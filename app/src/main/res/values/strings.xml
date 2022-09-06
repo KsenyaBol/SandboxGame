@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SandboxGame</string>
+    <string name="message_start_game">Start</string>
+    <string name="message_settings_game">SETTINGS</string>
+    <string name="message_continue_game">CONTINUE</string>
+</resources>

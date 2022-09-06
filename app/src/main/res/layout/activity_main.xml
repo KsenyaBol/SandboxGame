@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@drawable/background_sandbox"
+    tools:ignore="MissingConstraints,MissingDefaultResource">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="@string/message_start_game"
+            android:background="@drawable/button_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/button_continue"/>
+
+        <Button
+            android:id="@+id/button_continue"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="@string/message_continue_game"
+            android:background="@drawable/button_background"
+            app:layout_constraintStart_toStartOf="@id/button_start"
+            app:layout_constraintEnd_toEndOf="@id/button_start"
+            app:layout_constraintTop_toBottomOf="@id/button_start"
+            app:layout_constraintBottom_toTopOf="@id/button_settings"/>
+
+        <Button
+            android:id="@+id/button_settings"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="@string/message_settings_game"
+            android:background="@drawable/button_background"
+            app:layout_constraintStart_toStartOf="@id/button_start"
+            app:layout_constraintEnd_toEndOf="@id/button_start"
+            app:layout_constraintTop_toBottomOf="@id/button_continue"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
