@@ -1,5 +1,8 @@
 package com.example.sandboxgame.ui.base
 
-open class BasePresenter<View : BaseView> : OmegaPresenter<View>() {
+import com.omega_r.base.mvp.presenters.OmegaPresenter
+
+open class BasePresenter<View : BaseView>
+    : OmegaPresenter<View>() {
 
 }

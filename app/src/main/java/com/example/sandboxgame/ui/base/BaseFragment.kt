@@ -1,5 +1,8 @@
 package com.example.sandboxgame.ui.base
 
-abstract class BaseFragment(contentLayoutId: Int) : OmegaFragment(contentLayoutId), BaseView {
+import com.omega_r.base.components.OmegaFragment
+
+abstract class BaseFragment(contentLayoutId: Int)
+    : OmegaFragment(contentLayoutId), BaseView {
 
 }

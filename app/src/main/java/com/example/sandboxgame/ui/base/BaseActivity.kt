@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
 import com.example.sandboxgame.R
+import com.omega_r.base.components.OmegaActivity
+import com.omega_r.base.mvp.presenters.OmegaPresenter
 
 abstract class BaseActivity : OmegaActivity, BaseView {
 
@@ -17,6 +19,6 @@ abstract class BaseActivity : OmegaActivity, BaseView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setBackgroundDrawable(ColorDrawable(R.attr.activityBackground))
+//        window.setBackgroundDrawable(ColorDrawable(R.attr.activityBackground))
     }
 }

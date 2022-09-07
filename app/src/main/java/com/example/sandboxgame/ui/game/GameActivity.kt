@@ -1,36 +1,31 @@
-package com.example.sandboxgame.ui.main
+package com.example.sandboxgame.ui.game
 
 import android.graphics.Color
+import android.location.GnssAntennaInfo
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
+import com.example.sandboxgame.ui.base.BaseView
+import com.omega_r.base.mvp.presenters.OmegaPresenter
+import com.omegar.libs.omegalaunchers.Launcher
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
 
-open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
+open class GameActivity : BaseActivity(R.layout.activity_game), GameView {
 
-    companion object {
+    companion object{
+
 
         fun createLauncher() = createActivityLauncher()
     }
-    override val presenter: MainPresenter by providePresenter()
 
-    private val buttonStart: Button by bind(R.id.button_start)
-
+    override val presenter: GamePresenter by providePresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-
-        buttonStart.setOnClickListener {
-           presenter.onButtonStartClicked()
-        }
-
 
     }
 
@@ -38,7 +33,6 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
         super.onResume()
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
     }
-
 
 
 }
