@@ -17,27 +17,18 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
         fun createLauncher() = createActivityLauncher()
     }
     override val presenter: MainPresenter by providePresenter()
-
     private val buttonStart: Button by bind(R.id.button_start)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-
         buttonStart.setOnClickListener {
            presenter.onButtonStartClicked()
         }
 
-
     }
 
-    override fun onResume() {
-        super.onResume()
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-    }
 
 
 

@@ -10,4 +10,5 @@
     <color name="transparent">#0000</color>
     <color name="dark_purple_20">#32423189</color>
     <color name="dark_blue">#003366</color>
+    <color name="dark_red">#d9092c</color>
 </resources>

@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/amatic_sc_bold</item>
+    </style>
 
+    <style name="Text.Title">
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/deanna</item>
+    </style>
+
+    <style name="Text.Red">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/dark_red</item>
+    </style>
+
+    <style name="Text.Big">
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

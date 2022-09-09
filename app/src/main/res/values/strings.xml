@@ -3,4 +3,9 @@
     <string name="message_start_game">Start</string>
     <string name="message_settings_game">SETTINGS</string>
     <string name="message_continue_game">CONTINUE</string>
+    <string name="message_name_of_the_game">Sandbox Game</string>
+    <string name="message_of_amount_square">Amount squares</string>
+    <string name="message_amount_of_clans">Amount clans</string>
+    <string name="message_amount_of_infected">Infected</string>
+    <string name="message_amount_of_died">Total died</string>
 </resources>

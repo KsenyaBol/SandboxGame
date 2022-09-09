@@ -7,41 +7,255 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_layout_game"
-    tools:ignore="MissingConstraints, ContentDescription">
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:menu="@menu/menu_game_description"
-        app:layout_constraintWidth_percent="0.205"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <ImageView
-        android:layout_width="420px"
-        android:layout_height="match_parent"
-        android:background="@drawable/button_background"
-        android:layout_marginStart="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="PxUsage" />
-
+    android:fitsSystemWindows="true"
+    tools:ignore="MissingConstraints, ContentDescription, HardcodedText">
 
 <!--    <ImageView-->
-<!--        android:id="@+id/square"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:src="@drawable/white_square"-->
-<!--        android:layout_marginHorizontal="10dp"-->
-<!--        android:layout_marginVertical="10dp"-->
-<!--        app:layout_constraintWidth_percent="0.6"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
+<!--        android:layout_width="35dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:background="@color/transparent"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:src="@drawable/ic_menu"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="170dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="5dp"
+        android:background="@drawable/button_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/drawing_view"
+        tools:ignore="PxUsage">
+
+        <TextView
+            style="@style/Text.Title"
+            android:id="@+id/name_of_the_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/message_name_of_the_game"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/Text"
+            android:id="@+id/text_amount_square"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/message_of_amount_square"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_of_the_game" />
+
+        <TextView
+            style="@style/Text"
+            android:id="@+id/text_amount_of_clans"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/message_amount_of_clans"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_amount_square"/>
+
+        <TextView
+            style="@style/Text"
+            android:id="@+id/text_amount_of_infected"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/message_amount_of_infected"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_amount_of_clans"/>
+
+        <TextView
+            style="@style/Text"
+            android:id="@+id/text_amount_of_died"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/message_amount_of_died"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_amount_of_infected"/>
+
+        <TextView
+            style="@style/Text"
+            android:id="@+id/number_amount_square"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="2500"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toEndOf="@+id/text_amount_square"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_amount_square"
+            app:layout_constraintBottom_toBottomOf="@+id/text_amount_square"/>
+
+        <TextView
+            style="@style/Text"
+            android:id="@+id/number_amount_of_clans"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="4"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toEndOf="@+id/text_amount_of_clans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_amount_of_clans"
+            app:layout_constraintBottom_toBottomOf="@+id/text_amount_of_clans"/>
+
+        <TextView
+            style="@style/Text"
+            android:id="@+id/number_amount_of_infected"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="560"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toEndOf="@+id/text_amount_of_infected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_amount_of_infected"
+            app:layout_constraintBottom_toBottomOf="@+id/text_amount_of_infected"/>
+
+        <TextView
+            style="@style/Text"
+            android:id="@+id/number_amount_of_died"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="481"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toEndOf="@+id/text_amount_of_died"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_amount_of_died"
+            app:layout_constraintBottom_toBottomOf="@+id/text_amount_of_died"/>
+
+<!--        <Button-->
+<!--            style="@style/Text.Red"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="EXIT"-->
+<!--            android:gravity="center"-->
+<!--            android:background="@drawable/inconspicuous_borders"-->
+<!--            android:layout_margin="10dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/button_background"
+        android:layout_marginHorizontal="5dp"
+        app:layout_constraintStart_toEndOf="@+id/drawing_view"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <TextView
+            style="@style/Text.Title"
+            android:id="@+id/title_game_setup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Game Setup"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            style="@style/Text.Big"
+            android:id="@+id/button_add_square"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add a square"
+            android:background="@drawable/button_background"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/title_game_setup"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            style="@style/Text.Big"
+            android:id="@+id/button_delete_square"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete a square"
+            android:background="@drawable/button_background"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/button_add_square"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            style="@style/Text.Big"
+            android:id="@+id/button_infect_square"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Infect a square"
+            android:background="@drawable/button_background"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/button_delete_square"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            style="@style/Text.Red"
+            android:id="@+id/button_exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EXIT"
+            android:background="@drawable/inconspicuous_borders"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.example.sandboxgame.ui.widget.DrawingView
         android:id="@+id/drawing_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
-
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

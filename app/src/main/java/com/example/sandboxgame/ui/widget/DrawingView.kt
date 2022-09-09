@@ -7,7 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
+import com.example.sandboxgame.ui.size.SizePresenter
 
 class DrawingView: View {
 
@@ -20,14 +20,26 @@ class DrawingView: View {
     init {
         setWillNotDraw(false)
         paintSettings()
-//        this.layoutParams.width = height
     }
+
+//    override fun drawingView() {
+//
+//    }
+
+
 
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawRect(10F, 20F, 30F, 40F, paint)
-        canvas.drawRect(450F, 0F, (height/1F)+450F, height/1F, paint)
+        val size = height/50F
+       for (j in 0 until 50)
+           for (i in 0 until 50)
+           {
+               val x = size * j
+               val y = size * i
+               paint.color = Color.WHITE
+               canvas.drawRect(x, y, size * (j + 1F), size * (i + 1F), paint)
+           }
 
     }
 

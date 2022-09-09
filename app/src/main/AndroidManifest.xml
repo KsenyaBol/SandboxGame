@@ -33,6 +33,15 @@
             android:screenOrientation="landscape"
             tools:ignore="MissingClass,WrongManifestParent"/>
 
+        <activity
+            android:name=".ui.size.SizeFragment"
+            android:screenOrientation="landscape"
+            tools:ignore="MissingClass,WrongManifestParent"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 

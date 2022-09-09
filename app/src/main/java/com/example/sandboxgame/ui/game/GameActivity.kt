@@ -1,38 +1,43 @@
 package com.example.sandboxgame.ui.game
 
-import android.graphics.Color
-import android.location.GnssAntennaInfo
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
+import android.widget.Button
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
-import com.example.sandboxgame.ui.base.BaseView
-import com.omega_r.base.mvp.presenters.OmegaPresenter
-import com.omegar.libs.omegalaunchers.Launcher
+import com.omega_r.libs.omegatypes.Text
 import com.omegar.libs.omegalaunchers.createActivityLauncher
+import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
 
 open class GameActivity : BaseActivity(R.layout.activity_game), GameView {
 
-    companion object{
+    companion object {
+        private const val EXTRA_SIZE = "size"
 
-
-        fun createLauncher() = createActivityLauncher()
+        fun createLauncher(size: Int) = createActivityLauncher(
+            EXTRA_SIZE put size
+        )
     }
 
-    override val presenter: GamePresenter by providePresenter()
+    override val presenter: GamePresenter by providePresenter {
+        GamePresenter(this[EXTRA_SIZE]!!)
+    }
+    private val buttonExit: Button by bind(R.id.button_exit)
+
+    override var size: Int = 0
+        set(value) {
+            field = value
+            showToast(Text.from("$value"))
+//             drawingView.size = value
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-
+        buttonExit.setOnClickListener {
+            presenter.onButtonExitClicked()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-    }
 
 
 }
