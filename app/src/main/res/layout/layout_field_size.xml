@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_layout_game"
+    android:background="@drawable/background_game"
     tools:ignore="MissingConstraints, HardcodedText">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
                 android:id="@+id/title_select_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Select field, please"
+                android:text="@string/message_select_field"
                 android:paddingTop="20dp"
                 android:gravity="center"/>
 
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="50 x 50"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_background"
+                android:background="@drawable/focus_state"
                 android:layout_marginTop="20dp"/>
 
             <Button
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="20 x 20"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_background"
+                android:background="@drawable/focus_state"
                 android:layout_marginTop="10dp" />
 
             <Button
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="10 x 10"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_background"
+                android:background="@drawable/focus_state"
                 android:layout_marginVertical="10dp" />
 
 

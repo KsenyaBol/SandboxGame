@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="message_start_game">НАЧАТЬ</string>
+    <string name="message_settings_game">НАСТРОИТЬ</string>
+    <string name="message_continue_game">ПРОДОЛЖИТЬ</string>
+    <string name="message_add_cell">Добавить</string>
+    <string name="message_delete_cell">Убить</string>
+    <string name="message_infect_cell">Заразить</string>
+    <string name="title_exit">ВЫЙТИ</string>
+    <string name="message_amount_of_died">Кол-во смертей</string>
+    <string name="message_amount_of_infected">Зараженные</string>
+    <string name="message_amount_of_clans">Кол-во кланов</string>
+    <string name="message_of_amount_cell">Кол-во клеток</string>
+</resources>

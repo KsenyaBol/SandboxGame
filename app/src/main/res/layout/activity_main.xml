@@ -22,10 +22,10 @@
 
         <Button
             android:id="@+id/button_start"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:text="@string/message_start_game"
-            android:background="@drawable/button_background"
+            android:background="@drawable/focus_state"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,10 +33,10 @@
 
         <Button
             android:id="@+id/button_continue"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:text="@string/message_continue_game"
-            android:background="@drawable/button_background"
+            android:background="@drawable/focus_state"
             app:layout_constraintStart_toStartOf="@id/button_start"
             app:layout_constraintEnd_toEndOf="@id/button_start"
             app:layout_constraintTop_toBottomOf="@id/button_start"
@@ -44,10 +44,10 @@
 
         <Button
             android:id="@+id/button_settings"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:text="@string/message_settings_game"
-            android:background="@drawable/button_background"
+            android:background="@drawable/focus_state"
             app:layout_constraintStart_toStartOf="@id/button_start"
             app:layout_constraintEnd_toEndOf="@id/button_start"
             app:layout_constraintTop_toBottomOf="@id/button_continue"

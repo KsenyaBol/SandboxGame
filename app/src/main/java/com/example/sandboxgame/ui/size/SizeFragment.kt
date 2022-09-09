@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
-import com.example.sandboxgame.ui.base.BaseFragment
 import com.omegar.libs.omegalaunchers.createActivityLauncher
-import com.omegar.libs.omegalaunchers.createFragmentLauncher
 import com.omegar.mvp.ktx.providePresenter
 
 open class SizeFragment : BaseActivity(R.layout.layout_field_size), SizeView {

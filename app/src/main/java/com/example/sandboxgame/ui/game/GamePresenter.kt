@@ -1,11 +1,10 @@
 package com.example.sandboxgame.ui.game
 
-import com.example.sandboxgame.ui.base.BasePresenter
-import com.example.sandboxgame.ui.main.MainActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
-import kotlinx.coroutines.launch
 
 class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
+
+    private var command: Command? = null
 
     init {
         viewState.size = size
@@ -13,5 +12,21 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
 
     fun onButtonExitClicked() {
         exit()
+    }
+
+    fun onButtonAddClicked() {
+        command = Command.ADD
+    }
+
+    fun onButtonDeleteClicked() {
+        command = Command.DELETE
+    }
+
+    fun onButtonInfectClicked() {
+        command = Command.INFECT
+    }
+
+    private enum class Command {
+        ADD, DELETE, INFECT
     }
 }

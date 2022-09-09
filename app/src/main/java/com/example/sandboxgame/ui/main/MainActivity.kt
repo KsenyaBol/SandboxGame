@@ -1,9 +1,6 @@
 package com.example.sandboxgame.ui.main
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
