@@ -13,6 +13,13 @@ import android.view.View
 class DrawingView: View{
 
     var size: Int = 0
+    var i: Int = 0
+    var j: Int = 0
+
+    set(value) {
+        field = value
+        invalidate()
+    }
 
     var onTapCellListener: OnTapCellListener? = null
 
@@ -55,6 +62,10 @@ class DrawingView: View{
                canvas.drawRect(x, y, x + sizeH , y + sizeH, paint)
            }
 
+        val x = sizeH * i
+        val y = sizeH * j
+        paint.color = Color.rgb((Math.random() * 255).toInt(), (Math.random() * 255).toInt(), (Math.random() * 255).toInt())
+        canvas.drawRect(x, y, x + sizeH , y + sizeH, paint)
 
     }
 

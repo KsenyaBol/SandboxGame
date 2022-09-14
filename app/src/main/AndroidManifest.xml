@@ -38,6 +38,10 @@
             android:screenOrientation="landscape"
             tools:ignore="MissingClass,WrongManifestParent"/>
 
+        <service
+            android:enabled="true"
+            android:name=".ui.music.MusicService" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -1,15 +1,17 @@
 package com.example.sandboxgame.ui.game
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
+import com.example.sandboxgame.ui.music.MusicService
 import com.example.sandboxgame.ui.widget.DrawingView
-import com.omega_r.libs.omegatypes.Text
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
+
 
 open class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
 
@@ -38,27 +40,36 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             drawingView.size = value
         }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         buttonExit.setOnClickListener {
             presenter.onButtonExitClicked()
         }
         buttonAdd.setOnClickListener {
+            it.isSelected = true
+            buttonDelete.isSelected = false
+            buttonInfect.isSelected = false
             presenter.onButtonAddClicked()
         }
         buttonDelete.setOnClickListener {
+            it.isSelected = true
+            buttonAdd.isSelected = false
+            buttonInfect.isSelected = false
             presenter.onButtonDeleteClicked()
         }
         buttonInfect.setOnClickListener {
+            it.isSelected = true
+            buttonInfect.invalidate()
+            buttonAdd.isSelected = false
+            buttonDelete.isSelected = false
             presenter.onButtonInfectClicked()
         }
     }
 
     override fun onTapCell(i: Int, j: Int) {
-        showToast(Text.from("i = $i, j = $j"))
+        drawingView.i = i
+        drawingView.j = j
     }
-
 
 }

@@ -7,6 +7,7 @@ class SizePresenter: OmegaPresenter<SizeView>() {
 
     fun onButtonBigClicked() {
         GameActivity.createLauncher(50).launch()
+
         exit()
     }
 

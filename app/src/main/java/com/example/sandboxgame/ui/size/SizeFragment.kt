@@ -22,12 +22,21 @@ open class SizeFragment : BaseActivity(R.layout.layout_field_size), SizeView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         buttonBigFaild.setOnClickListener {
+            it.isSelected = true
+            buttonNormFaild.isSelected = false
+            buttonSmallFaild.isSelected = false
             presenter.onButtonBigClicked()
         }
         buttonNormFaild.setOnClickListener {
+            it.isSelected = true
+            buttonBigFaild.isSelected = false
+            buttonSmallFaild.isSelected = false
             presenter.onButtonNormClicked()
         }
         buttonSmallFaild.setOnClickListener {
+            it.isSelected = true
+            buttonBigFaild.isSelected = false
+            buttonNormFaild.isSelected = false
             presenter.onButtonSmallClicked()
         }
     }
