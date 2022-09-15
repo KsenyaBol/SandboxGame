@@ -1,5 +1,6 @@
 package com.example.sandboxgame.ui.size
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import com.example.sandboxgame.R
@@ -21,23 +22,31 @@ open class SizeFragment : BaseActivity(R.layout.layout_field_size), SizeView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
+
         buttonBigFaild.setOnClickListener {
             it.isSelected = true
             buttonNormFaild.isSelected = false
             buttonSmallFaild.isSelected = false
             presenter.onButtonBigClicked()
+
+            soundButtonClick.start()
         }
         buttonNormFaild.setOnClickListener {
             it.isSelected = true
             buttonBigFaild.isSelected = false
             buttonSmallFaild.isSelected = false
             presenter.onButtonNormClicked()
+
+            soundButtonClick.start()
         }
         buttonSmallFaild.setOnClickListener {
             it.isSelected = true
             buttonBigFaild.isSelected = false
             buttonNormFaild.isSelected = false
             presenter.onButtonSmallClicked()
+
+            soundButtonClick.start()
         }
     }
 

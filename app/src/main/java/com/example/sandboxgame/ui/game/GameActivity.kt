@@ -1,12 +1,12 @@
 package com.example.sandboxgame.ui.game
 
 
-import android.content.Intent
+import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Button
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
-import com.example.sandboxgame.ui.music.MusicService
 import com.example.sandboxgame.ui.widget.DrawingView
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
@@ -40,23 +40,36 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             drawingView.size = value
         }
 
+    open fun parkData() : ArrayList<Array<String?>?>? {
+        return parkData()
+//        drawingView.setValue(park_data())
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
         buttonExit.setOnClickListener {
             presenter.onButtonExitClicked()
+
+            soundButtonClick.start()
         }
         buttonAdd.setOnClickListener {
             it.isSelected = true
             buttonDelete.isSelected = false
             buttonInfect.isSelected = false
             presenter.onButtonAddClicked()
+
+            soundButtonClick.start()
         }
         buttonDelete.setOnClickListener {
             it.isSelected = true
             buttonAdd.isSelected = false
             buttonInfect.isSelected = false
             presenter.onButtonDeleteClicked()
+
+            soundButtonClick.start()
         }
         buttonInfect.setOnClickListener {
             it.isSelected = true
@@ -64,6 +77,8 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             buttonAdd.isSelected = false
             buttonDelete.isSelected = false
             presenter.onButtonInfectClicked()
+
+            soundButtonClick.start()
         }
     }
 
@@ -71,5 +86,37 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
         drawingView.i = i
         drawingView.j = j
     }
+
+//    private var myDrawingObjects: ArrayList<DrawingView>? = null
+//    open fun MyGFXSur(context: Context?) {
+//        myDrawingObjects = ArrayList<DrawingView>()
+//
+////        myDrawingObjects!!.add(MyRect(this@MainActivity))
+//    }
+//
+//
+//    open fun run() {
+//        while (isRunning) {
+//            if (!holder.getSurface().isValid()) {
+//                continue
+//            }
+//            updatePhysics()
+//            val canvas: Canvas = holder.lockCanvas()
+//            drawObjects(canvas)
+//            holder.unlockCanvasAndPost(canvas)
+//        }
+//    }
+//
+//    private open fun updatePhysics() {
+//        for (drawObject in myDrawingObjects) {
+//            drawObject.updatePhysics()
+//        }
+//    }
+//
+//    private open fun drawObjects(canvas: Canvas) {
+//        for (drawObject in myDrawingObjects) {
+//            drawObject.draw(canvas)
+//        }
+//    }
 
 }
