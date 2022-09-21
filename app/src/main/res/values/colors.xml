@@ -11,4 +11,14 @@
     <color name="dark_purple_20">#32423189</color>
     <color name="dark_blue">#003366</color>
     <color name="dark_red">#d9092c</color>
+    <color name="blue_gray">#7393B3</color>
+    <color name="orange">#FF5733</color>
+    <color name="lime">#DAF7A6</color>
+    <color name="yellow">#FFC300</color>
+    <color name="cherry">#C70039</color>
+    <color name="light_purple">#B691D2</color>
+    <color name="quartz">#99958C</color>
+    <color name="green_grass">#658354</color>
+    <color name="cloudy_blue">#213A5C</color>
+    <color name="tonyc_pink">#E69580</color>
 </resources>

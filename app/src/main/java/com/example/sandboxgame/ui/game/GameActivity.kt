@@ -1,13 +1,20 @@
 package com.example.sandboxgame.ui.game
 
-
-import android.content.Context
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.widget.DrawingView
+import com.omega_r.libs.extensions.context.getCompatColor
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
@@ -23,6 +30,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
         )
     }
 
+    private var colorCell: Int = Color.BLACK
     override val presenter: GamePresenter by providePresenter {
         GamePresenter(this[EXTRA_SIZE]!!)
     }
@@ -30,6 +38,20 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
     private val buttonAdd: Button by bind(R.id.button_add_square)
     private val buttonDelete: Button by bind(R.id.button_delete_square)
     private val buttonInfect: Button by bind(R.id.button_infect_square)
+    private val textNumberAmount: TextView by bind(R.id.number_amount_square)
+    private val textNumberAmountDied: TextView by bind(R.id.number_amount_of_died)
+    private val textNumberAmountInfected: TextView by bind(R.id.number_amount_of_infected)
+    private val colorConstraint: View by bind(R.id.color_constraint)
+    private val cellRecBlue: ImageView by bind(R.id.cell_rec_blue)
+    private val cellRecLime: ImageView by bind(R.id.cell_rec_lime)
+    private val cellRecLightPurple: ImageView by bind(R.id.cell_rec_light_purple)
+    private val cellRecPink: ImageView by bind(R.id.cell_rec_pink)
+    private val cellRecQuartz: ImageView by bind(R.id.cell_rec_quartz)
+    private val cellRecRed: ImageView by bind(R.id.cell_rec_red)
+    private val cellRecOrange: ImageView by bind(R.id.cell_rec_orange)
+    private val cellRecYellow: ImageView by bind(R.id.cell_rec_yellow)
+    private val cellRecGreen: ImageView by bind(R.id.cell_rec_green)
+    private val cellRecCloudyBlue: ImageView by bind(R.id.cell_rec_cloudy_blue)
     private val drawingView: DrawingView by bind(R.id.drawing_view) {
         onTapCellListener = this@GameActivity
     }
@@ -40,83 +62,230 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             drawingView.size = value
         }
 
-    open fun parkData() : ArrayList<Array<String?>?>? {
-        return parkData()
-//        drawingView.setValue(park_data())
-    }
 
+
+    @SuppressLint("ResourceType", "NewApi")
+    @RequiresApi(Build.VERSION_CODES.M)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
-
+        colorCell = getCompatColor(R.color.blue_gray)
         buttonExit.setOnClickListener {
             presenter.onButtonExitClicked()
 
             soundButtonClick.start()
         }
+
+        colorConstraint.isVisible = false
+
         buttonAdd.setOnClickListener {
+            presenter.onButtonAddClicked()
             it.isSelected = true
             buttonDelete.isSelected = false
             buttonInfect.isSelected = false
-            presenter.onButtonAddClicked()
+            colorConstraint.isVisible = true
 
             soundButtonClick.start()
+
         }
         buttonDelete.setOnClickListener {
+            presenter.onButtonDeleteClicked()
             it.isSelected = true
             buttonAdd.isSelected = false
             buttonInfect.isSelected = false
-            presenter.onButtonDeleteClicked()
+            colorConstraint.isVisible = false
 
             soundButtonClick.start()
         }
         buttonInfect.setOnClickListener {
+            presenter.onButtonInfectClicked()
             it.isSelected = true
-            buttonInfect.invalidate()
             buttonAdd.isSelected = false
             buttonDelete.isSelected = false
-            presenter.onButtonInfectClicked()
+            colorConstraint.isVisible = false
 
             soundButtonClick.start()
         }
+
+        cellRecBlue.setOnClickListener {
+            cellRecBlue.isSelected = true
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = false
+
+            val colorBlue = resources.getColor(R.color.blue_gray)
+            colorCell = colorBlue
+        }
+
+        cellRecLime.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = true
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = false
+
+            val colorLime = resources.getColor(R.color.lime)
+            colorCell = colorLime
+        }
+
+        cellRecLightPurple.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = true
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = false
+
+            val colorPurple = resources.getColor(R.color.light_purple)
+            colorCell = colorPurple
+        }
+
+        cellRecPink.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = true
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = false
+
+            val colorPink = resources.getColor(R.color.tonyc_pink)
+            colorCell = colorPink
+        }
+
+        cellRecQuartz.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = true
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = false
+
+            val colorQuartz = resources.getColor(R.color.quartz)
+            colorCell = colorQuartz
+        }
+
+        cellRecRed.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = true
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = false
+
+            val colorCherry = resources.getColor(R.color.cherry)
+            colorCell = colorCherry
+        }
+
+        cellRecOrange.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = true
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = false
+
+            val colorOrange = resources.getColor(R.color.orange)
+            colorCell = colorOrange
+        }
+
+        cellRecYellow.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = true
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = false
+
+            val colorYellow = resources.getColor(R.color.yellow)
+            colorCell = colorYellow
+        }
+
+        cellRecGreen.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = true
+            cellRecCloudyBlue.isSelected = false
+
+            val colorGreen = resources.getColor(R.color.green_grass)
+            colorCell = colorGreen
+        }
+
+        cellRecCloudyBlue.setOnClickListener {
+            cellRecBlue.isSelected = false
+            cellRecLime.isSelected = false
+            cellRecLightPurple.isSelected = false
+            cellRecPink.isSelected = false
+            cellRecQuartz.isSelected = false
+            cellRecRed.isSelected = false
+            cellRecOrange.isSelected = false
+            cellRecYellow.isSelected = false
+            cellRecGreen.isSelected = false
+            cellRecCloudyBlue.isSelected = true
+
+            val colorCloudyBlue = resources.getColor(R.color.cloudy_blue)
+            colorCell = colorCloudyBlue
+        }
+
     }
 
     override fun onTapCell(i: Int, j: Int) {
-        drawingView.i = i
-        drawingView.j = j
+        if (buttonAdd.isSelected) {
+            drawingView.addValue(i, j, colorCell)
+        }
+        if (buttonDelete.isSelected) {
+            drawingView.deleteValue(i, j)
+        }
+        if (buttonInfect.isSelected) {
+            drawingView.infectValue(i, j)
+        }
+        val cellAmount = drawingView.myCellList.size
+        textNumberAmount.text = cellAmount.toString()
+        val cellDieAmount = drawingView.myDeleteRectList.size
+        textNumberAmountDied.text = cellDieAmount.toString()
+        val cellInfectAmount = drawingView.myCellInfectList.size
+        textNumberAmountInfected.text = cellInfectAmount.toString()
     }
-
-//    private var myDrawingObjects: ArrayList<DrawingView>? = null
-//    open fun MyGFXSur(context: Context?) {
-//        myDrawingObjects = ArrayList<DrawingView>()
-//
-////        myDrawingObjects!!.add(MyRect(this@MainActivity))
-//    }
-//
-//
-//    open fun run() {
-//        while (isRunning) {
-//            if (!holder.getSurface().isValid()) {
-//                continue
-//            }
-//            updatePhysics()
-//            val canvas: Canvas = holder.lockCanvas()
-//            drawObjects(canvas)
-//            holder.unlockCanvasAndPost(canvas)
-//        }
-//    }
-//
-//    private open fun updatePhysics() {
-//        for (drawObject in myDrawingObjects) {
-//            drawObject.updatePhysics()
-//        }
-//    }
-//
-//    private open fun drawObjects(canvas: Canvas) {
-//        for (drawObject in myDrawingObjects) {
-//            drawObject.draw(canvas)
-//        }
-//    }
 
 }

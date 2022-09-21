@@ -41,46 +41,10 @@ class MusicService: Service(), MediaPlayer.OnCompletionListener {
     override fun onDestroy() {
         player.stop()
     }
-//
-//    override fun onResume() {
-//        if (ScreenReceiver.screenOff == true) {
-//            player.stop()
-//        } else {
-//            player.start()
-//        }
-//    }
 
-//    override fun onDestroy() {
-//        Toast.makeText(this, "My Service Stopped", Toast.LENGTH_LONG).show()
-//        if (player.isPlaying) {
-//            player.stop()
-//        }
-//        player.release()
-//    }
-//
-//    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-//        Toast.makeText(this, "My Service Started", Toast.LENGTH_LONG).show()
-//        if (!player.isPlaying) {
-//            player.start()
-//        }
-//        return START_STICKY
-//    }
-//
     override fun onCompletion(mp: MediaPlayer?) {
         stopSelf()
     }
-
-//    override fun onPause() {
-//        if (!player .isPlaying) {
-//            player.pause()
-//        }
-//    }
-//
-//    override fun onResume() {
-//        if (!player .isPlaying) {
-//            player.start()
-//        }
-//    }
 
 
 

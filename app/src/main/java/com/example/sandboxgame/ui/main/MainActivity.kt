@@ -1,6 +1,8 @@
 package com.example.sandboxgame.ui.main
 
+import android.app.ActivityManager
 import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.MediaPlayer
@@ -24,9 +26,6 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
     override val presenter: MainPresenter by providePresenter()
     private val buttonStart: Button by bind(R.id.button_start)
 
-
-//    private val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +39,7 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
         startService(Intent(this, MusicService::class.java))
+        stopService(Intent(this, MusicService::class.java))
 
         buttonStart.setOnClickListener {
            presenter.onButtonStartClicked()
@@ -47,26 +47,6 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
         }
 
     }
-
-//    override fun onPause() {
-//        if (ScreenReceiver.wasScreenOn) {
-//
-//            println("SCREEN TURNED OFF")
-//        } else {
-//
-//        }
-//        super.onPause()
-//    }
-//
-//    override fun onResume() {
-//        if (ScreenReceiver.wasScreenOn) {
-//
-//            println("SCREEN TURNED ON")
-//        } else {
-//
-//        }
-//        super.onResume()
-//    }
 
     override fun onBackPressed() {
         super.onBackPressed()

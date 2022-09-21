@@ -8,7 +8,6 @@ import android.content.Intent
 open class ScreenReceiver: BroadcastReceiver() {
 
     var screenOff = false
-//    var wasScreenOn = true
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_SCREEN_OFF) {

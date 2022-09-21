@@ -1,6 +1,5 @@
 package com.example.sandboxgame.ui.widget
 
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -11,8 +10,8 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.example.sandboxgame.R
 import kotlinx.parcelize.Parcelize
-
 
 @Parcelize
 class MyState(private val superSaveState: Parcelable?, val loading: Boolean) : View.BaseSavedState(superSaveState), Parcelable
@@ -20,9 +19,6 @@ class MyState(private val superSaveState: Parcelable?, val loading: Boolean) : V
 class DrawingView: View{
 
     var size: Int = 0
-    var i: Int = 0
-    var j: Int = 0
-
 
     set(value) {
         field = value
@@ -30,7 +26,10 @@ class DrawingView: View{
     }
 
     var onTapCellListener: OnTapCellListener? = null
-    var parkData: ArrayList<Array<String?>?>? = null
+    var myRectList: ArrayList<Array<Int>> = arrayListOf()
+    var myDeleteRectList: ArrayList<Array<Int>> = arrayListOf()
+    var myCellList: ArrayList<Cell> = arrayListOf()
+    var myCellInfectList: ArrayList<Array<Int>> = arrayListOf()
 
     private val paint: Paint = Paint()
 
@@ -74,40 +73,75 @@ class DrawingView: View{
         return super.onTouchEvent(event)
     }
 
-
-    override fun onDraw(canvas: Canvas) {
+    public override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-//        var myRectList = arrayListOf<DrawingView>()
-
 
         val sizeH = height/size.toFloat()
 
+//        paint.color = Color.WHITE
+//        canvas.drawRect(0f, 0f, height.toFloat(),  height.toFloat(), paint)
 
-        if(parkData != null && parkData!!.size > 0)
-            if(parkData!![0]!![0]!!.equals(0)){
-                val x = sizeH * parkData!!.lastIndex
-                val y = sizeH * parkData!!.lastIndex
-                canvas.drawRect(x, y, x + sizeH , y + sizeH, paint)
+        if(myCellList.size > 0) {
+            myCellList.forEach { array->
+                val x = sizeH * array.x
+                val y = sizeH * array.y
+
+                paint.color = array.cellColor
+
+                canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
             }
 
-       for (j in 0 until size)
-           for (i in 0 until size)
-           {
-               val x = sizeH * i
-               val y = sizeH * j
-               paint.color = Color.WHITE
-               canvas.drawRect(x, y, x + sizeH , y + sizeH, paint)
-           }
+        }
 
-        val x = sizeH * i
-        val y = sizeH * j
-        paint.color = Color.rgb((Math.random() * 255).toInt(), (Math.random() * 255).toInt(), (Math.random() * 255).toInt())
-        canvas.drawRect(x, y, x + sizeH , y + sizeH, paint)
+        if(myCellInfectList.size > 0) {
+            myCellInfectList.forEach { array ->
+                val x = sizeH * array[0]
+                val y = sizeH * array[1]
+                paint.color = Color.BLACK
+                canvas.drawCircle((x + sizeH/2F), (y + sizeH/2F), 10F, paint)
+
+            }
+        }
 
     }
 
-    fun setValue(park_data: ArrayList<Array<String?>?>?) {
-        this.parkData = park_data
+    fun setValue(myRectList: ArrayList<Array<Int>>, myDeleteRectList: ArrayList<Array<Int>>, myCellInfectList: ArrayList<Array<Int>>) {
+        this.myRectList = myRectList
+        this.myDeleteRectList = myDeleteRectList
+        this.myCellInfectList = myCellInfectList
+        invalidate()
+    }
+
+    fun setValue(myCellList: ArrayList<Cell>) {
+        this.myCellList = myCellList
+        invalidate()
+    }
+
+    fun addValue(i: Int, j: Int, cellColor: Int) {
+        myCellList.add(Cell(x = i, y = j, cellColor = cellColor))
+        invalidate()
+    }
+
+    fun deleteValue(i: Int, j: Int) {
+        val cell = myCellList.firstOrNull { cell ->
+            cell.x == i && cell.y == j
+        }
+        myCellList.remove(cell)
+        myDeleteRectList.add(arrayOf(i, j))
+
+//        myCellList.count { it.cellColor == Color.RED }
+
+        val cellInfect = myCellInfectList.firstOrNull { cell ->
+            cell[0] == i && cell[1] == j
+        }
+        myCellInfectList.remove(cellInfect)
+        myDeleteRectList.add(arrayOf(i, j))
+
+        invalidate()
+    }
+
+    fun infectValue(i: Int, j: Int) {
+        myCellInfectList.add(arrayOf(i, j))
         invalidate()
     }
 
@@ -116,5 +150,11 @@ class DrawingView: View{
         fun onTapCell(i: Int, j: Int)
 
     }
+
+    data class Cell(
+        var x: Int,
+        var y: Int,
+        var cellColor: Int,
+        )
 
 }
