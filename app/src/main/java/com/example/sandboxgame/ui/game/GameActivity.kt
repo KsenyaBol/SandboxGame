@@ -41,6 +41,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
     private val textNumberAmount: TextView by bind(R.id.number_amount_square)
     private val textNumberAmountDied: TextView by bind(R.id.number_amount_of_died)
     private val textNumberAmountInfected: TextView by bind(R.id.number_amount_of_infected)
+    private val textNumberAmountClans: TextView by bind(R.id.number_amount_of_clans)
     private val colorConstraint: View by bind(R.id.color_constraint)
     private val cellRecBlue: ImageView by bind(R.id.cell_rec_blue)
     private val cellRecLime: ImageView by bind(R.id.cell_rec_lime)
@@ -272,13 +273,28 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
 
     override fun onTapCell(i: Int, j: Int) {
         if (buttonAdd.isSelected) {
-            drawingView.addValue(i, j, colorCell)
+            val cell = drawingView.myCellList.firstOrNull { cell ->
+                cell.x == i && cell.y == j
+            }
+            if (cell == null) {
+                drawingView.addValue(i, j, colorCell)
+            }
         }
         if (buttonDelete.isSelected) {
-            drawingView.deleteValue(i, j)
+            val cell = drawingView.myCellList.firstOrNull { cell ->
+                cell.x == i && cell.y == j
+            }
+            if (cell != null) {
+                drawingView.deleteValue(i, j)
+            }
         }
         if (buttonInfect.isSelected) {
-            drawingView.infectValue(i, j)
+            val cell = drawingView.myCellList.firstOrNull { cell ->
+                cell.x == i && cell.y == j
+            }
+            if (cell != null) {
+                drawingView.infectValue(i, j)
+            }
         }
         val cellAmount = drawingView.myCellList.size
         textNumberAmount.text = cellAmount.toString()
@@ -286,6 +302,10 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
         textNumberAmountDied.text = cellDieAmount.toString()
         val cellInfectAmount = drawingView.myCellInfectList.size
         textNumberAmountInfected.text = cellInfectAmount.toString()
+
+        // don't work
+        val cellClansAmount = drawingView.myCellList.count { it.cellColor >= 4 }
+        textNumberAmountClans.text = cellClansAmount.toString()
     }
 
 }

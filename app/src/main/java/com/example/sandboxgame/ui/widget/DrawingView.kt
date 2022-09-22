@@ -10,7 +10,6 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.example.sandboxgame.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -129,13 +128,10 @@ class DrawingView: View{
         myCellList.remove(cell)
         myDeleteRectList.add(arrayOf(i, j))
 
-//        myCellList.count { it.cellColor == Color.RED }
-
         val cellInfect = myCellInfectList.firstOrNull { cell ->
             cell[0] == i && cell[1] == j
         }
         myCellInfectList.remove(cellInfect)
-        myDeleteRectList.add(arrayOf(i, j))
 
         invalidate()
     }
@@ -158,3 +154,4 @@ class DrawingView: View{
         )
 
 }
+//        myCellList.count { it.cellColor == Color.RED }

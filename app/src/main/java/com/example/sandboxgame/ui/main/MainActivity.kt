@@ -1,8 +1,6 @@
 package com.example.sandboxgame.ui.main
 
-import android.app.ActivityManager
 import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.MediaPlayer
@@ -25,6 +23,7 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
     }
     override val presenter: MainPresenter by providePresenter()
     private val buttonStart: Button by bind(R.id.button_start)
+    private val buttonSetting: Button by bind(R.id.button_settings)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +42,11 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
         buttonStart.setOnClickListener {
            presenter.onButtonStartClicked()
+            soundButtonClick.start()
+        }
+
+        buttonSetting.setOnClickListener {
+            presenter.onButtonSettingsClicked()
             soundButtonClick.start()
         }
 

@@ -21,6 +21,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="Text.Medium">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="Text.Title.Focusable">
         <item name="android:textColor">#48FFFFFF</item>
     </style>

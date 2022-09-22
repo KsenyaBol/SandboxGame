@@ -25,7 +25,6 @@ class MusicService: Service(), MediaPlayer.OnCompletionListener {
         registerReceiver(receiver, filter)
         player = MediaPlayer.create(this, R.raw.music_for_bk)
         player.isLooping = true
-        player.setVolume(50F, 50F)
     }
 
     @Deprecated("Deprecated in Java")
@@ -40,12 +39,12 @@ class MusicService: Service(), MediaPlayer.OnCompletionListener {
 
     override fun onDestroy() {
         player.stop()
+        player.release()
     }
 
     override fun onCompletion(mp: MediaPlayer?) {
         stopSelf()
     }
-
 
 
 }

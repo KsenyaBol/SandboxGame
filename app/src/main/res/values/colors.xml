@@ -21,4 +21,6 @@
     <color name="green_grass">#658354</color>
     <color name="cloudy_blue">#213A5C</color>
     <color name="tonyc_pink">#E69580</color>
+    <color name="white_30">#48FFFFFF</color>
+    <color name="white_20">#32FFFFFF</color>
 </resources>
