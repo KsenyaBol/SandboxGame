@@ -4,39 +4,38 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.example.core.rule.ui.objects.Cell
+import com.example.sandboxgame.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class MyState(private val superSaveState: Parcelable?, val loading: Boolean) : View.BaseSavedState(superSaveState), Parcelable
+class MyState(private val superSaveState: Parcelable?) : View.BaseSavedState(superSaveState), Parcelable
 
 class DrawingView: View{
 
     var size: Int = 0
 
-    set(value) {
-        field = value
-        invalidate()
-    }
-
     var onTapCellListener: OnTapCellListener? = null
-    var myRectList: ArrayList<Array<Int>> = arrayListOf()
     var myDeleteRectList: ArrayList<Array<Int>> = arrayListOf()
     var myCellList: ArrayList<Cell> = arrayListOf()
-    var myCellInfectList: ArrayList<Array<Int>> = arrayListOf()
 
     private val paint: Paint = Paint()
-
+    private val paintBorder: Paint = Paint()
     constructor(ctx: Context) : super(ctx)
     constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
 
     init {
         setWillNotDraw(false)
+        cellMoving()
 
     }
 
@@ -72,53 +71,151 @@ class DrawingView: View{
         return super.onTouchEvent(event)
     }
 
+    @SuppressLint("DrawAllocation")
     public override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         val sizeH = height/size.toFloat()
 
-//        paint.color = Color.WHITE
-//        canvas.drawRect(0f, 0f, height.toFloat(),  height.toFloat(), paint)
+        paint.pathEffect = CornerPathEffect(10f)
+        paintBorder.pathEffect = CornerPathEffect(10f)
+
 
         if(myCellList.size > 0) {
             myCellList.forEach { array->
                 val x = sizeH * array.x
                 val y = sizeH * array.y
+                val infect = array.cellInfect
 
                 paint.color = array.cellColor
 
-                canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
+                paintBorder.style = Paint.Style.STROKE
+                paintBorder.strokeWidth = 3f
+                paintBorder.color = Color.WHITE
+                canvas.drawRect(x, y, x + sizeH, y + sizeH, paintBorder)
+
+                if (infect == true) {
+
+                    canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
+
+                    paint.color = Color.BLACK
+                    canvas.drawCircle((x + sizeH/2F), (y + sizeH/2F), 10F, paint)
+
+                    paintBorder.style = Paint.Style.STROKE
+                    paintBorder.strokeWidth = 1f
+                    paintBorder.color = Color.WHITE
+                    canvas.drawCircle((x + sizeH/2F), (y + sizeH/2F), 10F, paintBorder)
+
+                } else {
+                    canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
+                }
+
+
+//                canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
+
+
+
             }
 
         }
 
-        if(myCellInfectList.size > 0) {
-            myCellInfectList.forEach { array ->
-                val x = sizeH * array[0]
-                val y = sizeH * array[1]
-                paint.color = Color.BLACK
-                canvas.drawCircle((x + sizeH/2F), (y + sizeH/2F), 10F, paint)
-
-            }
-        }
+//        val cellInfect = myCellList.firstOrNull { cell ->
+//            cell.cellInfect == true
+//        }
+//        if (cellInfect == null) {
+//
+//            myCellInfectList.forEach { array ->
+//                val x = sizeH * array[0]
+//                val y = sizeH * array[1]
+//                paint.color = Color.BLACK
+//                canvas.drawCircle((x + sizeH/2F), (y + sizeH/2F), 10F, paint)
+//
+//                paintBorder.style = Paint.Style.STROKE
+//                paintBorder.strokeWidth = 1f
+//                paintBorder.color = Color.WHITE
+//                canvas.drawCircle((x + sizeH/2F), (y + sizeH/2F), 10F, paintBorder)
+//
+//            }
+//
+//        }
 
     }
 
-    fun setValue(myRectList: ArrayList<Array<Int>>, myDeleteRectList: ArrayList<Array<Int>>, myCellInfectList: ArrayList<Array<Int>>) {
-        this.myRectList = myRectList
+    fun setValue( myDeleteRectList: ArrayList<Array<Int>>, myCellList: ArrayList<Cell>) {
         this.myDeleteRectList = myDeleteRectList
-        this.myCellInfectList = myCellInfectList
-        invalidate()
-    }
-
-    fun setValue(myCellList: ArrayList<Cell>) {
         this.myCellList = myCellList
         invalidate()
     }
 
-    fun addValue(i: Int, j: Int, cellColor: Int) {
-        myCellList.add(Cell(x = i, y = j, cellColor = cellColor))
+//    fun setValue(myCellList: ArrayList<Cell>) {
+//        this.myCellList = myCellList
+//        invalidate()
+//    }
+
+    fun addValue(i: Int, j: Int, cellColor: Int, cellInfect: Boolean) {
+        val cell = myCellList.firstOrNull { cell ->
+            cell.x == i && cell.y == j
+        }
+        if (cell != null) {
+            myCellList.forEachIndexed { index, cell ->
+                cell.x == i && cell.y == j
+                myCellList[index] = Cell(x = i, y = j, cellColor = cellColor, cellInfect = true)
+            }
+        } else {
+            myCellList.add(Cell(x = i, y = j, cellColor = cellColor, cellInfect = cellInfect))
+        }
+
         invalidate()
+    }
+
+    fun addValue(cell: Cell) {
+        val last = myCellList.lastIndex
+        myCellList[last] = cell
+        invalidate()
+    }
+
+    fun cellMoving() {
+        val handler = Handler(Looper.getMainLooper())
+        var runnable: Runnable? = null
+        runnable = Runnable {
+            myCellList.forEachIndexed { index, cell ->
+
+                var x = cell.x
+                var y = cell.y
+                val rand = (0..3).random()
+
+                when (rand) {
+                    0 -> {
+                        if (x + 1 > size - 1) {
+                            x -= 1
+                        } else x += 1
+                    }
+                    1 -> {
+                        if (y + 1 > size - 1) {
+                            y -= 1
+                        } else y += 1
+                    }
+                    2 -> {
+                        if (x - 1 < 0) {
+                            x += 1
+                        } else x -= 1
+                    }
+                    3 -> {
+                        if (y - 1 < 0) {
+                            y += 1
+                        } else y -= 1
+                    }
+                }
+
+
+                myCellList[index] = Cell(x = x, y = y, cellColor = cell.cellColor, cellInfect = cell.cellInfect)
+                invalidate()
+            }
+            handler.postDelayed(runnable!!, 200)
+
+        }
+        handler.postDelayed(runnable, 200)
+
     }
 
     fun deleteValue(i: Int, j: Int) {
@@ -128,18 +225,24 @@ class DrawingView: View{
         myCellList.remove(cell)
         myDeleteRectList.add(arrayOf(i, j))
 
-        val cellInfect = myCellInfectList.firstOrNull { cell ->
-            cell[0] == i && cell[1] == j
-        }
-        myCellInfectList.remove(cellInfect)
+//        val cellInfect = myCellInfectList.firstOrNull { cell ->
+//            cell[0] == i && cell[1] == j
+//        }
+//        myCellInfectList.remove(cellInfect)
 
         invalidate()
     }
+//
+//    fun infectValue(i: Int, j: Int) {
+//        myCellList.add(arrayOf(i, j))
+//        invalidate()
+//    }
+//
+//    fun treatValue(i: Int, j: Int) {
+//        myCellInfectList.remove(arrayOf(i, j))
+//        invalidate()
+//    }
 
-    fun infectValue(i: Int, j: Int) {
-        myCellInfectList.add(arrayOf(i, j))
-        invalidate()
-    }
 
     interface OnTapCellListener {
 
@@ -147,11 +250,5 @@ class DrawingView: View{
 
     }
 
-    data class Cell(
-        var x: Int,
-        var y: Int,
-        var cellColor: Int,
-        )
 
 }
-//        myCellList.count { it.cellColor == Color.RED }

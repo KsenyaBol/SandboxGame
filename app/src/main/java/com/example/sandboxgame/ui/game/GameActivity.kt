@@ -5,12 +5,14 @@ import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import com.example.core.rule.ui.objects.Cell
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.widget.DrawingView
@@ -20,7 +22,7 @@ import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
 
 
-open class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
+open class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener{
 
     companion object {
         private const val EXTRA_SIZE = "size"
@@ -31,6 +33,10 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
     }
 
     private var colorCell: Int = Color.BLACK
+    var infect = 0
+    var delete = 0
+    private val handler = Handler()
+
     override val presenter: GamePresenter by providePresenter {
         GamePresenter(this[EXTRA_SIZE]!!)
     }
@@ -38,6 +44,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
     private val buttonAdd: Button by bind(R.id.button_add_square)
     private val buttonDelete: Button by bind(R.id.button_delete_square)
     private val buttonInfect: Button by bind(R.id.button_infect_square)
+    private val buttonTreat: Button by bind(R.id.button_treat_square)
     private val textNumberAmount: TextView by bind(R.id.number_amount_square)
     private val textNumberAmountDied: TextView by bind(R.id.number_amount_of_died)
     private val textNumberAmountInfected: TextView by bind(R.id.number_amount_of_infected)
@@ -72,6 +79,9 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
         super.onCreate(savedInstanceState)
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
         colorCell = getCompatColor(R.color.blue_gray)
+
+//        startViewAnimation()
+
         buttonExit.setOnClickListener {
             presenter.onButtonExitClicked()
 
@@ -85,6 +95,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             it.isSelected = true
             buttonDelete.isSelected = false
             buttonInfect.isSelected = false
+            buttonTreat.isSelected = false
             colorConstraint.isVisible = true
 
             soundButtonClick.start()
@@ -95,6 +106,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             it.isSelected = true
             buttonAdd.isSelected = false
             buttonInfect.isSelected = false
+            buttonTreat.isSelected = false
             colorConstraint.isVisible = false
 
             soundButtonClick.start()
@@ -104,6 +116,17 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             it.isSelected = true
             buttonAdd.isSelected = false
             buttonDelete.isSelected = false
+            buttonTreat.isSelected = false
+            colorConstraint.isVisible = false
+
+            soundButtonClick.start()
+        }
+        buttonTreat.setOnClickListener {
+            presenter.onButtonTreatClicked()
+            it.isSelected = true
+            buttonAdd.isSelected = false
+            buttonDelete.isSelected = false
+            buttonInfect.isSelected = false
             colorConstraint.isVisible = false
 
             soundButtonClick.start()
@@ -271,14 +294,22 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
 
     }
 
+
+
     override fun onTapCell(i: Int, j: Int) {
+
+//        CellMoving().cellMoving(i, j, colorCell, false)
+
         if (buttonAdd.isSelected) {
-            val cell = drawingView.myCellList.firstOrNull { cell ->
+            val cell = drawingView.myCellList.firstOrNull { cell: Cell ->
                 cell.x == i && cell.y == j
             }
             if (cell == null) {
-                drawingView.addValue(i, j, colorCell)
+                drawingView.addValue(i, j, colorCell, false)
+//                drawingView.addValue(Cell(i, j, colorCell, false))
+
             }
+
         }
         if (buttonDelete.isSelected) {
             val cell = drawingView.myCellList.firstOrNull { cell ->
@@ -293,19 +324,42 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
                 cell.x == i && cell.y == j
             }
             if (cell != null) {
-                drawingView.infectValue(i, j)
+//                drawingView.infectValue(i, j)
+                drawingView.addValue(i, j, colorCell, true)
+                infect += 1
             }
         }
+
+//        if (buttonTreat.isSelected) {
+//            val cell = drawingView.myCellList.firstOrNull { cell ->
+//                cell.x == i && cell.y == j && cell.cellInfect
+//            }
+//            if (cell != null) {
+//                drawingView.treatValue(i, j)
+//            }
+//        }
+
         val cellAmount = drawingView.myCellList.size
         textNumberAmount.text = cellAmount.toString()
         val cellDieAmount = drawingView.myDeleteRectList.size
         textNumberAmountDied.text = cellDieAmount.toString()
-        val cellInfectAmount = drawingView.myCellInfectList.size
-        textNumberAmountInfected.text = cellInfectAmount.toString()
+//        val cellInfectAmount = drawingView.myCellInfectList.size
+        textNumberAmountInfected.text = infect.toString()
 
         // don't work
-        val cellClansAmount = drawingView.myCellList.count { it.cellColor >= 4 }
-        textNumberAmountClans.text = cellClansAmount.toString()
+//        val cellClansAmount = drawingView.myCellList.count { it.cellColor >= 4 }
+//        textNumberAmountClans.text = cellClansAmount.toString()
     }
 
+
+
 }
+
+//    val handler = Handler(Looper.getMainLooper())
+//        var runnable: Runnable? = null
+//        runnable = Runnable {
+//            Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show()
+//            handler.postDelayed(runnable!!, 5000)
+//        }
+//
+//        handler.postDelayed(runnable, 5000)
