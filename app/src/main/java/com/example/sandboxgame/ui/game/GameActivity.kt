@@ -8,11 +8,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.example.core.rule.ui.objects.Cell
+import com.example.core.rule.ui.objects.Space
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.widget.DrawingView
@@ -45,6 +47,9 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
     private val buttonDelete: Button by bind(R.id.button_delete_square)
     private val buttonInfect: Button by bind(R.id.button_infect_square)
     private val buttonTreat: Button by bind(R.id.button_treat_square)
+    private val buttonPause: ImageButton by bind(R.id.button_pause)
+    private val buttonSlowly: ImageView by bind(R.id.button_slowly)
+    private val buttonAcceleration: ImageView by bind(R.id.button_acceleration)
     private val textNumberAmount: TextView by bind(R.id.number_amount_square)
     private val textNumberAmountDied: TextView by bind(R.id.number_amount_of_died)
     private val textNumberAmountInfected: TextView by bind(R.id.number_amount_of_infected)
@@ -68,6 +73,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
         set(value) {
             field = value
             drawingView.size = value
+//            Space().size = value
         }
 
 
@@ -84,6 +90,16 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
 
         buttonExit.setOnClickListener {
             presenter.onButtonExitClicked()
+
+            soundButtonClick.start()
+        }
+        buttonPause.setOnClickListener {
+            it.isSelected = true
+            if (buttonPause.isSelected) {
+                buttonPause.setOnClickListener {
+                    it.isSelected = false
+                }
+            }
 
             soundButtonClick.start()
         }
@@ -298,15 +314,14 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
 
     override fun onTapCell(i: Int, j: Int) {
 
-//        CellMoving().cellMoving(i, j, colorCell, false)
 
         if (buttonAdd.isSelected) {
             val cell = drawingView.myCellList.firstOrNull { cell: Cell ->
                 cell.x == i && cell.y == j
             }
             if (cell == null) {
+//                Space().addValue(i, j, colorCell, false)
                 drawingView.addValue(i, j, colorCell, false)
-//                drawingView.addValue(Cell(i, j, colorCell, false))
 
             }
 
@@ -316,7 +331,9 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
                 cell.x == i && cell.y == j
             }
             if (cell != null) {
+//                Space().deleteValue(i, j)
                 drawingView.deleteValue(i, j)
+                delete += 1
             }
         }
         if (buttonInfect.isSelected) {
@@ -324,26 +341,25 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
                 cell.x == i && cell.y == j
             }
             if (cell != null) {
-//                drawingView.infectValue(i, j)
+//                Space().addValue(i, j, colorCell, true)
                 drawingView.addValue(i, j, colorCell, true)
                 infect += 1
             }
         }
 
-//        if (buttonTreat.isSelected) {
-//            val cell = drawingView.myCellList.firstOrNull { cell ->
-//                cell.x == i && cell.y == j && cell.cellInfect
-//            }
-//            if (cell != null) {
-//                drawingView.treatValue(i, j)
-//            }
-//        }
+        if (buttonTreat.isSelected) {
+            val cell = drawingView.myCellList.firstOrNull { cell ->
+                cell.x == i && cell.y == j && cell.cellInfect
+            }
+            if (cell != null) {
+//                Space().treatValue(i, j, colorCell, false)
+                drawingView.treatValue(i, j, colorCell, false)
+            }
+        }
 
         val cellAmount = drawingView.myCellList.size
         textNumberAmount.text = cellAmount.toString()
-        val cellDieAmount = drawingView.myDeleteRectList.size
-        textNumberAmountDied.text = cellDieAmount.toString()
-//        val cellInfectAmount = drawingView.myCellInfectList.size
+        textNumberAmountDied.text = delete.toString()
         textNumberAmountInfected.text = infect.toString()
 
         // don't work
