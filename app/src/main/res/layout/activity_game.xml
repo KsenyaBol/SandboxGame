@@ -152,7 +152,17 @@
             app:layout_constraintTop_toTopOf="@+id/text_amount_of_died"
             app:layout_constraintBottom_toBottomOf="@+id/text_amount_of_died"/>
 
-        <LinearLayout
+        <TextView
+            style="@style/Text.Big.Space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_speed_cell"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/speed_constraint"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/speed_constraint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
@@ -166,16 +176,33 @@
                 android:src="@drawable/ic_slowly"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <ImageButton
                 android:id="@+id/button_pause"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:onClick="clickEvent"
-                android:background="@drawable/button_pause_reproduction"
+                android:background="@drawable/ic_reproduction"
                 android:layout_margin="5dp"
-                tools:ignore="UsingOnClickInXml" />
+                tools:ignore="UsingOnClickInXml"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageButton
+                android:id="@+id/button_reproduction"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_pause"
+                android:layout_margin="5dp"
+                tools:ignore="UsingOnClickInXml"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <ImageView
                 android:id="@+id/button_acceleration"
@@ -184,10 +211,12 @@
                 android:src="@drawable/ic_acceleration"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -269,7 +298,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/focus_state"
-                    android:text="TREAT A CELL"
+                    android:text="@string/message_treat_cell"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/button_infect_square" />
 

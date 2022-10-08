@@ -2,11 +2,13 @@ package com.example.sandboxgame.ui.game
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -14,7 +16,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.example.core.rule.ui.objects.Cell
-import com.example.core.rule.ui.objects.Space
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.widget.DrawingView
@@ -22,7 +23,8 @@ import com.omega_r.libs.extensions.context.getCompatColor
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
-
+import java.util.*
+import kotlin.concurrent.timerTask
 
 open class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener{
 
@@ -37,6 +39,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
     private var colorCell: Int = Color.BLACK
     var infect = 0
     var delete = 0
+    var clanAmount = 0
     private val handler = Handler()
 
     override val presenter: GamePresenter by providePresenter {
@@ -48,6 +51,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
     private val buttonInfect: Button by bind(R.id.button_infect_square)
     private val buttonTreat: Button by bind(R.id.button_treat_square)
     private val buttonPause: ImageButton by bind(R.id.button_pause)
+    private val buttonReproduction: ImageButton by bind(R.id.button_reproduction)
     private val buttonSlowly: ImageView by bind(R.id.button_slowly)
     private val buttonAcceleration: ImageView by bind(R.id.button_acceleration)
     private val textNumberAmount: TextView by bind(R.id.number_amount_square)
@@ -69,6 +73,11 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
         onTapCellListener = this@GameActivity
     }
 
+//    val soundAddCell = MediaPlayer.create(this, R.raw.add_cell)
+//    val soundDeleteCell = MediaPlayer.create(this, R.raw.delete_cell)
+//    val soundInfectCell = MediaPlayer.create(this, R.raw.infect)
+//    val soundTreatCell = MediaPlayer.create(this, R.raw.treat_cell)
+
     override var size: Int = 0
         set(value) {
             field = value
@@ -83,10 +92,14 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
-        colorCell = getCompatColor(R.color.blue_gray)
 
-//        startViewAnimation()
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
+
+
+        colorCell = getCompatColor(R.color.blue_gray)
 
         buttonExit.setOnClickListener {
             presenter.onButtonExitClicked()
@@ -94,12 +107,32 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             soundButtonClick.start()
         }
         buttonPause.setOnClickListener {
+            it.isVisible = false
+            buttonReproduction.isVisible = true
+
+//                drawingView.pause_flg = false
+
+            soundButtonClick.start()
+        }
+        buttonReproduction.setOnClickListener {
+            it.isVisible = false
+            buttonPause.isVisible = true
+
+//            drawingView.pause_flg = true
+
+            soundButtonClick.start()
+        }
+        buttonSlowly.setOnClickListener {
             it.isSelected = true
-            if (buttonPause.isSelected) {
-                buttonPause.setOnClickListener {
-                    it.isSelected = false
-                }
-            }
+            drawingView.millis += 100
+
+            soundButtonClick.start()
+        }
+        buttonAcceleration.setOnClickListener {
+            it.isSelected = true
+            if (drawingView.millis > 0) {
+                drawingView.millis -= 100
+            } else drawingView.millis = 0
 
             soundButtonClick.start()
         }
@@ -310,6 +343,39 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
 
     }
 
+//    @SuppressLint("UseCompatLoadingForDrawables")
+//    fun pauseGame(view: DrawingView) {
+//        if (pause_flg == false) {
+//            pause_flg = true
+//
+//
+//            timer.cancel()
+//            timer == null
+//
+//            val reproduction : Drawable? = getDrawable(R.drawable.ic_reproduction)
+//
+//            buttonReproduction.setBackgroundDrawable(reproduction)
+////            buttonReproduction.isVisible = true
+////            buttonPause.isVisible = false
+//        } else {
+//            pause_flg = false
+//
+//            val pause : Drawable? = getDrawable(R.drawable.ic_pause)
+//            buttonReproduction.setBackgroundDrawable(pause)
+//
+//            timer = Timer()
+//            timer.schedule(timerTask() {
+//                override fun run() {
+//                    handler.post(Runnable() {
+//                        override fun run() {
+//                            drawingView.cellMoving()
+//                        }
+//                    })
+//                }
+//            }, 0, 20)
+//        }
+//    }
+
 
 
     override fun onTapCell(i: Int, j: Int) {
@@ -322,7 +388,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             if (cell == null) {
 //                Space().addValue(i, j, colorCell, false)
                 drawingView.addValue(i, j, colorCell, false)
-
+//                soundAddCell.start()
             }
 
         }
@@ -334,6 +400,7 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
 //                Space().deleteValue(i, j)
                 drawingView.deleteValue(i, j)
                 delete += 1
+//                soundDeleteCell.start()
             }
         }
         if (buttonInfect.isSelected) {
@@ -342,8 +409,9 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             }
             if (cell != null) {
 //                Space().addValue(i, j, colorCell, true)
-                drawingView.addValue(i, j, colorCell, true)
+                drawingView.infectValue(i, j,  true)
                 infect += 1
+//                soundInfectCell.start()
             }
         }
 
@@ -353,9 +421,12 @@ open class GameActivity : BaseActivity(R.layout.activity_game), GameView, Drawin
             }
             if (cell != null) {
 //                Space().treatValue(i, j, colorCell, false)
-                drawingView.treatValue(i, j, colorCell, false)
+                drawingView.treatValue(i, j, false)
+//                soundTreatCell.start()
             }
         }
+
+        drawingView.myCellList.count { it.cellColor > 0 }
 
         val cellAmount = drawingView.myCellList.size
         textNumberAmount.text = cellAmount.toString()

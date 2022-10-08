@@ -11,4 +11,7 @@
     <string name="message_amount_of_infected">Зараженные</string>
     <string name="message_amount_of_clans">Кол-во кланов</string>
     <string name="message_of_amount_cell">Кол-во клеток</string>
+    <string name="message_speed_cell">СКОРОСТЬ</string>
+    <string name="message_treat_cell">ВЫЛЕЧИТЬ</string>
+    <string name="message_sound_of_game">ГРОМКОСТЬ</string>
 </resources>

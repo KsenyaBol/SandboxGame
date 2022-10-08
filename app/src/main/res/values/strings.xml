@@ -14,4 +14,7 @@
     <string name="title_exit">EXIT</string>
     <string name="message_select_field" translatable="false">Select field, please</string>
     <string name="message_settings_game">SETTINGS</string>
+    <string name="message_speed_cell">SPEED</string>
+    <string name="message_treat_cell">TREAT A CELL</string>
+    <string name="message_sound_of_game">SOUND</string>
 </resources>
