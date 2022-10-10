@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_game"
     android:fitsSystemWindows="true"
-    tools:ignore="MissingConstraints, ContentDescription, HardcodedText, UnusedAttribute">
+    tools:ignore="MissingConstraints, ContentDescription, HardcodedText, UnusedAttribute, UsingOnClickInXml">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -180,17 +180,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <ImageButton
-                android:id="@+id/button_pause"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_reproduction"
-                android:layout_margin="5dp"
-                tools:ignore="UsingOnClickInXml"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/button_pause"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:background="@drawable/ic_reproduction"-->
+<!--                android:layout_margin="5dp"-->
+<!--                tools:ignore="UsingOnClickInXml"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent" />-->
 
             <ImageButton
                 android:id="@+id/button_reproduction"
@@ -198,7 +198,6 @@
                 android:layout_height="40dp"
                 android:background="@drawable/ic_pause"
                 android:layout_margin="5dp"
-                tools:ignore="UsingOnClickInXml"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

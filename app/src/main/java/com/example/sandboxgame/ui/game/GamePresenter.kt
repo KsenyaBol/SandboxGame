@@ -30,7 +30,7 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
         command = Command.TREAT
     }
 
-    private enum class Command {
+    enum class Command {
         ADD, DELETE, INFECT, TREAT
     }
 }

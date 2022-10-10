@@ -6,25 +6,18 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.CornerPathEffect
 import android.graphics.Paint
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Parcelable
+import android.os.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.example.core.rule.ui.objects.Cell
-import com.example.core.rule.ui.objects.Space
-import com.example.sandboxgame.R
-import com.example.sandboxgame.ui.game.GameActivity
 import kotlinx.parcelize.Parcelize
-import java.util.*
 import kotlin.collections.ArrayList
 
 @Parcelize
 class MyState(private val superSaveState: Parcelable?) : View.BaseSavedState(superSaveState), Parcelable
 
-class DrawingView: View{
+class DrawingView : View {
 
     var size: Int = 0
     var millis: Int = 200
@@ -35,7 +28,7 @@ class DrawingView: View{
 
     private val paint: Paint = Paint()
     private val paintBorder: Paint = Paint()
-    private var timer: Timer = Timer()
+
     constructor(ctx: Context) : super(ctx)
     constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
 
@@ -66,7 +59,7 @@ class DrawingView: View{
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                val sizeH = height/size.toFloat()
+                val sizeH = height / size.toFloat()
 
                 val i = (event.x / sizeH).toInt()
                 val j = (event.y / sizeH).toInt()
@@ -84,14 +77,14 @@ class DrawingView: View{
 
 //        if (Space().change == true) invalidate()
 
-        val sizeH = height/size.toFloat()
+        val sizeH = height / size.toFloat()
 
         paint.pathEffect = CornerPathEffect(10f)
         paintBorder.pathEffect = CornerPathEffect(10f)
 
 
-        if(myCellList.size > 0) {
-            myCellList.forEach { array->
+        if (myCellList.size > 0) {
+            myCellList.forEach { array ->
                 val x = sizeH * array.x
                 val y = sizeH * array.y
                 val infect = array.cellInfect
@@ -108,23 +101,21 @@ class DrawingView: View{
                     canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
 
                     paint.color = Color.BLACK
-                    canvas.drawCircle((x + sizeH/2F), (y + sizeH/2F), 10F, paint)
+                    canvas.drawCircle((x + sizeH / 2F), (y + sizeH / 2F), 10F, paint)
 
                     paintBorder.style = Paint.Style.STROKE
                     paintBorder.strokeWidth = 1f
                     paintBorder.color = Color.WHITE
-                    canvas.drawCircle((x + sizeH/2F), (y + sizeH/2F), 10F, paintBorder)
+                    canvas.drawCircle((x + sizeH / 2F), (y + sizeH / 2F), 10F, paintBorder)
 
-                }
-                else {
+                } else {
                     canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
                 }
             }
+
         }
 
     }
-
-
 
 
     fun setValue(myCellList: ArrayList<Cell>) {
@@ -135,9 +126,10 @@ class DrawingView: View{
         val handler = Handler(Looper.getMainLooper())
         var runnable: Runnable? = null
 
-//        if (pause_flg == true) {
 
-            runnable = Runnable {
+
+        runnable = Runnable {
+            if (pause_flg == true) {
                 myCellList.forEachIndexed { index, cell ->
 
                     var x = cell.x
@@ -167,23 +159,15 @@ class DrawingView: View{
                         }
                     }
 
-
                     myCellList[index] = Cell(x = x, y = y, cellColor = cell.cellColor, cellInfect = cell.cellInfect)
                 }
-                handler.postDelayed(runnable!!, millis.toLong())
                 invalidate()
-
             }
-            handler.postDelayed(runnable, millis.toLong())
-//        }
-//    else {
-//
-//            handler.postDelayed(runnable!!, 100000000)
-//
-//        }
-
-
+            handler.postDelayed(runnable!!, millis.toLong())
+        }
+        handler.postDelayed(runnable, millis.toLong())
     }
+
 
     fun addValue(i: Int, j: Int, cellColor: Int, cellInfect: Boolean) {
         val cell = myCellList.firstOrNull { cell ->
