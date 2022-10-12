@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import com.example.core.rule.ui.move.CellMoving
 import com.example.core.rule.ui.objects.Cell
 import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.R
@@ -41,6 +42,8 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     var clanAmount = 0
     private val handler = Handler()
     private var sound: Command? = null
+    private val space: Space = Space()
+    private val cellMoving: CellMoving = CellMoving()
 
     override val presenter: GamePresenter by providePresenter {
         GamePresenter(this[EXTRA_SIZE]!!)
@@ -50,7 +53,6 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val buttonDelete: Button by bind(R.id.button_delete_square)
     private val buttonInfect: Button by bind(R.id.button_infect_square)
     private val buttonTreat: Button by bind(R.id.button_treat_square)
-//    private val buttonPause: ImageButton by bind(R.id.button_pause)
     private val buttonReproduction: ImageButton by bind(R.id.button_reproduction)
     private val buttonSlowly: ImageView by bind(R.id.button_slowly)
     private val buttonAcceleration: ImageView by bind(R.id.button_acceleration)
@@ -69,21 +71,23 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val cellRecYellow: ImageView by bind(R.id.cell_rec_yellow)
     private val cellRecGreen: ImageView by bind(R.id.cell_rec_green)
     private val cellRecCloudyBlue: ImageView by bind(R.id.cell_rec_cloudy_blue)
-    private val drawingView: DrawingView by bind(R.id.drawing_view) {
-        onTapCellListener = this@GameActivity
-    }
-
     private val soundAddCell by lazy {MediaPlayer.create(this, R.raw.add_cell)}
     private val soundDeleteCell by lazy { MediaPlayer.create(this, R.raw.delete_cell)}
     private val soundInfectCell by lazy { MediaPlayer.create(this, R.raw.infect)}
     private val soundTreatCell by lazy { MediaPlayer.create(this, R.raw.treat_cell)}
+
+    private val drawingView: DrawingView by bind(R.id.drawing_view) {
+        onTapCellListener = this@GameActivity
+    }
+
+
 
 
     override var size: Int = 0
         set(value) {
             field = value
             drawingView.size = value
-//            Space().size = value
+//            cellMoving.size = value
         }
 
 
@@ -94,12 +98,11 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        drawingView.space = space
+//        cellMoving.space = space
+
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
-        if (Space().change == true) {
-            drawingView.invalidate()
-        }
 
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
@@ -358,23 +361,6 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 
     }
 
-//        @SuppressLint("UseCompatLoadingForDrawables")
-//    fun pauseGame (button_reproduction: ImageButton) {
-//        if (drawingView.pause_flg == false) {
-//            drawingView.pause_flg = true
-//
-//            val reproduction : Drawable? = getDrawable(R.drawable.ic_reproduction)
-//            buttonReproduction.setBackgroundDrawable(reproduction)
-//
-//        } else {
-//            drawingView.pause_flg = false
-//
-//            val pause : Drawable? = getDrawable(R.drawable.ic_pause)
-//            buttonReproduction.setBackgroundDrawable(pause)
-//
-//        }
-//    }
-
     fun soundGame(sound: Command) {
         if (sound == Command.ADD) {
             soundAddCell.start()
@@ -398,82 +384,57 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 
 
         if (buttonAdd.isSelected) {
-            val cell = drawingView.myCellList.firstOrNull { cell: Cell ->
+            val cell = space.myCellList.firstOrNull { cell: Cell ->
                 cell.x == i && cell.y == j
             }
             if (cell == null) {
-//                Space().addValue(i, j, colorCell, false)
-                drawingView.addValue(i, j, colorCell, false)
+                space.addValue(i, j, colorCell, false)
                 soundGame(Command.ADD)
             }
 
         }
         if (buttonDelete.isSelected) {
-            val cell = drawingView.myCellList.firstOrNull { cell ->
+            val cell = space.myCellList.firstOrNull { cell ->
                 cell.x == i && cell.y == j
             }
             if (cell != null) {
-//                Space().deleteValue(i, j)
-                drawingView.deleteValue(i, j)
+                space.deleteValue(i, j)
                 delete += 1
                 soundGame(Command.DELETE)
             }
         }
         if (buttonInfect.isSelected) {
-            val cell = drawingView.myCellList.firstOrNull { cell ->
+            val cell = space.myCellList.firstOrNull { cell ->
                 cell.x == i && cell.y == j
             }
             if (cell != null) {
-//                Space().addValue(i, j, colorCell, true)
-                drawingView.infectValue(i, j,  true)
+                space.infectValue(i, j,  true)
                 infect += 1
                 soundGame(Command.INFECT)
             }
         }
 
         if (buttonTreat.isSelected) {
-            val cell = drawingView.myCellList.firstOrNull { cell ->
+            val cell = space.myCellList.firstOrNull { cell ->
                 cell.x == i && cell.y == j && cell.cellInfect
             }
             if (cell != null) {
-//                Space().treatValue(i, j, colorCell, false)
-                drawingView.treatValue(i, j, false)
+                space.treatValue(i, j, false)
                 soundGame(Command.TREAT)
             }
         }
 
-        drawingView.myCellList.count { it.cellColor > 0 }
-
-        val cellAmount = drawingView.myCellList.size
+        val cellAmount = space.myCellList.size
         textNumberAmount.text = cellAmount.toString()
         textNumberAmountDied.text = delete.toString()
         textNumberAmountInfected.text = infect.toString()
 
         // don't work
-//        val cellClansAmount = drawingView.myCellList.count { it.cellColor >= 4 }
+//        val cellClansAmount = space.myCellList.count { it.cellColor >= 4 }
 //        textNumberAmountClans.text = cellClansAmount.toString()
+//        space.myCellList.count { it.cellColor > 0 }
     }
 
-//    @SuppressLint("UseCompatLoadingForDrawables")
-//    fun pauseGame(view: View) {
-//        buttonReproduction.setOnClickListener {
-//
-//            if (drawingView.pause_flg == true) {
-//                drawingView.pause_flg = false
-//
-//                val reproduction : Drawable? = getDrawable(R.drawable.ic_reproduction)
-//                buttonReproduction.setBackgroundDrawable(reproduction)
-//
-//            } else {
-//                drawingView.pause_flg = true
-//
-//                val pause : Drawable? = getDrawable(R.drawable.ic_pause)
-//                buttonReproduction.setBackgroundDrawable(pause)
-//
-//            }
-//        }
-//
-//    }
 
 
 }

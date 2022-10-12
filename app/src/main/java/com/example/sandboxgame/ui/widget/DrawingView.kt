@@ -10,24 +10,26 @@ import android.os.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.example.core.rule.ui.move.CellMoving
 import com.example.core.rule.ui.objects.Cell
+import com.example.core.rule.ui.objects.space.Space
+import com.example.core.rule.ui.objects.space.SpaceListener
 import kotlinx.parcelize.Parcelize
-import kotlin.collections.ArrayList
 
 @Parcelize
 class MyState(private val superSaveState: Parcelable?) : View.BaseSavedState(superSaveState), Parcelable
 
-class DrawingView : View {
+class DrawingView : View, SpaceListener {
 
     var size: Int = 0
     var millis: Int = 200
-    var pause_flg = true
+    var pause_flg: Boolean = true
 
     var onTapCellListener: OnTapCellListener? = null
-    var myCellList: ArrayList<Cell> = arrayListOf()
 
     private val paint: Paint = Paint()
     private val paintBorder: Paint = Paint()
+    lateinit var space: Space
 
     constructor(ctx: Context) : super(ctx)
     constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
@@ -35,7 +37,6 @@ class DrawingView : View {
     init {
         setWillNotDraw(false)
         cellMoving()
-
     }
 
     private var loading: Boolean = false
@@ -74,17 +75,13 @@ class DrawingView : View {
     public override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-
-//        if (Space().change == true) invalidate()
-
         val sizeH = height / size.toFloat()
 
         paint.pathEffect = CornerPathEffect(10f)
         paintBorder.pathEffect = CornerPathEffect(10f)
 
-
-        if (myCellList.size > 0) {
-            myCellList.forEach { array ->
+        if (space.myCellList.size > 0) {
+            space.myCellList.forEach { array ->
                 val x = sizeH * array.x
                 val y = sizeH * array.y
                 val infect = array.cellInfect
@@ -112,14 +109,8 @@ class DrawingView : View {
                     canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
                 }
             }
-
         }
 
-    }
-
-
-    fun setValue(myCellList: ArrayList<Cell>) {
-        this.myCellList = myCellList
     }
 
     fun cellMoving() {
@@ -130,7 +121,7 @@ class DrawingView : View {
 
         runnable = Runnable {
             if (pause_flg == true) {
-                myCellList.forEachIndexed { index, cell ->
+                space.myCellList.forEachIndexed { index, cell ->
 
                     var x = cell.x
                     var y = cell.y
@@ -159,7 +150,7 @@ class DrawingView : View {
                         }
                     }
 
-                    myCellList[index] = Cell(x = x, y = y, cellColor = cell.cellColor, cellInfect = cell.cellInfect)
+                    space.myCellList[index] = Cell(x = x, y = y, cellColor = cell.cellColor, cellInfect = cell.cellInfect)
                 }
                 invalidate()
             }
@@ -168,50 +159,15 @@ class DrawingView : View {
         handler.postDelayed(runnable, millis.toLong())
     }
 
-
-    fun addValue(i: Int, j: Int, cellColor: Int, cellInfect: Boolean) {
-        val cell = myCellList.firstOrNull { cell ->
-            cell.x == i && cell.y == j
-        }
-        if (cell == null) {
-            myCellList.add(Cell(x = i, y = j, cellColor = cellColor, cellInfect = cellInfect))
-        }
-        invalidate()
-    }
-
-    fun infectValue(i: Int, j: Int, cellInfect: Boolean) {
-        val cell = myCellList.firstOrNull { cell ->
-            cell.x == i && cell.y == j
-        }
-        if (cell != null) {
-            val index = myCellList.indexOf(cell)
-            myCellList[index] = Cell(x = i, y = j, cellColor = cell.cellColor, cellInfect = cellInfect)
-        }
-        invalidate()
-    }
-
-    fun deleteValue(i: Int, j: Int) {
-        val cell = myCellList.firstOrNull { cell ->
-            cell.x == i && cell.y == j
-        }
-        myCellList.remove(cell)
-    }
-
-    fun treatValue(i: Int, j: Int, cellInfect: Boolean) {
-        val cell = myCellList.firstOrNull { cell ->
-            cell.x == i && cell.y == j && cell.cellInfect == true
-        }
-
-        if (cell != null) {
-            val index = myCellList.indexOf(cell)
-            myCellList[index] = Cell(x = i, y = j, cellColor = cell.cellColor, cellInfect = cellInfect)
-        }
-        invalidate()
-    }
-
     interface OnTapCellListener {
 
         fun onTapCell(i: Int, j: Int)
+
+    }
+
+    override fun changeSpace(space: Space) {
+
+        invalidate()
 
     }
 
