@@ -2,18 +2,16 @@ package com.example.sandboxgame.ui.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.CornerPathEffect
-import android.graphics.Paint
+import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.os.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.example.core.rule.ui.move.CellMoving
 import com.example.core.rule.ui.objects.Cell
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceListener
+import com.example.sandboxgame.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -22,9 +20,9 @@ class MyState(private val superSaveState: Parcelable?) : View.BaseSavedState(sup
 class DrawingView : View, SpaceListener {
 
     var size: Int = 0
+    var pause_flg = true
     var millis: Int = 200
-    var pause_flg: Boolean = true
-
+    var drawable: Drawable = resources.getDrawable(R.drawable.planet_1)
     var onTapCellListener: OnTapCellListener? = null
 
     private val paint: Paint = Paint()
@@ -77,8 +75,9 @@ class DrawingView : View, SpaceListener {
 
         val sizeH = height / size.toFloat()
 
+
         paint.pathEffect = CornerPathEffect(10f)
-        paintBorder.pathEffect = CornerPathEffect(10f)
+      //  paintBorder.pathEffect = CornerPathEffect(10f)
 
         if (space.myCellList.size > 0) {
             space.myCellList.forEach { array ->
@@ -86,28 +85,33 @@ class DrawingView : View, SpaceListener {
                 val y = sizeH * array.y
                 val infect = array.cellInfect
 
-                paint.color = array.cellColor
+//                paint.color = array.cellImage
 
-                paintBorder.style = Paint.Style.STROKE
+
+                paintBorder.style = Paint.Style.FILL_AND_STROKE
                 paintBorder.strokeWidth = 3f
                 paintBorder.color = Color.WHITE
-                canvas.drawRect(x, y, x + sizeH, y + sizeH, paintBorder)
+//                canvas.drawBitmap(bitmap, x, y, paint)
+//                canvas.drawRect(x, y, x + sizeH, y + sizeH, paintBorder)
+//                array.cellImage.setBounds(0,0, width, height)
+                array.cellImage.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt() , (y + sizeH).toInt())
+                array.cellImage.draw(canvas)
 
-                if (infect == true) {
-
-                    canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
-
-                    paint.color = Color.BLACK
-                    canvas.drawCircle((x + sizeH / 2F), (y + sizeH / 2F), 10F, paint)
-
-                    paintBorder.style = Paint.Style.STROKE
-                    paintBorder.strokeWidth = 1f
-                    paintBorder.color = Color.WHITE
-                    canvas.drawCircle((x + sizeH / 2F), (y + sizeH / 2F), 10F, paintBorder)
-
-                } else {
-                    canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
-                }
+//                if (infect == true) {
+//
+//                    canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
+//
+//                    paint.color = Color.BLACK
+//                    canvas.drawCircle((x + sizeH / 2F), (y + sizeH / 2F), 10F, paint)
+//
+//                    paintBorder.style = Paint.Style.STROKE
+//                    paintBorder.strokeWidth = 1f
+//                    paintBorder.color = Color.WHITE
+//                    canvas.drawCircle((x + sizeH / 2F), (y + sizeH / 2F), 10F, paintBorder)
+//
+//                } else {
+//                    canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
+//                }
             }
         }
 
@@ -116,8 +120,6 @@ class DrawingView : View, SpaceListener {
     fun cellMoving() {
         val handler = Handler(Looper.getMainLooper())
         var runnable: Runnable? = null
-
-
 
         runnable = Runnable {
             if (pause_flg == true) {
@@ -150,7 +152,8 @@ class DrawingView : View, SpaceListener {
                         }
                     }
 
-                    space.myCellList[index] = Cell(x = x, y = y, cellColor = cell.cellColor, cellInfect = cell.cellInfect)
+                    space.myCellList[index] = Cell(x = x, y = y, cellImage = cell.cellImage, cellInfect = cell.cellInfect)
+//                    space.spaceListener?.changeSpace(space = space)
                 }
                 invalidate()
             }

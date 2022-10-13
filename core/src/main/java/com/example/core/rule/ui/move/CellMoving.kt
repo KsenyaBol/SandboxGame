@@ -6,13 +6,12 @@ import com.example.core.rule.ui.objects.Cell
 import com.example.core.rule.ui.objects.space.Space
 
 class CellMoving {
-//
-//    var pause_flg = true
-//    var size: Int = 0
-//    var millis: Int = 200
-//
-//    lateinit var space: Space
-//
+
+    var pause_flg = true
+    var size: Int = 0
+    var millis: Int = 200
+    lateinit var space: Space
+
 //    init {
 //        cellMoving()
 //    }
@@ -20,8 +19,6 @@ class CellMoving {
 //    fun cellMoving() {
 //        val handler = Handler(Looper.getMainLooper())
 //        var runnable: Runnable? = null
-//
-//
 //
 //        runnable = Runnable {
 //            if (pause_flg == true) {
@@ -55,8 +52,9 @@ class CellMoving {
 //                    }
 //
 //                    space.myCellList[index] = Cell(x = x, y = y, cellColor = cell.cellColor, cellInfect = cell.cellInfect)
+//                    space.spaceListener?.changeSpace(space = space)
 //                }
-////                invalidate()
+//
 //            }
 //            handler.postDelayed(runnable!!, millis.toLong())
 //        }

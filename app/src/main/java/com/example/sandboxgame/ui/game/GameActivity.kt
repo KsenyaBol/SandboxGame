@@ -1,6 +1,8 @@
 package com.example.sandboxgame.ui.game
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
@@ -22,11 +24,12 @@ import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.widget.DrawingView
 import com.omega_r.libs.extensions.context.getCompatColor
+import com.omega_r.libs.extensions.context.getCompatDrawable
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
 
-class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener{
+class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
 
     companion object {
         private const val EXTRA_SIZE = "size"
@@ -36,7 +39,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         )
     }
 
-    private var colorCell: Int = Color.BLACK
+    lateinit var imageCell: Drawable
     var infect = 0
     var delete = 0
     var clanAmount = 0
@@ -61,16 +64,17 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val textNumberAmountInfected: TextView by bind(R.id.number_amount_of_infected)
     private val textNumberAmountClans: TextView by bind(R.id.number_amount_of_clans)
     private val colorConstraint: View by bind(R.id.color_constraint)
-    private val cellRecBlue: ImageView by bind(R.id.cell_rec_blue)
-    private val cellRecLime: ImageView by bind(R.id.cell_rec_lime)
-    private val cellRecLightPurple: ImageView by bind(R.id.cell_rec_light_purple)
-    private val cellRecPink: ImageView by bind(R.id.cell_rec_pink)
-    private val cellRecQuartz: ImageView by bind(R.id.cell_rec_quartz)
-    private val cellRecRed: ImageView by bind(R.id.cell_rec_red)
-    private val cellRecOrange: ImageView by bind(R.id.cell_rec_orange)
-    private val cellRecYellow: ImageView by bind(R.id.cell_rec_yellow)
-    private val cellRecGreen: ImageView by bind(R.id.cell_rec_green)
-    private val cellRecCloudyBlue: ImageView by bind(R.id.cell_rec_cloudy_blue)
+    private val planet1: ImageView by bind(R.id.cell_rec_blue)
+    private val planet2: ImageView by bind(R.id.cell_rec_lime)
+    private val planet3: ImageView by bind(R.id.cell_rec_light_purple)
+    private val planet4: ImageView by bind(R.id.cell_rec_pink)
+    private val planet5: ImageView by bind(R.id.cell_rec_quartz)
+    private val planet6: ImageView by bind(R.id.cell_rec_red)
+    private val planet7: ImageView by bind(R.id.cell_rec_orange)
+    private val planet8: ImageView by bind(R.id.cell_rec_yellow)
+    private val planet9: ImageView by bind(R.id.cell_rec_green)
+    private val planet10: ImageView by bind(R.id.cell_rec_cloudy_blue)
+
     private val soundAddCell by lazy {MediaPlayer.create(this, R.raw.add_cell)}
     private val soundDeleteCell by lazy { MediaPlayer.create(this, R.raw.delete_cell)}
     private val soundInfectCell by lazy { MediaPlayer.create(this, R.raw.infect)}
@@ -80,14 +84,11 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         onTapCellListener = this@GameActivity
     }
 
-
-
-
     override var size: Int = 0
         set(value) {
             field = value
             drawingView.size = value
-//            cellMoving.size = value
+            cellMoving.size = value
         }
 
 
@@ -99,15 +100,17 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         super.onCreate(savedInstanceState)
 
         drawingView.space = space
-//        cellMoving.space = space
+        cellMoving.space = space
 
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
+        soundInfectCell.setVolume(100f,100f)
 
-        colorCell = getCompatColor(R.color.blue_gray)
+
+        imageCell = resources.getDrawable(R.drawable.planet_1)
 
         buttonExit.setOnClickListener {
             presenter.onButtonExitClicked()
@@ -199,169 +202,161 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             soundButtonClick.start()
         }
 
-        cellRecBlue.setOnClickListener {
-            cellRecBlue.isSelected = true
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = false
+        planet1.setOnClickListener {
+            planet1.isSelected = true
+            planet2.isSelected = false
+            planet3.isSelected = false
+            planet4.isSelected = false
+            planet5.isSelected = false
+            planet6.isSelected = false
+            planet7.isSelected = false
+            planet8.isSelected = false
+            planet9.isSelected = false
+            planet10.isSelected = false
 
-            val colorBlue = resources.getColor(R.color.blue_gray)
-            colorCell = colorBlue
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecLime.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = true
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = false
+        planet2.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = true
+            planet3.isSelected = false
+            planet4.isSelected = false
+            planet5.isSelected = false
+            planet6.isSelected = false
+            planet7.isSelected = false
+            planet8.isSelected = false
+            planet9.isSelected = false
+            planet10.isSelected = false
 
-            val colorLime = resources.getColor(R.color.lime)
-            colorCell = colorLime
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecLightPurple.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = true
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = false
+        planet3.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = false
+            planet3.isSelected = true
+            planet4.isSelected = false
+            planet5.isSelected = false
+            planet6.isSelected = false
+            planet7.isSelected = false
+            planet8.isSelected = false
+            planet9.isSelected = false
+            planet10.isSelected = false
 
-            val colorPurple = resources.getColor(R.color.light_purple)
-            colorCell = colorPurple
+
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecPink.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = true
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = false
+        planet4.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = false
+            planet3.isSelected = false
+            planet4.isSelected = true
+            planet5.isSelected = false
+            planet6.isSelected = false
+            planet7.isSelected = false
+            planet8.isSelected = false
+            planet9.isSelected = false
+            planet10.isSelected = false
 
-            val colorPink = resources.getColor(R.color.tonyc_pink)
-            colorCell = colorPink
+
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecQuartz.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = true
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = false
+        planet5.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = false
+            planet3.isSelected = false
+            planet4.isSelected = false
+            planet5.isSelected = true
+            planet6.isSelected = false
+            planet7.isSelected = false
+            planet8.isSelected = false
+            planet9.isSelected = false
+            planet10.isSelected = false
 
-            val colorQuartz = resources.getColor(R.color.quartz)
-            colorCell = colorQuartz
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecRed.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = true
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = false
+        planet6.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = false
+            planet3.isSelected = false
+            planet4.isSelected = false
+            planet5.isSelected = false
+            planet6.isSelected = true
+            planet7.isSelected = false
+            planet8.isSelected = false
+            planet9.isSelected = false
+            planet10.isSelected = false
 
-            val colorCherry = resources.getColor(R.color.cherry)
-            colorCell = colorCherry
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecOrange.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = true
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = false
+        planet7.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = false
+            planet3.isSelected = false
+            planet4.isSelected = false
+            planet5.isSelected = false
+            planet6.isSelected = false
+            planet7.isSelected = true
+            planet8.isSelected = false
+            planet9.isSelected = false
+            planet10.isSelected = false
 
-            val colorOrange = resources.getColor(R.color.orange)
-            colorCell = colorOrange
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecYellow.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = true
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = false
+        planet8.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = false
+            planet3.isSelected = false
+            planet4.isSelected = false
+            planet5.isSelected = false
+            planet6.isSelected = false
+            planet7.isSelected = false
+            planet8.isSelected = true
+            planet9.isSelected = false
+            planet10.isSelected = false
 
-            val colorYellow = resources.getColor(R.color.yellow)
-            colorCell = colorYellow
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecGreen.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = true
-            cellRecCloudyBlue.isSelected = false
+        planet9.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = false
+            planet3.isSelected = false
+            planet4.isSelected = false
+            planet5.isSelected = false
+            planet6.isSelected = false
+            planet7.isSelected = false
+            planet8.isSelected = false
+            planet9.isSelected = true
+            planet10.isSelected = false
 
-            val colorGreen = resources.getColor(R.color.green_grass)
-            colorCell = colorGreen
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
-        cellRecCloudyBlue.setOnClickListener {
-            cellRecBlue.isSelected = false
-            cellRecLime.isSelected = false
-            cellRecLightPurple.isSelected = false
-            cellRecPink.isSelected = false
-            cellRecQuartz.isSelected = false
-            cellRecRed.isSelected = false
-            cellRecOrange.isSelected = false
-            cellRecYellow.isSelected = false
-            cellRecGreen.isSelected = false
-            cellRecCloudyBlue.isSelected = true
+        planet10.setOnClickListener {
+            planet1.isSelected = false
+            planet2.isSelected = false
+            planet3.isSelected = false
+            planet4.isSelected = false
+            planet5.isSelected = false
+            planet6.isSelected = false
+            planet7.isSelected = false
+            planet8.isSelected = false
+            planet9.isSelected = false
+            planet10.isSelected = true
 
-            val colorCloudyBlue = resources.getColor(R.color.cloudy_blue)
-            colorCell = colorCloudyBlue
+            imageCell = it.background.constantState!!.newDrawable().mutate()
         }
 
     }
 
-    fun soundGame(sound: Command) {
+    private fun soundGame(sound: Command) {
         if (sound == Command.ADD) {
             soundAddCell.start()
         }
@@ -388,7 +383,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
                 cell.x == i && cell.y == j
             }
             if (cell == null) {
-                space.addValue(i, j, colorCell, false)
+                space.addValue(i, j, imageCell, false)
                 soundGame(Command.ADD)
             }
 
@@ -420,6 +415,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             }
             if (cell != null) {
                 space.treatValue(i, j, false)
+                infect -= 1
                 soundGame(Command.TREAT)
             }
         }

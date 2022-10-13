@@ -328,9 +328,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_blue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_blue"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_1"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -342,9 +342,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_lime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_lime"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_2"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -356,9 +356,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_light_purple"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_purple_light"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_3"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -370,9 +370,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_pink"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_tonyc_pink"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_4"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -384,9 +384,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_quartz"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_quartz"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:background="@drawable/planet12"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -398,9 +398,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_red"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_red"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_6"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -413,9 +413,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_orange"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_orange"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_7"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -428,9 +428,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_yellow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_yellow"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_8"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -443,9 +443,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_green"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_green"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_5"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"
@@ -458,9 +458,9 @@
 
                     <ImageView
                         android:id="@+id/cell_rec_cloudy_blue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/cell_color_dark_blue"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/planet_11"
                         android:foreground="@drawable/focus_state_small"
                         android:clickable="true"
                         android:focusable="true"

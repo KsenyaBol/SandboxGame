@@ -1,5 +1,6 @@
 package com.example.core.rule.ui.objects.space
 
+import android.graphics.drawable.Drawable
 import com.example.core.rule.ui.objects.Cell
 
 class Space {
@@ -14,13 +15,13 @@ class Space {
 
     }
 
-    fun addValue(i: Int, j: Int, cellColor: Int, cellInfect: Boolean) {
+    fun addValue(i: Int, j: Int, cellImage: Drawable, cellInfect: Boolean) {
 
         val cell = myCellList.firstOrNull { cell ->
             cell.x == i && cell.y == j
         }
         if (cell == null) {
-            myCellList.add(Cell(x = i, y = j, cellColor = cellColor, cellInfect = cellInfect))
+            myCellList.add(Cell(x = i, y = j, cellImage = cellImage, cellInfect = cellInfect))
             spaceListener?.changeSpace(space = this)
         }
 
@@ -33,7 +34,7 @@ class Space {
         }
         if (cell != null) {
             val index = myCellList.indexOf(cell)
-            myCellList[index] = Cell(x = i, y = j, cellColor = cell.cellColor, cellInfect = cellInfect)
+            myCellList[index] = Cell(x = i, y = j, cellImage = cell.cellImage, cellInfect = cellInfect)
             spaceListener?.changeSpace(space = this)
         }
 
@@ -56,7 +57,7 @@ class Space {
         }
         if (cell != null) {
             val index = myCellList.indexOf(cell)
-            myCellList[index] = Cell(x = i, y = j, cellColor = cell.cellColor, cellInfect = cellInfect)
+            myCellList[index] = Cell(x = i, y = j, cellImage = cell.cellImage, cellInfect = cellInfect)
             spaceListener?.changeSpace(space = this)
         }
 
