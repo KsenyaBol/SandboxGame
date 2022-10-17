@@ -1,40 +1,40 @@
 package com.example.core.rule.ui.objects.space
 
 import android.graphics.drawable.Drawable
-import com.example.core.rule.ui.objects.Cell
+import com.example.core.rule.ui.objects.planet.Planet
 
 class Space {
 
-    var myCellList: ArrayList<Cell> = arrayListOf()
+    var myPlanetList: ArrayList<Planet> = arrayListOf()
     var spaceListener: SpaceListener? = null
 
-    fun setValue(myCellList: ArrayList<Cell>, spaceListener: SpaceListener) {
+    fun setValue(myPlanetList: ArrayList<Planet>, spaceListener: SpaceListener) {
 
-        this.myCellList = myCellList
+        this.myPlanetList = myPlanetList
         this.spaceListener = spaceListener
 
     }
 
-    fun addValue(i: Int, j: Int, cellImage: Drawable, cellInfect: Boolean) {
+    fun addValue(i: Int, j: Int, planetImage: Drawable, planetInfect: Boolean) {
 
-        val cell = myCellList.firstOrNull { cell ->
-            cell.x == i && cell.y == j
+        val planet = myPlanetList.firstOrNull { planet ->
+            planet.x == i && planet.y == j
         }
-        if (cell == null) {
-            myCellList.add(Cell(x = i, y = j, cellImage = cellImage, cellInfect = cellInfect))
+        if (planet == null) {
+            myPlanetList.add(Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect))
             spaceListener?.changeSpace(space = this)
         }
 
     }
 
-    fun infectValue(i: Int, j: Int, cellInfect: Boolean) {
+    fun infectValue(i: Int, j: Int, planetInfect: Boolean) {
 
-        val cell = myCellList.firstOrNull { cell ->
-            cell.x == i && cell.y == j
+        val planet = myPlanetList.firstOrNull { planet ->
+            planet.x == i && planet.y == j
         }
-        if (cell != null) {
-            val index = myCellList.indexOf(cell)
-            myCellList[index] = Cell(x = i, y = j, cellImage = cell.cellImage, cellInfect = cellInfect)
+        if (planet != null) {
+            val index = myPlanetList.indexOf(planet)
+            myPlanetList[index] = Planet(x = i, y = j, planetImage = planet.planetImage, planetInfect = planetInfect)
             spaceListener?.changeSpace(space = this)
         }
 
@@ -42,26 +42,45 @@ class Space {
 
     fun deleteValue(i: Int, j: Int) {
 
-        val cell = myCellList.firstOrNull { cell ->
-            cell.x == i && cell.y == j
+        val planet = myPlanetList.firstOrNull { planet ->
+            planet.x == i && planet.y == j
         }
-        myCellList.remove(cell)
+        myPlanetList.remove(planet)
         spaceListener?.changeSpace(space = this)
 
     }
 
-    fun treatValue(i: Int, j: Int, cellInfect: Boolean) {
+    fun treatValue(i: Int, j: Int, planetInfect: Boolean) {
 
-        val cell = myCellList.firstOrNull { cell ->
-            cell.x == i && cell.y == j && cell.cellInfect == true
+        val planet = myPlanetList.firstOrNull { planet ->
+            planet.x == i && planet.y == j && planet.planetInfect == true
         }
-        if (cell != null) {
-            val index = myCellList.indexOf(cell)
-            myCellList[index] = Cell(x = i, y = j, cellImage = cell.cellImage, cellInfect = cellInfect)
+        if (planet != null) {
+            val index = myPlanetList.indexOf(planet)
+            myPlanetList[index] = Planet(x = i, y = j, planetImage = planet.planetImage, planetInfect = planetInfect)
             spaceListener?.changeSpace(space = this)
         }
 
     }
+
+//    fun planetMovingChange(index: Int, i: Int, j: Int, planetImage: Drawable, planetInfect: Boolean) {
+//
+//        val planet = myPlanetList.firstOrNull { planet ->
+//            planet.x == i && planet.y == j
+//        }
+//
+//        if (planet == null) {
+//            myPlanetList[index] = Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect)
+//            spaceListener?.changeSpace(space = this)
+//        }
+//
+//    }
+//
+//    fun change() {
+//
+//        spaceListener?.changeSpace(space = this)
+//
+//    }
 
 
 

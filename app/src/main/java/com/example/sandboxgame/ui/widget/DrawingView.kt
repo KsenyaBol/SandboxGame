@@ -3,12 +3,13 @@ package com.example.sandboxgame.ui.widget
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.os.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.example.core.rule.ui.objects.Cell
+import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceListener
 import com.example.sandboxgame.R
@@ -23,6 +24,26 @@ class DrawingView : View, SpaceListener {
     var pause_flg = true
     var millis: Int = 200
     var drawable: Drawable = resources.getDrawable(R.drawable.planet_1)
+    val imageInfect: Drawable  = resources.getDrawable(R.drawable.image_infect)
+
+    var animation1 = (resources.getDrawable(R.drawable.animation_boom) as AnimationDrawable).also {
+        it.callback = this
+    }
+    var animation = arrayListOf(
+        Anim(image = resources.getDrawable(R.drawable.animation_boom)),
+//        Anim(image = resources.getDrawable(R.drawable.boom_stage_2)),
+//        Anim(image = resources.getDrawable(R.drawable.boom_stage_3)),
+//        Anim(image = resources.getDrawable(R.drawable.boom_stage_4)),
+//        Anim(image = resources.getDrawable(R.drawable.boom_stage_5)),
+//        Anim(image = resources.getDrawable(R.drawable.boom_stage_6)),
+//        Anim(image = resources.getDrawable(R.drawable.boom_stage_7)),
+
+    )
+    data class Anim(
+        val image: Drawable,
+            )
+
+
     var onTapCellListener: OnTapCellListener? = null
 
     private val paint: Paint = Paint()
@@ -35,6 +56,7 @@ class DrawingView : View, SpaceListener {
     init {
         setWillNotDraw(false)
         cellMoving()
+//        animationBlast()
     }
 
     private var loading: Boolean = false
@@ -75,47 +97,80 @@ class DrawingView : View, SpaceListener {
 
         val sizeH = height / size.toFloat()
 
+        if (space.myPlanetList.size > 0) {
+            space.myPlanetList.forEach { planet ->
+                val x = sizeH * planet.x
+                val y = sizeH * planet.y
+                val infect = planet.planetInfect
 
-        paint.pathEffect = CornerPathEffect(10f)
-      //  paintBorder.pathEffect = CornerPathEffect(10f)
+                if (infect) {
 
-        if (space.myCellList.size > 0) {
-            space.myCellList.forEach { array ->
-                val x = sizeH * array.x
-                val y = sizeH * array.y
-                val infect = array.cellInfect
+                    imageInfect.setBounds(
+                        (x - 10).toInt(),
+                        (y - 10).toInt(),
+                        ((x + 10) + sizeH).toInt(),
+                        ((y + 10) + sizeH).toInt()
+                    )
+                    imageInfect.draw(canvas)
 
-//                paint.color = array.cellImage
+                    planet.planetImage.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt() , (y + sizeH).toInt())
+                    planet.planetImage.draw(canvas)
 
+                }
+                else {
 
-                paintBorder.style = Paint.Style.FILL_AND_STROKE
-                paintBorder.strokeWidth = 3f
-                paintBorder.color = Color.WHITE
-//                canvas.drawBitmap(bitmap, x, y, paint)
-//                canvas.drawRect(x, y, x + sizeH, y + sizeH, paintBorder)
-//                array.cellImage.setBounds(0,0, width, height)
-                array.cellImage.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt() , (y + sizeH).toInt())
-                array.cellImage.draw(canvas)
+                    planet.planetImage.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
+                    planet.planetImage.draw(canvas)
 
-//                if (infect == true) {
+//                    if (animation.size > 0) {
+//                        animation.forEachIndexed { index, anim ->
+//                            val anim = anim.image
+//                            anim.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
+//                            anim.draw(canvas)
 //
-//                    canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
 //
-//                    paint.color = Color.BLACK
-//                    canvas.drawCircle((x + sizeH / 2F), (y + sizeH / 2F), 10F, paint)
-//
-//                    paintBorder.style = Paint.Style.STROKE
-//                    paintBorder.strokeWidth = 1f
-//                    paintBorder.color = Color.WHITE
-//                    canvas.drawCircle((x + sizeH / 2F), (y + sizeH / 2F), 10F, paintBorder)
-//
-//                } else {
-//                    canvas.drawRect(x, y, x + sizeH, y + sizeH, paint)
-//                }
+//                        }
+//                        invalidate()
+//                    }
+                }
             }
         }
 
     }
+
+//    fun animationBlast() {
+//        val handlerAnim = Handler(Looper.getMainLooper())
+//        var runnableAnim: Runnable? = null
+//        runnableAnim = Runnable {
+//
+//            handlerAnim.postDelayed(runnableAnim!!, 300)
+//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_1)))
+//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_2)))
+//            invalidate()
+//            handlerAnim.postDelayed(runnableAnim!!, 300)
+//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_2)))
+//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_3)))
+//            invalidate()
+//            handlerAnim.postDelayed(runnableAnim!!, 300)
+//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_3)))
+//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_4)))
+//            invalidate()
+//            handlerAnim.postDelayed(runnableAnim!!, 300)
+//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_4)))
+//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_5)))
+//            invalidate()
+//            handlerAnim.postDelayed(runnableAnim!!, 300)
+//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_5)))
+//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_6)))
+//            invalidate()
+//            handlerAnim.postDelayed(runnableAnim!!, 300)
+//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_6)))
+//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_7)))
+//            handlerAnim.postDelayed(runnableAnim!!, 300)
+//            invalidate()
+//        }
+//
+//    }
 
     fun cellMoving() {
         val handler = Handler(Looper.getMainLooper())
@@ -123,10 +178,10 @@ class DrawingView : View, SpaceListener {
 
         runnable = Runnable {
             if (pause_flg == true) {
-                space.myCellList.forEachIndexed { index, cell ->
+                space.myPlanetList.forEachIndexed { index, planet ->
 
-                    var x = cell.x
-                    var y = cell.y
+                    var x = planet.x
+                    var y = planet.y
                     val rand = (0..3).random()
 
                     when (rand) {
@@ -152,8 +207,8 @@ class DrawingView : View, SpaceListener {
                         }
                     }
 
-                    space.myCellList[index] = Cell(x = x, y = y, cellImage = cell.cellImage, cellInfect = cell.cellInfect)
-//                    space.spaceListener?.changeSpace(space = space)
+                    space.myPlanetList[index] = Planet(x = x, y = y, planetImage = planet.planetImage, planetInfect = planet.planetInfect)
+
                 }
                 invalidate()
             }
