@@ -1,15 +1,12 @@
 package com.example.sandboxgame.ui.game
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.view.WindowManager
-import android.view.animation.Animation
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -36,12 +33,12 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     }
 
     lateinit var planetImage: Drawable
+    lateinit var foodImage: Drawable
     var infect = 0
     var delete = 0
     var clanAmount = 0
+    var satiety: Int = 0
     @SuppressLint("UseCompatLoadingForDrawables")
-    private val handler = Handler()
-    private var sound: Command? = null
     private val space: Space = Space()
     private val planetMoving: PlanetMoving = PlanetMoving()
 
@@ -53,6 +50,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val buttonDelete: Button by bind(R.id.button_delete_square)
     private val buttonInfect: Button by bind(R.id.button_infect_square)
     private val buttonTreat: Button by bind(R.id.button_treat_square)
+    private val buttonAddFood: Button by bind(R.id.button_add_food)
     private val buttonReproduction: ImageButton by bind(R.id.button_reproduction)
     private val buttonSlowly: ImageView by bind(R.id.button_slowly)
     private val buttonAcceleration: ImageView by bind(R.id.button_acceleration)
@@ -60,7 +58,9 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val textNumberAmountDied: TextView by bind(R.id.number_amount_of_died)
     private val textNumberAmountInfected: TextView by bind(R.id.number_amount_of_infected)
     private val textNumberAmountClans: TextView by bind(R.id.number_amount_of_clans)
-    private val colorConstraint: View by bind(R.id.color_constraint)
+    private val textNumberAmountFood: TextView by bind(R.id.number_amount_of_food)
+
+    private val planetConstraint: View by bind(R.id.planet_constraint)
     private val planet1: ImageView by bind(R.id.cell_rec_blue)
     private val planet2: ImageView by bind(R.id.cell_rec_lime)
     private val planet3: ImageView by bind(R.id.cell_rec_light_purple)
@@ -71,6 +71,12 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val planet8: ImageView by bind(R.id.cell_rec_yellow)
     private val planet9: ImageView by bind(R.id.cell_rec_green)
     private val planet10: ImageView by bind(R.id.cell_rec_cloudy_blue)
+
+    private val foodConstraint: View by bind(R.id.food_constraint)
+    private val foodXS: ImageView by bind(R.id.food_XS)
+    private val foodS: ImageView by bind(R.id.food_S)
+    private val foodM: ImageView by bind(R.id.food_M)
+    private val foodL: ImageView by bind(R.id.food_L)
 
     private val soundAddCell by lazy {MediaPlayer.create(this, R.raw.add_cell)}
     private val soundDeleteCell by lazy { MediaPlayer.create(this, R.raw.delete_cell)}
@@ -88,6 +94,11 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planetMoving.size = value
         }
 
+    var foodAmount: Int = 0
+    set(value) {
+        field = value
+        space.foodAmount = value
+    }
 
 
     @SuppressLint("ResourceType", "NewApi", "UseCompatLoadingForDrawables")
@@ -96,33 +107,18 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        val recycleView: RecyclerView? = findViewById(R.id.cell_rec_blue)
-
-//        val planetImageList = listOf(
-//            (R.drawable.planet_1),
-//            (R.drawable.planet_2),
-//            (R.drawable.planet_3),
-//            (R.drawable.planet_4),
-//            (R.drawable.planet_5),
-//            (R.drawable.planet_6),
-//            (R.drawable.planet_7),
-//            (R.drawable.planet_8),
-//            (R.drawable.planet_9),
-//            (R.drawable.planet_10),
-//        )
-
         drawingView.space = space
-//        drawingView.animation = animation
-//                    animation.draw(canvas)
-//        planetMoving.space = space
+        planetMoving.space = space
 
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
-        soundInfectCell.setVolume(100f,100f)
+        planetConstraint.isVisible = false
+        foodConstraint.isVisible = false
 
+        soundInfectCell.setVolume(100f,100f)
 
         planetImage = resources.getDrawable(R.drawable.planet_1)
 
@@ -134,14 +130,14 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 
         buttonReproduction.setOnClickListener {
 
-            if (drawingView.pause_flg == true) {
-                drawingView.pause_flg = false
+            if (planetMoving.pause_flg) {
+                planetMoving.pause_flg = false
 
                 val reproduction : Drawable? = getDrawable(R.drawable.ic_reproduction)
                 buttonReproduction.setBackgroundDrawable(reproduction)
 
             } else {
-                drawingView.pause_flg = true
+                planetMoving.pause_flg = true
 
                 val pause : Drawable? = getDrawable(R.drawable.ic_pause)
                 buttonReproduction.setBackgroundDrawable(pause)
@@ -153,23 +149,21 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 
         buttonSlowly.setOnClickListener {
             it.isSelected = true
-            if(drawingView.millis < 3001) {
-                drawingView.millis += 100
-            } else drawingView.millis = 3000
+            if(planetMoving.millis < 3001) {
+                planetMoving.millis += 100
+            } else planetMoving.millis = 3000
 
             soundButtonClick.start()
         }
 
         buttonAcceleration.setOnClickListener {
             it.isSelected = true
-            if (drawingView.millis > 101) {
-                drawingView.millis -= 100
-            } else drawingView.millis = 0
+            if (planetMoving.millis > 101) {
+                planetMoving.millis -= 100
+            } else planetMoving.millis = 0
 
             soundButtonClick.start()
         }
-
-        colorConstraint.isVisible = false
 
         buttonAdd.setOnClickListener {
             presenter.onButtonAddClicked()
@@ -177,7 +171,9 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             buttonDelete.isSelected = false
             buttonInfect.isSelected = false
             buttonTreat.isSelected = false
-            colorConstraint.isVisible = true
+            buttonAddFood.isSelected = false
+            planetConstraint.isVisible = true
+            foodConstraint.isVisible = false
 
             soundButtonClick.start()
 
@@ -189,7 +185,9 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             buttonAdd.isSelected = false
             buttonInfect.isSelected = false
             buttonTreat.isSelected = false
-            colorConstraint.isVisible = false
+            buttonAddFood.isSelected = false
+            planetConstraint.isVisible = false
+            foodConstraint.isVisible = false
 
             soundButtonClick.start()
         }
@@ -200,7 +198,9 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             buttonAdd.isSelected = false
             buttonDelete.isSelected = false
             buttonTreat.isSelected = false
-            colorConstraint.isVisible = false
+            buttonAddFood.isSelected = false
+            planetConstraint.isVisible = false
+            foodConstraint.isVisible = false
 
             soundButtonClick.start()
         }
@@ -211,9 +211,66 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             buttonAdd.isSelected = false
             buttonDelete.isSelected = false
             buttonInfect.isSelected = false
-            colorConstraint.isVisible = false
+            buttonAddFood.isSelected = false
+            planetConstraint.isVisible = false
+            foodConstraint.isVisible = false
 
             soundButtonClick.start()
+        }
+
+        buttonAddFood.setOnClickListener {
+            presenter.onButtonAddFoodClicked()
+            it.isSelected = true
+            buttonAdd.isSelected = false
+            buttonDelete.isSelected = false
+            buttonInfect.isSelected = false
+            planetConstraint.isVisible = false
+            buttonTreat.isSelected = false
+            planetConstraint.isVisible = false
+            foodConstraint.isVisible = true
+
+            soundButtonClick.start()
+
+        }
+
+        foodXS.setOnClickListener {
+            foodXS.isSelected = true
+            foodS.isSelected = false
+            foodM.isSelected = false
+            foodL.isSelected = false
+
+            satiety = 1
+            foodImage = resources.getDrawable(R.drawable.planet_food_3)
+        }
+
+        foodS.setOnClickListener {
+            foodXS.isSelected = false
+            foodS.isSelected = true
+            foodM.isSelected = false
+            foodL.isSelected = false
+
+            satiety = 5
+            foodImage = resources.getDrawable(R.drawable.planet_food_2)
+        }
+
+        foodM.setOnClickListener {
+            foodXS.isSelected = false
+            foodS.isSelected = false
+            foodM.isSelected = true
+            foodL.isSelected = false
+
+            satiety = 10
+            foodImage = resources.getDrawable(R.drawable.planet_food_1)
+        }
+
+        foodL.setOnClickListener {
+            foodXS.isSelected = false
+            foodS.isSelected = false
+            foodM.isSelected = false
+            foodL.isSelected = true
+
+            satiety = 20
+            foodImage = resources.getDrawable(R.drawable.planet_food_4)
         }
 
         planet1.setOnClickListener {
@@ -393,31 +450,30 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 
 
         if (buttonAdd.isSelected) {
-            val cell = space.myPlanetList.firstOrNull { planet ->
+            val planet = space.myPlanetList.firstOrNull { planet ->
                 planet.x == i && planet.y == j
             }
-            if (cell == null) {
-                space.addValue(i, j, planetImage, false)
+            if (planet == null) {
+                space.addValue(i, j, planetImage, false, 0)
                 soundGame(Command.ADD)
-                drawingView.animationBlast()
             }
 
         }
         if (buttonDelete.isSelected) {
-            val cell = space.myPlanetList.firstOrNull { planet ->
+            val planet = space.myPlanetList.firstOrNull { planet ->
                 planet.x == i && planet.y == j
             }
-            if (cell != null) {
+            if (planet != null) {
                 space.deleteValue(i, j)
                 delete += 1
                 soundGame(Command.DELETE)
             }
         }
         if (buttonInfect.isSelected) {
-            val cell = space.myPlanetList.firstOrNull { planet ->
-                planet.x == i && planet.y == j && planet.planetInfect == false
+            val planet = space.myPlanetList.firstOrNull { planet ->
+                planet.x == i && planet.y == j && !planet.planetInfect
             }
-            if (cell != null) {
+            if (planet != null) {
                 space.infectValue(i, j,  true)
                 infect += 1
                 soundGame(Command.INFECT)
@@ -425,13 +481,24 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         }
 
         if (buttonTreat.isSelected) {
-            val cell = space.myPlanetList.firstOrNull { planet ->
-                planet.x == i && planet.y == j && planet.planetInfect == true
+            val planet = space.myPlanetList.firstOrNull { planet ->
+                planet.x == i && planet.y == j && planet.planetInfect
             }
-            if (cell != null) {
+            if (planet != null) {
                 space.treatValue(i, j, false)
                 infect -= 1
                 soundGame(Command.TREAT)
+            }
+        }
+
+        if (buttonAddFood.isSelected) {
+            val food = space.myFoodList.firstOrNull { food ->
+                food.x == i && food.y == j
+            }
+            if (food == null) {
+                space.addFood(i, j, foodImage, satiety)
+                foodAmount += 1
+                soundGame(Command.ADD)
             }
         }
 
@@ -439,13 +506,13 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         textNumberAmount.text = planetAmount.toString()
         textNumberAmountDied.text = delete.toString()
         textNumberAmountInfected.text = infect.toString()
+        textNumberAmountFood.text = foodAmount.toString()
 
         // don't work
 //        val cellClansAmount = space.myCellList.count { it.cellColor >= 4 }
 //        textNumberAmountClans.text = cellClansAmount.toString()
 //        space.myCellList.count { it.cellColor > 0 }
     }
-
 
 
 }

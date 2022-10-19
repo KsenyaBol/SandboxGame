@@ -7,5 +7,5 @@ data class Planet(
     var y: Int,
     var planetImage: Drawable,
     var planetInfect: Boolean,
-//    var satiety: Int,
+    var satiety: Int,
 )

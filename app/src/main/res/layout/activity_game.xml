@@ -93,6 +93,21 @@
             app:layout_constraintTop_toBottomOf="@+id/text_amount_of_infected"/>
 
         <TextView
+            style="@style/Text"
+            android:id="@+id/text_amount_of_food"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="AMOUNT FOOD"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_amount_of_died"/>
+
+        <TextView
             style="@style/Text.Big"
             android:id="@+id/number_amount_square"
             android:layout_width="0dp"
@@ -153,6 +168,21 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_amount_of_died"/>
 
         <TextView
+            style="@style/Text.Big"
+            android:id="@+id/number_amount_of_food"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0"
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            app:layout_constraintWidth_percent="0.40"
+            app:layout_constraintStart_toEndOf="@+id/text_amount_of_food"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_amount_of_food"
+            app:layout_constraintBottom_toBottomOf="@+id/text_amount_of_food"/>
+
+        <TextView
             style="@style/Text.Big.Space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -179,18 +209,6 @@
                 android:layout_margin="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/button_pause"-->
-<!--                android:layout_width="40dp"-->
-<!--                android:layout_height="40dp"-->
-<!--                android:background="@drawable/ic_reproduction"-->
-<!--                android:layout_margin="5dp"-->
-<!--                tools:ignore="UsingOnClickInXml"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent" />-->
 
             <ImageButton
                 android:id="@+id/button_reproduction"
@@ -274,12 +292,12 @@
                     android:background="@drawable/focus_state"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@+id/color_constraint"
+                    app:layout_constraintTop_toBottomOf="@+id/planet_constraint"
                     app:layout_constraintStart_toStartOf="parent"/>
 
                 <Button
-                    android:id="@+id/button_infect_square"
                     style="@style/Text.Big"
+                    android:id="@+id/button_infect_square"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
@@ -290,8 +308,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/button_delete_square" />
 
                 <Button
-                    android:id="@+id/button_treat_square"
                     style="@style/Text.Big"
+                    android:id="@+id/button_treat_square"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
@@ -300,6 +318,18 @@
                     android:text="@string/message_treat_cell"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/button_infect_square" />
+
+                <Button
+                    style="@style/Text.Big"
+                    android:id="@+id/button_add_food"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/focus_state"
+                    android:text="ADD FOOD"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button_treat_square" />
 
                 <Button
                     style="@style/Text.Red"
@@ -311,15 +341,14 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button_treat_square"
+                    app:layout_constraintTop_toBottomOf="@+id/food_constraint"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/color_constraint"
+                    android:id="@+id/planet_constraint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_background"
-                    android:translationZ="2dp"
                     android:layout_marginVertical="10dp"
                     android:layout_marginHorizontal="10dp"
                     app:layout_constraintStart_toStartOf="@+id/button_add_square"
@@ -469,6 +498,70 @@
                         app:layout_constraintStart_toEndOf="@id/cell_rec_green"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/food_constraint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/focus_state"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/button_add_food">
+
+                    <ImageView
+                        android:id="@+id/food_XS"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/food_focus_state"
+                        android:layout_marginVertical="10dp"
+                        android:padding="5dp"
+                        android:src="@drawable/planet_food_3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/food_S"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/food_S"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/food_focus_state"
+                        android:layout_marginVertical="10dp"
+                        android:padding="5dp"
+                        android:src="@drawable/planet_food_2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/food_M"
+                        app:layout_constraintStart_toEndOf="@+id/food_XS"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/food_M"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/food_focus_state"
+                        android:layout_marginVertical="10dp"
+                        android:padding="5dp"
+                        android:src="@drawable/planet_food_1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/food_L"
+                        app:layout_constraintStart_toEndOf="@+id/food_S"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/food_L"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/food_focus_state"
+                        android:layout_marginVertical="10dp"
+                        android:padding="5dp"
+                        android:src="@drawable/planet_food_4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/food_M"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

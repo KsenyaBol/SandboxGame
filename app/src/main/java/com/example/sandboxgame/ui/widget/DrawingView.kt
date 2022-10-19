@@ -29,34 +29,22 @@ class DrawingView : View, SpaceListener {
     var animation1 = (resources.getDrawable(R.drawable.animation_boom) as AnimationDrawable).also {
         it.callback = this
     }
-    var animation = arrayListOf(
-        Anim(image = resources.getDrawable(R.drawable.animation_boom)),
-//        Anim(image = resources.getDrawable(R.drawable.boom_stage_2)),
-//        Anim(image = resources.getDrawable(R.drawable.boom_stage_3)),
-//        Anim(image = resources.getDrawable(R.drawable.boom_stage_4)),
-//        Anim(image = resources.getDrawable(R.drawable.boom_stage_5)),
-//        Anim(image = resources.getDrawable(R.drawable.boom_stage_6)),
-//        Anim(image = resources.getDrawable(R.drawable.boom_stage_7)),
-
-    )
-    data class Anim(
-        val image: Drawable,
-            )
-
 
     var onTapCellListener: OnTapCellListener? = null
 
-    private val paint: Paint = Paint()
-    private val paintBorder: Paint = Paint()
-    lateinit var space: Space
+    var space: Space? = null
+    set(value) {
+        field = value
+        field?.spaceListener = this
+    }
 
     constructor(ctx: Context) : super(ctx)
     constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
 
     init {
         setWillNotDraw(false)
-        cellMoving()
-//        animationBlast()
+//        cellMoving()
+
     }
 
     private var loading: Boolean = false
@@ -97,8 +85,56 @@ class DrawingView : View, SpaceListener {
 
         val sizeH = height / size.toFloat()
 
-        if (space.myPlanetList.size > 0) {
-            space.myPlanetList.forEach { planet ->
+        if (space!!.myFoodList.size > 0) {
+            space!!.myFoodList.forEach { food ->
+                val x = sizeH * food.x
+                val y = sizeH * food.y
+                val satiety = food.satiety
+
+                when(satiety) {
+                    1 -> {
+                        food.foodImage.setBounds(
+                            (x + sizeH/2 - 5).toInt(),
+                            (y + sizeH/2 - 5).toInt(),
+                            (x + sizeH/2 + 5).toInt(),
+                            (y + sizeH/2 + 5).toInt()
+                        )
+                        food.foodImage.draw(canvas)
+                    }
+                    5 -> {
+                        food.foodImage.setBounds(
+                            (x + sizeH/2 - 8).toInt(),
+                            (y + sizeH/2 - 8).toInt(),
+                            (x + sizeH/2 + 8).toInt(),
+                            (y + sizeH/2 + 8).toInt()
+                        )
+                        food.foodImage.draw(canvas)
+                    }
+                    10 -> {
+                        food.foodImage.setBounds(
+                            (x + sizeH/2 - 10).toInt(),
+                            (y + sizeH/2 - 10).toInt(),
+                            (x + sizeH/2 + 10).toInt(),
+                            (y + sizeH/2 + 10).toInt()
+                        )
+                        food.foodImage.draw(canvas)
+                    }
+                    20 -> {
+                        food.foodImage.setBounds(
+                            (x + sizeH/2 - 14).toInt(),
+                            (y + sizeH/2 - 14).toInt(),
+                            (x + sizeH/2 + 14).toInt(),
+                            (y + sizeH/2 + 14).toInt()
+                        )
+                        food.foodImage.draw(canvas)
+                    }
+                }
+
+            }
+        }
+
+        if (space!!.myPlanetList.size > 0) {
+            space!!.myPlanetList.forEach { planet ->
                 val x = sizeH * planet.x
                 val y = sizeH * planet.y
                 val infect = planet.planetInfect
@@ -122,100 +158,60 @@ class DrawingView : View, SpaceListener {
                     planet.planetImage.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
                     planet.planetImage.draw(canvas)
 
-//                    if (animation.size > 0) {
-//                        animation.forEachIndexed { index, anim ->
-//                            val anim = anim.image
-//                            anim.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
-//                            anim.draw(canvas)
+                }
+            }
+        }
+
+    }
+
+//    fun cellMoving() {
+//        val handler = Handler(Looper.getMainLooper())
+//        var runnable: Runnable? = null
 //
+//        runnable = Runnable {
+//            if (pause_flg == true) {
+//                space.myPlanetList.forEachIndexed { index, planet ->
 //
+//                    var x = planet.x
+//                    var y = planet.y
+//                    val rand = (0..3).random()
+//
+//                    when (rand) {
+//                        0 -> {
+//                            if (x + 1 > size - 1) {
+//                                x -= 1
+//                            } else x += 1
 //                        }
-//                        invalidate()
+//                        1 -> {
+//                            if (y + 1 > size - 1) {
+//                                y -= 1
+//                            } else y += 1
+//                        }
+//                        2 -> {
+//                            if (x - 1 < 0) {
+//                                x += 1
+//                            } else x -= 1
+//                        }
+//                        3 -> {
+//                            if (y - 1 < 0) {
+//                                y += 1
+//                            } else y -= 1
+//                        }
 //                    }
-                }
-            }
-        }
-
-    }
-
-//    fun animationBlast() {
-//        val handlerAnim = Handler(Looper.getMainLooper())
-//        var runnableAnim: Runnable? = null
-//        runnableAnim = Runnable {
 //
-//            handlerAnim.postDelayed(runnableAnim!!, 300)
-//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_1)))
-//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_2)))
-//            invalidate()
-//            handlerAnim.postDelayed(runnableAnim!!, 300)
-//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_2)))
-//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_3)))
-//            invalidate()
-//            handlerAnim.postDelayed(runnableAnim!!, 300)
-//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_3)))
-//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_4)))
-//            invalidate()
-//            handlerAnim.postDelayed(runnableAnim!!, 300)
-//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_4)))
-//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_5)))
-//            invalidate()
-//            handlerAnim.postDelayed(runnableAnim!!, 300)
-//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_5)))
-//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_6)))
-//            invalidate()
-//            handlerAnim.postDelayed(runnableAnim!!, 300)
-//            animation.remove(Anim(resources.getDrawable(R.drawable.boom_stage_6)))
-//            animation.add(Anim(resources.getDrawable(R.drawable.boom_stage_7)))
-//            handlerAnim.postDelayed(runnableAnim!!, 300)
-//            invalidate()
+//                    space.myPlanetList[index] = Planet(x = x, y = y, planetImage = planet.planetImage,
+//                        planetInfect = planet.planetInfect, satiety = planet.satiety )
+//                    space.planetSatiety(x, y)
+//                    space.planetDecay(x, y , planetImage = planet.planetImage, planetInfect = planet.planetInfect, satiety =
+//                    planet.satiety)
+//
+//                }
+//                invalidate()
+//            }
+//            handler.postDelayed(runnable!!, millis.toLong())
 //        }
-//
+//        handler.postDelayed(runnable, millis.toLong())
 //    }
-
-    fun cellMoving() {
-        val handler = Handler(Looper.getMainLooper())
-        var runnable: Runnable? = null
-
-        runnable = Runnable {
-            if (pause_flg == true) {
-                space.myPlanetList.forEachIndexed { index, planet ->
-
-                    var x = planet.x
-                    var y = planet.y
-                    val rand = (0..3).random()
-
-                    when (rand) {
-                        0 -> {
-                            if (x + 1 > size - 1) {
-                                x -= 1
-                            } else x += 1
-                        }
-                        1 -> {
-                            if (y + 1 > size - 1) {
-                                y -= 1
-                            } else y += 1
-                        }
-                        2 -> {
-                            if (x - 1 < 0) {
-                                x += 1
-                            } else x -= 1
-                        }
-                        3 -> {
-                            if (y - 1 < 0) {
-                                y += 1
-                            } else y -= 1
-                        }
-                    }
-
-                    space.myPlanetList[index] = Planet(x = x, y = y, planetImage = planet.planetImage, planetInfect = planet.planetInfect)
-
-                }
-                invalidate()
-            }
-            handler.postDelayed(runnable!!, millis.toLong())
-        }
-        handler.postDelayed(runnable, millis.toLong())
-    }
 
     interface OnTapCellListener {
 

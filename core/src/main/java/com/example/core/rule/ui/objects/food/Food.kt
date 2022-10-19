@@ -6,5 +6,5 @@ data class Food (
     var x: Int,
     var y: Int,
     var foodImage: Drawable,
-    var saturation: Int,
+    var satiety: Int,
 )

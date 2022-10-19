@@ -30,7 +30,11 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
         command = Command.TREAT
     }
 
+    fun onButtonAddFoodClicked() {
+        command = Command.ADD_FOOD
+    }
+
     enum class Command {
-        ADD, DELETE, INFECT, TREAT
+        ADD, DELETE, INFECT, TREAT, ADD_FOOD
     }
 }
