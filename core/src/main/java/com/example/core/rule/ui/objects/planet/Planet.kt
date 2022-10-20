@@ -6,6 +6,7 @@ data class Planet(
     var x: Int,
     var y: Int,
     var planetImage: Drawable,
-    var planetInfect: Boolean,
+    var planetInfect: Int,
     var satiety: Int,
+    var age: Int,
 )

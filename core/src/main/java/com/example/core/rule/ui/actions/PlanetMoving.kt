@@ -1,8 +1,7 @@
-package com.example.core.rule.ui.move
+package com.example.core.rule.ui.actions
 
 import android.os.Handler
 import android.os.Looper
-import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 
 open class PlanetMoving {
@@ -30,6 +29,7 @@ open class PlanetMoving {
                     val planetImage = planet.planetImage
                     val planetInfect = planet.planetInfect
                     val satiety = planet.satiety
+                    val age = planet.age
 
                     when ((0..3).random()) {
                         0 -> {
@@ -53,14 +53,10 @@ open class PlanetMoving {
                             } else y -= 1
                         }
                     }
-                    space.planetMovingChange(index, x, y, planetImage, planetInfect, satiety)
-                    space.planetSatiety(x, y)
-                    space.planetDecay(x, y , planetImage = planet.planetImage, planetInfect = planet.planetInfect, satiety =
-                    planet.satiety)
-//                    space.myPlanetList[index] = Planet(x = x, y = y, planetImage = planetImage,
-//                        planetInfect = planetInfect)
+                    space.planetMovingChange(index, x, y, planetImage, planetInfect, satiety, age)
+                    space.planetSatiety(x, y, satiety, age)
+                    space.planetDecay(x, y , planet.planetImage, planet.planetInfect, planet.satiety, age)
                 }
-//                space.change()
             }
             handler.postDelayed(runnable!!, millis.toLong())
         }

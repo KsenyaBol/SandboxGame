@@ -13,7 +13,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
-import com.example.core.rule.ui.move.PlanetMoving
+import com.example.core.rule.ui.actions.FoodAdd
+import com.example.core.rule.ui.actions.PlanetAge
+import com.example.core.rule.ui.actions.PlanetInfect
+import com.example.core.rule.ui.actions.PlanetMoving
 import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
@@ -38,9 +41,13 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     var delete = 0
     var clanAmount = 0
     var satiety: Int = 0
+    var foodAmount: Int = 0
     @SuppressLint("UseCompatLoadingForDrawables")
     private val space: Space = Space()
     private val planetMoving: PlanetMoving = PlanetMoving()
+    private val addFood: FoodAdd = FoodAdd()
+    private val planetAge: PlanetAge = PlanetAge()
+    private val planetInfect: PlanetInfect = PlanetInfect()
 
     override val presenter: GamePresenter by providePresenter {
         GamePresenter(this[EXTRA_SIZE]!!)
@@ -92,13 +99,11 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             field = value
             drawingView.size = value
             planetMoving.size = value
+            addFood.size = value
         }
 
-    var foodAmount: Int = 0
-    set(value) {
-        field = value
-        space.foodAmount = value
-    }
+
+
 
 
     @SuppressLint("ResourceType", "NewApi", "UseCompatLoadingForDrawables")
@@ -109,6 +114,22 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 
         drawingView.space = space
         planetMoving.space = space
+        addFood.space = space
+        planetAge.space = space
+        planetInfect.space = space
+
+
+        val planetFoodXS = resources.getDrawable(R.drawable.planet_food_3)
+        val planetFoodS = resources.getDrawable(R.drawable.planet_food_2)
+        val planetFoodM = resources.getDrawable(R.drawable.planet_food_1)
+        val planetFoodL = resources.getDrawable(R.drawable.planet_food_4)
+
+
+        addFood.foodXS = planetFoodXS
+        addFood.foodS = planetFoodS
+        addFood.foodM = planetFoodM
+        addFood.foodL = planetFoodL
+        addFood.imageFoodFinal = planetFoodXS
 
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -454,7 +475,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
                 planet.x == i && planet.y == j
             }
             if (planet == null) {
-                space.addValue(i, j, planetImage, false, 0)
+                space.addValue(i, j, planetImage, 0, 0, 0)
                 soundGame(Command.ADD)
             }
 
@@ -471,10 +492,10 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         }
         if (buttonInfect.isSelected) {
             val planet = space.myPlanetList.firstOrNull { planet ->
-                planet.x == i && planet.y == j && !planet.planetInfect
+                planet.x == i && planet.y == j && planet.planetInfect <= 50
             }
             if (planet != null) {
-                space.infectValue(i, j,  true)
+                space.infectValue(i, j,  50, planet.age)
                 infect += 1
                 soundGame(Command.INFECT)
             }
@@ -482,10 +503,10 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 
         if (buttonTreat.isSelected) {
             val planet = space.myPlanetList.firstOrNull { planet ->
-                planet.x == i && planet.y == j && planet.planetInfect
+                planet.x == i && planet.y == j && planet.planetInfect >= 50
             }
             if (planet != null) {
-                space.treatValue(i, j, false)
+                space.treatValue(i, j, 0, planet.age)
                 infect -= 1
                 soundGame(Command.TREAT)
             }
@@ -496,7 +517,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
                 food.x == i && food.y == j
             }
             if (food == null) {
-                space.addFood(i, j, foodImage, satiety)
+                space.addFoodUser(i, j, foodImage, satiety)
                 foodAmount += 1
                 soundGame(Command.ADD)
             }

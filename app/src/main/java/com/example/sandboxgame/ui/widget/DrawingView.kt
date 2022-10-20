@@ -9,7 +9,6 @@ import android.os.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceListener
 import com.example.sandboxgame.R
@@ -21,11 +20,11 @@ class MyState(private val superSaveState: Parcelable?) : View.BaseSavedState(sup
 class DrawingView : View, SpaceListener {
 
     var size: Int = 0
-    var pause_flg = true
-    var millis: Int = 200
+    @SuppressLint("UseCompatLoadingForDrawables")
     var drawable: Drawable = resources.getDrawable(R.drawable.planet_1)
+    @SuppressLint("UseCompatLoadingForDrawables")
     val imageInfect: Drawable  = resources.getDrawable(R.drawable.image_infect)
-
+    @SuppressLint("UseCompatLoadingForDrawables")
     var animation1 = (resources.getDrawable(R.drawable.animation_boom) as AnimationDrawable).also {
         it.callback = this
     }
@@ -43,7 +42,6 @@ class DrawingView : View, SpaceListener {
 
     init {
         setWillNotDraw(false)
-//        cellMoving()
 
     }
 
@@ -139,7 +137,7 @@ class DrawingView : View, SpaceListener {
                 val y = sizeH * planet.y
                 val infect = planet.planetInfect
 
-                if (infect) {
+                if (infect >= 50) {
 
                     imageInfect.setBounds(
                         (x - 10).toInt(),
@@ -163,55 +161,6 @@ class DrawingView : View, SpaceListener {
         }
 
     }
-
-//    fun cellMoving() {
-//        val handler = Handler(Looper.getMainLooper())
-//        var runnable: Runnable? = null
-//
-//        runnable = Runnable {
-//            if (pause_flg == true) {
-//                space.myPlanetList.forEachIndexed { index, planet ->
-//
-//                    var x = planet.x
-//                    var y = planet.y
-//                    val rand = (0..3).random()
-//
-//                    when (rand) {
-//                        0 -> {
-//                            if (x + 1 > size - 1) {
-//                                x -= 1
-//                            } else x += 1
-//                        }
-//                        1 -> {
-//                            if (y + 1 > size - 1) {
-//                                y -= 1
-//                            } else y += 1
-//                        }
-//                        2 -> {
-//                            if (x - 1 < 0) {
-//                                x += 1
-//                            } else x -= 1
-//                        }
-//                        3 -> {
-//                            if (y - 1 < 0) {
-//                                y += 1
-//                            } else y -= 1
-//                        }
-//                    }
-//
-//                    space.myPlanetList[index] = Planet(x = x, y = y, planetImage = planet.planetImage,
-//                        planetInfect = planet.planetInfect, satiety = planet.satiety )
-//                    space.planetSatiety(x, y)
-//                    space.planetDecay(x, y , planetImage = planet.planetImage, planetInfect = planet.planetInfect, satiety =
-//                    planet.satiety)
-//
-//                }
-//                invalidate()
-//            }
-//            handler.postDelayed(runnable!!, millis.toLong())
-//        }
-//        handler.postDelayed(runnable, millis.toLong())
-//    }
 
     interface OnTapCellListener {
 
