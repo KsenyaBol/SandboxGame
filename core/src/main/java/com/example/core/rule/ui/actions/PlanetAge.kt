@@ -25,11 +25,11 @@ class PlanetAge {
 
                 age += 2
                 space.ageChange(index, x, y, age)
-                space.planetDie()
+//                space.planetDie(x, y, age)
             }
-            handler.postDelayed(runnable!!, 2000)
+            handler.postDelayed(runnable!!, 300)
         }
-        handler.postDelayed(runnable, 2000)
+        handler.postDelayed(runnable, 300)
 
     }
 }

@@ -8,15 +8,18 @@ import kotlin.collections.ArrayList
 class Space {
 
     var myPlanetList: ArrayList<Planet> = arrayListOf()
+    var myPlanetList2: ArrayList<Planet> = arrayListOf()
     var myFoodList: ArrayList<Food> = arrayListOf()
     var spaceListener: SpaceListener? = null
 
-    fun setValue(myPlanetList: ArrayList<Planet>, spaceListener: SpaceListener, myFoodList: ArrayList<Food>) {
+
+    fun setValue(myPlanetList: ArrayList<Planet>, myPlanetList2: ArrayList<Planet>, spaceListener: SpaceListener, myFoodList:
+    ArrayList<Food>) {
 
         this.myPlanetList = myPlanetList
+        this.myPlanetList2 = myPlanetList2
         this.spaceListener = spaceListener
         this.myFoodList = myFoodList
-
     }
 
     fun addValue(i: Int, j: Int, planetImage: Drawable, planetInfect: Int, satiety: Int, age: Int) {
@@ -104,6 +107,7 @@ class Space {
                 satiety = satietyAll,
                 age = age
             )
+            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
 
         }
@@ -119,9 +123,10 @@ class Space {
 
             val index = myPlanetList.indexOf(planet)
             val planetSatiety = satiety - 100
-            myPlanetList.add(Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect, satiety = 0, age = age))
+            myPlanetList.add(Planet(x = i, y = j, planetImage = planetImage, planetInfect = 0, satiety = 0, age = 0))
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect, satiety =
             planetSatiety, age = age)
+            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
 
         }
@@ -136,6 +141,7 @@ class Space {
         if (planet == null) {
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect, satiety =
             satiety, age = age)
+            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
         }
 
@@ -160,6 +166,7 @@ class Space {
         if (planet != null) {
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planet.planetImage, planetInfect = planet.planetInfect,
                 satiety = planet.satiety, age = age)
+            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
         }
 
@@ -172,16 +179,31 @@ class Space {
         if (planet != null) {
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planet.planetImage, planetInfect = planetInfect,
                 satiety = planet.satiety, age = planet.age)
+            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
         }
     }
 
-    fun planetDie() {
-        myPlanetList.forEachIndexed { index, planet ->
-            if (planet.age >= 100) {
+    fun reviewPlanet(iPlanet: Int, jPlanet: Int, iFood: Int, jFood: Int) {
+
+        val planet = myPlanetList.firstOrNull{ planet ->
+            planet.x == iPlanet && planet.y == jPlanet
+        }
+        if (planet != null) {
+            val index = myPlanetList.indexOf(planet)
+            myPlanetList[index] = Planet(iFood, jFood, planet.planetImage, planet.planetInfect, planet.satiety, planet.age)
+            spaceListener?.changeSpace(space = this)
+        }
+
+    }
+
+    fun planetDie(i: Int, j: Int, age: Int) {
+        myPlanetList.forEachIndexed { index,  planet ->
+            if (planet.x == i && planet.y == j && age >= 100) {
                 myPlanetList.removeAt(index)
                 spaceListener?.changeSpace(space = this)
             }
+
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.core.rule.ui.actions
 
 import android.os.Handler
 import android.os.Looper
+import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 
 open class PlanetMoving {
@@ -14,6 +15,7 @@ open class PlanetMoving {
 
     init {
         planetMoving()
+//        reviewPlanet()
     }
 
     private fun planetMoving() {
@@ -22,7 +24,8 @@ open class PlanetMoving {
 
         runnable = Runnable {
             if (pause_flg == true) {
-                space.myPlanetList.forEachIndexed { index, planet ->
+                space.myPlanetList2 = space.myPlanetList.clone() as ArrayList<Planet>
+                space.myPlanetList2.forEachIndexed { index, planet ->
 
                     var x = planet.x
                     var y = planet.y
@@ -56,12 +59,35 @@ open class PlanetMoving {
                     space.planetMovingChange(index, x, y, planetImage, planetInfect, satiety, age)
                     space.planetSatiety(x, y, satiety, age)
                     space.planetDecay(x, y , planet.planetImage, planet.planetInfect, planet.satiety, age)
+                    space.planetDie(x, y, age)
                 }
             }
             handler.postDelayed(runnable!!, millis.toLong())
         }
         handler.postDelayed(runnable, millis.toLong())
     }
+
+//    fun reviewPlanet() {
+//        val handler = Handler(Looper.getMainLooper())
+//        var runnable: Runnable? = null
+//
+//        runnable = Runnable {
+//            space.myPlanetList.forEach { planet ->
+//                val xPlanet = planet.x
+//                val yPlanet = planet.y
+//
+//                val food = space.myFoodList.firstOrNull { food ->
+//                    food.x == (xPlanet + 1) || food.x == (xPlanet - 1) || food.y == (yPlanet + 1) || food.y == (yPlanet - 1)
+//                }
+//                if (food != null) {
+//                    space.reviewPlanet(xPlanet, yPlanet, food.x, food.y)
+//                }
+//            }
+//            handler.postDelayed(runnable!!, 100)
+//        }
+//        handler.postDelayed(runnable, 100)
+//    }
+
 
 
 }

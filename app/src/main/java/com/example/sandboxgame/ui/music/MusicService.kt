@@ -11,7 +11,7 @@ import com.example.sandboxgame.R
 
 class MusicService: Service(), MediaPlayer.OnCompletionListener {
 
-    private var player = MediaPlayer()
+    lateinit var player: MediaPlayer
 
     override fun onBind(intent: Intent?): IBinder? {
         return null

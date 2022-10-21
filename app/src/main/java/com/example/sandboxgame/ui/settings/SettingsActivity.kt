@@ -8,13 +8,15 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.base.BaseActivity
+import com.example.sandboxgame.ui.music.MusicService
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
 import kotlin.math.ln
 
 class SettingsActivity: BaseActivity(R.layout.activity_settings), SettingsView, SeekBar.OnSeekBarChangeListener {
 
-    private var player = MediaPlayer()
+    private var player: MediaPlayer =  MediaPlayer()
+    private val musicService: MusicService = MusicService()
     private val MAX_VOLUME = 100
 
 //    private val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -36,6 +38,8 @@ class SettingsActivity: BaseActivity(R.layout.activity_settings), SettingsView, 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        musicService.player = player
+
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
 //        volumeControlStream = AudioManager.STREAM_MUSIC
@@ -56,10 +60,6 @@ class SettingsActivity: BaseActivity(R.layout.activity_settings), SettingsView, 
     //уведомляет об изменении положения ползунка
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
-//        val volume = (1 - ln((100 - progress).toDouble()) / ln(100.0)).toFloat()
-//        player.setVolume(volume, volume)
-//        player.start()
-
         val volume = (1 - ln((MAX_VOLUME - progress).toDouble()) / ln(MAX_VOLUME.toDouble())).toFloat()
         player.setVolume(volume, volume)
 
@@ -70,7 +70,9 @@ class SettingsActivity: BaseActivity(R.layout.activity_settings), SettingsView, 
 
     // уведомляет о том, что пользователь закончил перемещать ползунок
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
         textAmountProgressSeekbar.text = seekBar?.progress.toString()
+
     }
 
 }

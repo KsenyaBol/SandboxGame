@@ -18,13 +18,12 @@ class PlanetInfect {
 
         runnable = Runnable {
             space.myPlanetList.forEachIndexed { index, planet ->
-                val index = index
                 val x = planet.x
                 val y = planet.y
                 var planetInfect = planet.planetInfect
                 planetInfect += 2
                 space.infectChange(index, x, y, planetInfect)
-                space.planetDie()
+//                space.planetDie(x, y, planetInfect)
             }
             handler.postDelayed(runnable!!, 2000)
         }

@@ -102,10 +102,6 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             addFood.size = value
         }
 
-
-
-
-
     @SuppressLint("ResourceType", "NewApi", "UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.M)
 
@@ -118,12 +114,10 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         planetAge.space = space
         planetInfect.space = space
 
-
         val planetFoodXS = resources.getDrawable(R.drawable.planet_food_3)
         val planetFoodS = resources.getDrawable(R.drawable.planet_food_2)
         val planetFoodM = resources.getDrawable(R.drawable.planet_food_1)
         val planetFoodL = resources.getDrawable(R.drawable.planet_food_4)
-
 
         addFood.foodXS = planetFoodXS
         addFood.foodS = planetFoodS
@@ -529,10 +523,19 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         textNumberAmountInfected.text = infect.toString()
         textNumberAmountFood.text = foodAmount.toString()
 
-        // don't work
-//        val cellClansAmount = space.myCellList.count { it.cellColor >= 4 }
-//        textNumberAmountClans.text = cellClansAmount.toString()
-//        space.myCellList.count { it.cellColor > 0 }
+        val cellClansAmount = space.myPlanetList.count {
+            it.planetImage == resources.getDrawable(R.drawable.planet_1)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_2)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_3)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_4)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_5)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_6)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_7)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_8)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_9)
+                    || it.planetImage == resources.getDrawable(R.drawable.planet_10)}
+        textNumberAmountClans.text = cellClansAmount.toString()
+
     }
 
 

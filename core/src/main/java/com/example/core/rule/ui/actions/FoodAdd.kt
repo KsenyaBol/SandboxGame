@@ -25,9 +25,9 @@ class FoodAdd {
 
         runnable = Runnable {
             space.foodChange((0..size).random(), (0..size).random(), foodM, 10)
-            handler.postDelayed(runnable!!, 2000)
+            handler.postDelayed(runnable!!, 1500)
         }
-        handler.postDelayed(runnable, 2000)
+        handler.postDelayed(runnable, 1500)
 
     }
 
