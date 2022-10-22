@@ -133,13 +133,15 @@ class Space {
         }
     }
 
-    fun planetMovingChange(index: Int, i: Int, j: Int, planetImage: Drawable, planetInfect: Int, satiety: Int, age: Int) {
+    fun planetMovingChange( i: Int, j: Int, planetImage: Drawable, planetInfect: Int, satiety: Int, age: Int) {
 
         val planet = myPlanetList.firstOrNull { planet ->
-            planet.x == i && planet.y == j
+            (planet.x == i - 1 && planet.y == j) || (planet.x == i + 1 && planet.y == j) ||
+                    (planet.y == j - 1 && planet.x == i) || (planet.y == j + 1 && planet.x == i)
         }
 
-        if (planet == null) {
+        if (planet != null) {
+            val index = myPlanetList.indexOf(planet)
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect, satiety =
             satiety, age = age)
             spaceListener?.changeSpace(space = this)
@@ -196,7 +198,7 @@ class Space {
     }
 
     fun planetDie(i: Int, j: Int, age: Int) {
-        myPlanetList.forEachIndexed { index,  planet ->
+        ArrayList(myPlanetList).forEachIndexed { index, planet ->
             if (planet.x == i && planet.y == j && age >= 100) {
                 myPlanetList.removeAt(index)
                 spaceListener?.changeSpace(space = this)

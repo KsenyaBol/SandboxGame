@@ -37,8 +37,8 @@ open class PlanetMoving {
     private fun planetMoving() {
 
             if (pause_flg == true) {
-                space.myPlanetList2 = space.myPlanetList.clone() as ArrayList<Planet>
-                space.myPlanetList2.forEachIndexed { index, planet ->
+                val myPlanetList2 = ArrayList(space.myPlanetList)
+                myPlanetList2.forEachIndexed { index, planet ->
 
                     var x = planet.x
                     var y = planet.y
@@ -69,10 +69,10 @@ open class PlanetMoving {
                             } else y -= 1
                         }
                     }
-                    space.planetMovingChange(index, x, y, planetImage, planetInfect, satiety, age)
+                    space.planetMovingChange(x, y, planetImage, planetInfect, satiety, age)
                     space.planetSatiety(x, y, satiety, age)
                     space.planetDecay(x, y , planet.planetImage, planet.planetInfect, planet.satiety, age)
-//                    space.planetDie(x, y, age)
+                    space.planetDie(x, y, age)
                 }
             }
 
@@ -81,8 +81,8 @@ open class PlanetMoving {
     fun reviewPlanet() {
 
         if (pause_flg == true) {
-            space.myPlanetList2 = space.myPlanetList.clone() as ArrayList<Planet>
-            space.myPlanetList2.forEachIndexed { index, planet ->
+            val myPlanetList2 = ArrayList(space.myPlanetList)
+            myPlanetList2.forEachIndexed { index, planet ->
                 val xPlanet = planet.x
                 val yPlanet = planet.y
 
@@ -96,7 +96,7 @@ open class PlanetMoving {
                     space.reviewPlanet(xPlanet, yPlanet, food.x, food.y)
                     space.planetSatiety(food.x, food.y, planet.satiety, planet.age)
                     space.planetDecay(food.x, food.y , planet.planetImage, planet.planetInfect, planet.satiety, planet.age)
-//                    space.planetDie(food.x, food.x, planet.age)
+                    space.planetDie(food.x, food.x, planet.age)
                 } else {
                     planetMoving()
                 }
