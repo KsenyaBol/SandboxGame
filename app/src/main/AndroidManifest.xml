@@ -46,7 +46,7 @@
             tools:ignore="MissingClass,WrongManifestParent"/>
 
         <activity
-            android:name=".ui.continue.ContinueActivity"
+            android:name=".ui.continueGame.ContinueActivity"
             android:screenOrientation="landscape"
             tools:ignore="MissingClass,WrongManifestParent"/>
 

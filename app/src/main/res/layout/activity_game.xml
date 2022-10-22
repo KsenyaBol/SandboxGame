@@ -558,7 +558,7 @@
             android:id="@+id/text_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Would you like to save the game \n before exiting?"
+            android:text="@string/message_save_game"
             android:gravity="center"
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -571,7 +571,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="@drawable/button_background"
-            android:text="YES"
+            android:text="@string/message_yes"
             android:layout_margin="10dp"
             app:layout_constraintEnd_toEndOf="@id/divider"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -582,7 +582,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="@drawable/button_background"
-            android:text="NO"
+            android:text="@string/message_no"
             android:layout_margin="10dp"
             app:layout_constraintStart_toEndOf="@id/divider"
             app:layout_constraintBottom_toBottomOf="parent"/>

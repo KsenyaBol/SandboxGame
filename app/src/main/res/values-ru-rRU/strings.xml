@@ -17,4 +17,7 @@
     <string name="message_add_food">ЕДА</string>
     <string name="message_date_save">00/00/0000</string>
     <string name="message_world_name">Название мира номер __</string>
+    <string name="message_save_game">Хотите сохранить игру, прежде чем выйти?</string>
+    <string name="message_yes">ДА</string>
+    <string name="message_no">НЕТ</string>
 </resources>

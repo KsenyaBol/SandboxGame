@@ -1,4 +1,4 @@
-package com.example.sandboxgame.ui.`continue`
+package com.example.sandboxgame.ui.continueGame
 
 import com.example.sandboxgame.ui.base.BaseView
 

@@ -1,6 +1,6 @@
 package com.example.sandboxgame.ui.main
 
-import com.example.sandboxgame.ui.`continue`.ContinueActivity
+import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.example.sandboxgame.ui.settings.SettingsActivity
 import com.example.sandboxgame.ui.size.SizeFragment
 import com.omega_r.base.mvp.presenters.OmegaPresenter

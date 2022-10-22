@@ -116,6 +116,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         addFood.space = space
         planetAge.space = space
         planetInfect.space = space
+        addFood.pause_flg = planetMoving.pause_flg
 
         val planetFoodXS = resources.getDrawable(R.drawable.planet_food_3)
         val planetFoodS = resources.getDrawable(R.drawable.planet_food_2)

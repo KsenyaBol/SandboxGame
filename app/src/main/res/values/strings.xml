@@ -22,5 +22,9 @@
     <string name="message_time_save" translatable="false">00:00</string>
     <string name="message_date_save">00/00/0000</string>
     <string name="message_world_name">Name of theWorld number __</string>
-    <string name="back">back</string>
+    <string name="back" translatable="false">back</string>
+    <string name="message_save_game">Would you like to save the game \n before exiting?</string>
+    <string name="message_yes">YES</string>
+    <string name="message_no">NO</string>
+
 </resources>
