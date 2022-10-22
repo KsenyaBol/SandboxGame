@@ -14,15 +14,28 @@ open class PlanetMoving {
 
 
     init {
-        planetMoving()
-//        reviewPlanet()
+        change()
     }
 
-    private fun planetMoving() {
+    private fun change() {
         val handler = Handler(Looper.getMainLooper())
         var runnable: Runnable? = null
 
         runnable = Runnable {
+            val random = (0..3).random()
+            when(random) {
+                0 -> planetMoving()
+                1 -> reviewPlanet()
+                2 -> reviewPlanet()
+                3 -> reviewPlanet()
+            }
+            handler.postDelayed(runnable!!, millis.toLong())
+        }
+        handler.postDelayed(runnable, millis.toLong())
+    }
+
+    private fun planetMoving() {
+
             if (pause_flg == true) {
                 space.myPlanetList2 = space.myPlanetList.clone() as ArrayList<Planet>
                 space.myPlanetList2.forEachIndexed { index, planet ->
@@ -59,35 +72,36 @@ open class PlanetMoving {
                     space.planetMovingChange(index, x, y, planetImage, planetInfect, satiety, age)
                     space.planetSatiety(x, y, satiety, age)
                     space.planetDecay(x, y , planet.planetImage, planet.planetInfect, planet.satiety, age)
-                    space.planetDie(x, y, age)
+//                    space.planetDie(x, y, age)
                 }
             }
-            handler.postDelayed(runnable!!, millis.toLong())
-        }
-        handler.postDelayed(runnable, millis.toLong())
+
     }
 
-//    fun reviewPlanet() {
-//        val handler = Handler(Looper.getMainLooper())
-//        var runnable: Runnable? = null
-//
-//        runnable = Runnable {
-//            space.myPlanetList.forEach { planet ->
-//                val xPlanet = planet.x
-//                val yPlanet = planet.y
-//
-//                val food = space.myFoodList.firstOrNull { food ->
-//                    food.x == (xPlanet + 1) || food.x == (xPlanet - 1) || food.y == (yPlanet + 1) || food.y == (yPlanet - 1)
-//                }
-//                if (food != null) {
-//                    space.reviewPlanet(xPlanet, yPlanet, food.x, food.y)
-//                }
-//            }
-//            handler.postDelayed(runnable!!, 100)
-//        }
-//        handler.postDelayed(runnable, 100)
-//    }
+    fun reviewPlanet() {
 
+        if (pause_flg == true) {
+            space.myPlanetList2 = space.myPlanetList.clone() as ArrayList<Planet>
+            space.myPlanetList2.forEachIndexed { index, planet ->
+                val xPlanet = planet.x
+                val yPlanet = planet.y
 
+                val food = space.myFoodList.firstOrNull { food ->
+                    val foodX = food.x
+                    val foodY = food.y
+                    foodX == (xPlanet + 1) && foodY == yPlanet || foodX == (xPlanet - 1) && foodY == yPlanet
+                            || foodY == (yPlanet + 1) && foodX == xPlanet || foodY == (yPlanet - 1) && foodX == xPlanet
+                }
+                if (food != null) {
+                    space.reviewPlanet(xPlanet, yPlanet, food.x, food.y)
+                    space.planetSatiety(food.x, food.y, planet.satiety, planet.age)
+                    space.planetDecay(food.x, food.y , planet.planetImage, planet.planetInfect, planet.satiety, planet.age)
+//                    space.planetDie(food.x, food.x, planet.age)
+                } else {
+                    planetMoving()
+                }
+            }
+        }
+    }
 
 }

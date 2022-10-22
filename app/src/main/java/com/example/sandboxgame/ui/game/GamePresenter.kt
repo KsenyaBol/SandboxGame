@@ -10,7 +10,7 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
         viewState.size = size
     }
 
-    fun onButtonExitClicked() {
+    fun onButtonNoClicked() {
         exit()
     }
 

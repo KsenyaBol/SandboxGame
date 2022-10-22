@@ -4,14 +4,17 @@
     <string name="message_settings_game">НАСТРОИТЬ</string>
     <string name="message_continue_game">ПРОДОЛЖИТЬ</string>
     <string name="message_add_cell">Добавить</string>
-    <string name="message_delete_cell">Убить</string>
+    <string name="message_delete_cell">Удалить</string>
     <string name="message_infect_cell">Заразить</string>
     <string name="title_exit">ВЫЙТИ</string>
-    <string name="message_amount_of_died">Кол-во смертей</string>
+    <string name="message_amount_of_died">Смертей</string>
     <string name="message_amount_of_infected">Зараженные</string>
-    <string name="message_amount_of_clans">Кол-во кланов</string>
-    <string name="message_of_amount_cell">Кол-во клеток</string>
+    <string name="message_amount_of_clans">Виды</string>
+    <string name="message_of_amount_cell">Планеты</string>
     <string name="message_speed_cell">СКОРОСТЬ</string>
     <string name="message_treat_cell">ВЫЛЕЧИТЬ</string>
     <string name="message_sound_of_game">ГРОМКОСТЬ</string>
+    <string name="message_add_food">ЕДА</string>
+    <string name="message_date_save">00/00/0000</string>
+    <string name="message_world_name">Название мира номер __</string>
 </resources>

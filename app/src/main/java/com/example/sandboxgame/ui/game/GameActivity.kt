@@ -41,7 +41,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     var delete = 0
     var clanAmount = 0
     var satiety: Int = 0
-    var foodAmount: Int = 0
+
     @SuppressLint("UseCompatLoadingForDrawables")
     private val space: Space = Space()
     private val planetMoving: PlanetMoving = PlanetMoving()
@@ -65,7 +65,6 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val textNumberAmountDied: TextView by bind(R.id.number_amount_of_died)
     private val textNumberAmountInfected: TextView by bind(R.id.number_amount_of_infected)
     private val textNumberAmountClans: TextView by bind(R.id.number_amount_of_clans)
-    private val textNumberAmountFood: TextView by bind(R.id.number_amount_of_food)
 
     private val planetConstraint: View by bind(R.id.planet_constraint)
     private val planet1: ImageView by bind(R.id.cell_rec_blue)
@@ -84,6 +83,10 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val foodS: ImageView by bind(R.id.food_S)
     private val foodM: ImageView by bind(R.id.food_M)
     private val foodL: ImageView by bind(R.id.food_L)
+
+    private val questionConstraint: View by bind(R.id.constraint_question)
+    private val buttonYes: Button by bind(R.id.button_yes)
+    private val buttonNo: Button by bind(R.id.button_no)
 
     private val soundAddCell by lazy {MediaPlayer.create(this, R.raw.add_cell)}
     private val soundDeleteCell by lazy { MediaPlayer.create(this, R.raw.delete_cell)}
@@ -132,13 +135,21 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 
         planetConstraint.isVisible = false
         foodConstraint.isVisible = false
+        questionConstraint.isVisible = false
 
         soundInfectCell.setVolume(100f,100f)
 
         planetImage = resources.getDrawable(R.drawable.planet_1)
 
         buttonExit.setOnClickListener {
-            presenter.onButtonExitClicked()
+            questionConstraint.isVisible = true
+            planetMoving.pause_flg = planetMoving.pause_flg != true
+
+            soundButtonClick.start()
+        }
+
+        buttonNo.setOnClickListener {
+            presenter.onButtonNoClicked()
 
             soundButtonClick.start()
         }
@@ -512,7 +523,6 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             }
             if (food == null) {
                 space.addFoodUser(i, j, foodImage, satiety)
-                foodAmount += 1
                 soundGame(Command.ADD)
             }
         }
@@ -521,19 +531,9 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         textNumberAmount.text = planetAmount.toString()
         textNumberAmountDied.text = delete.toString()
         textNumberAmountInfected.text = infect.toString()
-        textNumberAmountFood.text = foodAmount.toString()
 
         val cellClansAmount = space.myPlanetList.count {
-            it.planetImage == resources.getDrawable(R.drawable.planet_1)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_2)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_3)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_4)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_5)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_6)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_7)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_8)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_9)
-                    || it.planetImage == resources.getDrawable(R.drawable.planet_10)}
+            it.planetImage == planetImage}
         textNumberAmountClans.text = cellClansAmount.toString()
 
     }

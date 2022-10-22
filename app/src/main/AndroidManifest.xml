@@ -45,6 +45,11 @@
             android:screenOrientation="landscape"
             tools:ignore="MissingClass,WrongManifestParent"/>
 
+        <activity
+            android:name=".ui.continue.ContinueActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="MissingClass,WrongManifestParent"/>
+
         <service
             android:enabled="true"
             android:name=".ui.music.MusicService" />

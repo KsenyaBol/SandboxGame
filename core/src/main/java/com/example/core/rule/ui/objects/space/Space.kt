@@ -90,27 +90,29 @@ class Space {
         val planet = myPlanetList.firstOrNull { planet ->
             planet.x == i && planet.y == j
         }
-        val food = myFoodList.firstOrNull { food ->
-            food.x == i && food.y == j
-        }
-        if (food != null) {
+        if (planet != null) {
+            val food = myFoodList.firstOrNull { food ->
+                food.x == i && food.y == j
+            }
+            if (food != null) {
 
-            val index = myPlanetList.indexOf(planet)
-            var satietyAll = satiety
-            satietyAll += food.satiety
-            myFoodList.remove(food)
-            myPlanetList[index] = Planet(
-                x = planet!!.x,
-                y = planet.y,
-                planetImage = planet.planetImage,
-                planetInfect = planet.planetInfect,
-                satiety = satietyAll,
-                age = age
-            )
-            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
-            spaceListener?.changeSpace(space = this)
+                val index = myPlanetList.indexOf(planet)
+                var satietyAll = satiety
+                satietyAll += food.satiety
+                myFoodList.remove(food)
+                myPlanetList[index] = Planet(
+                    x = planet.x,
+                    y = planet.y,
+                    planetImage = planet.planetImage,
+                    planetInfect = planet.planetInfect,
+                    satiety = satietyAll,
+                    age = age
+                )
+                spaceListener?.changeSpace(space = this)
 
+            }
         }
+
     }
 
 
@@ -126,7 +128,6 @@ class Space {
             myPlanetList.add(Planet(x = i, y = j, planetImage = planetImage, planetInfect = 0, satiety = 0, age = 0))
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect, satiety =
             planetSatiety, age = age)
-            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
 
         }
@@ -141,7 +142,6 @@ class Space {
         if (planet == null) {
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect, satiety =
             satiety, age = age)
-            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
         }
 
@@ -166,7 +166,6 @@ class Space {
         if (planet != null) {
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planet.planetImage, planetInfect = planet.planetInfect,
                 satiety = planet.satiety, age = age)
-            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
         }
 
@@ -179,7 +178,6 @@ class Space {
         if (planet != null) {
             myPlanetList[index] = Planet(x = i, y = j, planetImage = planet.planetImage, planetInfect = planetInfect,
                 satiety = planet.satiety, age = planet.age)
-            myPlanetList2 = myPlanetList.clone() as ArrayList<Planet>
             spaceListener?.changeSpace(space = this)
         }
     }

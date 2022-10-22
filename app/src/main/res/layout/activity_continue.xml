@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:background="@drawable/background_sandbox"
+    tools:ignore="MissingConstraints,MissingDefaultResource, ContentDescription">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.8"
+        app:layout_constraintWidth_percent="0.6"
+        android:scrollbars="none"
+        android:background="@drawable/button_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/button_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_back_arrow"
+                android:background="@color/transparent"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginHorizontal="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/title_continue"
+                app:layout_constraintBottom_toBottomOf="@id/title_continue"
+                android:contentDescription="@string/back" />
+
+        <TextView
+            style="@style/Text.Title"
+            android:id="@+id/title_continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_continue"
+            android:layout_margin="17dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/save_1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/focus_state"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/title_continue"/>
+
+            <ImageButton
+                android:id="@+id/save_2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/focus_state"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/save_1"/>
+
+            <ImageButton
+                android:id="@+id/save_3"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/focus_state"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/save_2"/>
+
+            <ImageButton
+                android:id="@+id/save_4"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/focus_state"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/save_3"/>
+
+            <ImageButton
+                android:id="@+id/save_5"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/focus_state"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/save_4"/>
+
+            <TextView
+                style="@style/Text.Big"
+                android:id="@+id/world_name_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_world_name"
+                android:layout_marginHorizontal="10dp"
+                app:layout_constraintStart_toStartOf="@id/save_1"
+                app:layout_constraintTop_toTopOf="@id/save_1"
+                app:layout_constraintBottom_toBottomOf="@id/save_1"/>
+
+            <TextView
+                style="@style/Text.Big"
+                android:id="@+id/world_name_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_world_name"
+                android:layout_marginHorizontal="10dp"
+                app:layout_constraintStart_toStartOf="@id/save_2"
+                app:layout_constraintTop_toTopOf="@id/save_2"
+                app:layout_constraintBottom_toBottomOf="@id/save_2"/>
+
+            <TextView
+                style="@style/Text.Big"
+                android:id="@+id/world_name_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_world_name"
+                android:layout_marginHorizontal="10dp"
+                app:layout_constraintStart_toStartOf="@id/save_3"
+                app:layout_constraintTop_toTopOf="@id/save_3"
+                app:layout_constraintBottom_toBottomOf="@id/save_3"/>
+
+            <TextView
+                style="@style/Text.Big"
+                android:id="@+id/world_name_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_world_name"
+                android:layout_marginHorizontal="10dp"
+                app:layout_constraintStart_toStartOf="@id/save_4"
+                app:layout_constraintTop_toTopOf="@id/save_4"
+                app:layout_constraintBottom_toBottomOf="@id/save_4"/>
+
+            <TextView
+                style="@style/Text.Big"
+                android:id="@+id/world_name_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_world_name"
+                android:layout_marginHorizontal="10dp"
+                app:layout_constraintStart_toStartOf="@id/save_5"
+                app:layout_constraintTop_toTopOf="@id/save_5"
+                app:layout_constraintBottom_toBottomOf="@id/save_5"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_time_save_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_time_save"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_1"
+                app:layout_constraintTop_toTopOf="@id/save_1"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_time_save_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_time_save"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_2"
+                app:layout_constraintTop_toTopOf="@id/save_2"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_time_save_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_time_save"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_3"
+                app:layout_constraintTop_toTopOf="@id/save_3"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_time_save_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_time_save"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_4"
+                app:layout_constraintTop_toTopOf="@id/save_4"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_time_save_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_time_save"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_5"
+                app:layout_constraintTop_toTopOf="@id/save_5"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_date_save_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_date_save"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_1"
+                app:layout_constraintBottom_toBottomOf="@+id/save_1"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_date_save_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_date_save"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_2"
+                app:layout_constraintBottom_toBottomOf="@+id/save_2"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_date_save_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_date_save"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_3"
+                app:layout_constraintBottom_toBottomOf="@+id/save_3"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_date_save_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_date_save"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_4"
+                app:layout_constraintBottom_toBottomOf="@+id/save_4"/>
+
+            <TextView
+                style="@style/Text.Medium.Roboto"
+                android:id="@+id/text_date_save_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/message_date_save"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@id/save_5"
+                app:layout_constraintBottom_toBottomOf="@+id/save_5"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

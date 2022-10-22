@@ -23,6 +23,7 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
     }
     override val presenter: MainPresenter by providePresenter()
     private val buttonStart: Button by bind(R.id.button_start)
+    private val buttonContinue: Button by bind(R.id.button_continue)
     private val buttonSetting: Button by bind(R.id.button_settings)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +43,11 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
         buttonStart.setOnClickListener {
            presenter.onButtonStartClicked()
+            soundButtonClick.start()
+        }
+
+        buttonContinue.setOnClickListener {
+            presenter.onButtonContinueClicked()
             soundButtonClick.start()
         }
 
