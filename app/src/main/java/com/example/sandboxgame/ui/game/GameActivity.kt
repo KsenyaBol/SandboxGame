@@ -17,13 +17,17 @@ import com.example.core.rule.ui.actions.FoodAdd
 import com.example.core.rule.ui.actions.PlanetAge
 import com.example.core.rule.ui.actions.PlanetInfect
 import com.example.core.rule.ui.actions.PlanetMoving
+import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.R
+import com.example.sandboxgame.di.WorldGameInfo
 import com.example.sandboxgame.ui.base.BaseActivity
+import com.example.sandboxgame.ui.name.NameActivity
 import com.example.sandboxgame.ui.widget.DrawingView
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
+import java.util.*
 
 class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
 
@@ -48,6 +52,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val addFood: FoodAdd = FoodAdd()
     private val planetAge: PlanetAge = PlanetAge()
     private val planetInfect: PlanetInfect = PlanetInfect()
+    private val nameActivity: NameActivity = NameActivity()
 
     override val presenter: GamePresenter by providePresenter {
         GamePresenter(this[EXTRA_SIZE]!!)
@@ -153,6 +158,13 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             presenter.onButtonNoClicked()
 
             soundButtonClick.start()
+        }
+
+        buttonYes.setOnClickListener {
+            val time = Calendar.AM_PM.toString()
+            val data = Calendar.DATE.toString()
+            WorldGameInfo(nameWorld = nameActivity.worldName, timeSave = time, dateSave = data, planet = space.myPlanetList,
+                food = space.myFoodList)
         }
 
         buttonReproduction.setOnClickListener {

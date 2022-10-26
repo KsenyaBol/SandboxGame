@@ -42,12 +42,11 @@ dependencies {
 //    dependency of modules on each other
     implementation project(path: ':core')
 
-
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.android.datatransport:transport-runtime:3.1.7'
+    implementation 'com.google.android.datatransport:transport-runtime:3.1.8'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
     implementation 'androidx.games:games-activity:1.2.1'
@@ -70,4 +69,16 @@ dependencies {
 
     // omega launcher
     implementation 'com.github.Omega-R:OmegaLaunchers:1.0.3'
+
+    //room
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.5.1")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:2.5.1")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:2.5.1")
+
+    // optional - Paging 3 Integration
+    implementation("androidx.room:room-paging:2.5.0-beta01")
 }

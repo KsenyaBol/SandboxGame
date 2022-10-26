@@ -23,7 +23,7 @@ class PlanetInfect {
                 var planetInfect = planet.planetInfect
                 planetInfect += 2
                 space.infectChange(index, x, y, planetInfect)
-//                space.planetDie(x, y, planetInfect)
+                space.planetDie(x, y, planetInfect)
             }
             handler.postDelayed(runnable!!, 2000)
         }
