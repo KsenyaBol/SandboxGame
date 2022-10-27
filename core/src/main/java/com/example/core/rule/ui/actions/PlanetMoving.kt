@@ -2,6 +2,8 @@ package com.example.core.rule.ui.actions
 
 import android.os.Handler
 import android.os.Looper
+import com.example.core.rule.ui.objects.food.ConvertFoodImage
+import com.example.core.rule.ui.objects.planet.ConvertPlanetImage
 import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 
@@ -11,6 +13,8 @@ open class PlanetMoving {
     var size: Int = 0
     var millis: Int = 200
     lateinit var space: Space
+    var convertPlanetImage: ConvertPlanetImage = ConvertPlanetImage()
+    var convertFoodImage: ConvertFoodImage = ConvertFoodImage()
 
 
     init {
@@ -69,9 +73,9 @@ open class PlanetMoving {
                             } else y -= 1
                         }
                     }
-                    space.planetMovingChange(x, y, planetImage, planetInfect, satiety, age)
+                    space.planetMovingChange(x, y, convertPlanetImage.planetString, planetInfect, satiety, age)
                     space.planetSatiety(x, y, satiety, age)
-                    space.planetDecay(x, y , planet.planetImage, planet.planetInfect, planet.satiety, age)
+                    space.planetDecay(x, y , convertPlanetImage.planetString, planet.planetInfect, planet.satiety, age)
                     space.planetDie(x, y, age)
                 }
             }

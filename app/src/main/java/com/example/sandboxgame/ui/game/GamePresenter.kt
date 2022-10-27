@@ -1,5 +1,6 @@
 package com.example.sandboxgame.ui.game
 
+import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
 
 class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
@@ -11,6 +12,12 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
     }
 
     fun onButtonNoClicked() {
+        exit()
+    }
+
+    fun onButtonYesClicked() {
+        command = Command.GAME_ACTIVITY
+        ContinueActivity.createLauncher().launch()
         exit()
     }
 
@@ -35,6 +42,6 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
     }
 
     enum class Command {
-        ADD, DELETE, INFECT, TREAT, ADD_FOOD
+        ADD, DELETE, INFECT, TREAT, ADD_FOOD, GAME_ACTIVITY
     }
 }

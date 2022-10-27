@@ -2,6 +2,7 @@ package com.example.sandboxgame.ui.continueGame
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.sandboxgame.R
@@ -22,6 +23,11 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
     private val musicService: MusicService = MusicService()
 
     private val buttonBack: ImageView by bind(R.id.button_back)
+    private val buttonSave1: ImageButton by bind(R.id.save_1)
+    private val buttonSave2: ImageButton by bind(R.id.save_2)
+    private val buttonSave3: ImageButton by bind(R.id.save_3)
+    private val buttonSave4: ImageButton by bind(R.id.save_4)
+    private val buttonSave5: ImageButton by bind(R.id.save_5)
     private val worldName1: TextView by bind(R.id.world_name_1)
     private val worldName2: TextView by bind(R.id.world_name_2)
     private val worldName3: TextView by bind(R.id.world_name_3)
@@ -38,7 +44,6 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
     private val textDateSave4: TextView by bind(R.id.text_date_save_4)
     private val textDateSave5: TextView by bind(R.id.text_date_save_5)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,6 +56,12 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
 
             soundButtonClick.start()
         }
+
+        buttonSave1.setOnClickListener {
+
+        }
+
+
     }
 
 }

@@ -16,34 +16,34 @@ open class SizeFragment : BaseActivity(R.layout.layout_field_size), SizeView {
     }
 
     override val presenter: SizePresenter by providePresenter()
-    private val buttonBigFaild: Button by bind(R.id.button_size_big)
-    private val buttonNormFaild: Button by bind(R.id.button_size_normal)
-    private val buttonSmallFaild: Button by bind(R.id.button_size_small)
+    private val buttonBigField: Button by bind(R.id.button_size_big)
+    private val buttonNormField: Button by bind(R.id.button_size_normal)
+    private val buttonSmallField: Button by bind(R.id.button_size_small)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
-        buttonBigFaild.setOnClickListener {
+        buttonBigField.setOnClickListener {
             it.isSelected = true
-            buttonNormFaild.isSelected = false
-            buttonSmallFaild.isSelected = false
+            buttonNormField.isSelected = false
+            buttonSmallField.isSelected = false
             presenter.onButtonBigClicked()
 
             soundButtonClick.start()
         }
-        buttonNormFaild.setOnClickListener {
+        buttonNormField.setOnClickListener {
             it.isSelected = true
-            buttonBigFaild.isSelected = false
-            buttonSmallFaild.isSelected = false
+            buttonBigField.isSelected = false
+            buttonSmallField.isSelected = false
             presenter.onButtonNormClicked()
 
             soundButtonClick.start()
         }
-        buttonSmallFaild.setOnClickListener {
+        buttonSmallField.setOnClickListener {
             it.isSelected = true
-            buttonBigFaild.isSelected = false
-            buttonNormFaild.isSelected = false
+            buttonBigField.isSelected = false
+            buttonNormField.isSelected = false
             presenter.onButtonSmallClicked()
 
             soundButtonClick.start()
