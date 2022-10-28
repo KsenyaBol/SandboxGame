@@ -1,7 +1,9 @@
 package com.example.core.rule.ui.objects.space
 
 import android.graphics.drawable.Drawable
+import androidx.room.Room
 import com.example.core.R
+import com.example.core.rule.ui.database.GameDatabase
 import com.example.core.rule.ui.objects.food.ConvertFoodImage
 import com.example.core.rule.ui.objects.food.Food
 import com.example.core.rule.ui.objects.planet.ConvertPlanetImage
@@ -18,8 +20,6 @@ class Space {
     var convertFoodImage: ConvertFoodImage = ConvertFoodImage()
 
 
-
-
     fun setValue(myPlanetList: ArrayList<Planet>, myPlanetList2: ArrayList<Planet>, spaceListener: SpaceListener, myFoodList:
     ArrayList<Food>) {
 
@@ -29,17 +29,14 @@ class Space {
         this.myFoodList = myFoodList
     }
 
-    fun addValue(i: Int, j: Int, planetImage: Drawable, planetInfect: Int, satiety: Int, age: Int) {
+    fun addValue(i: Int, j: Int, planetImage: ConvertPlanetImage.CommandImage, planetInfect: Int, satiety: Int, age: Int) {
 
         val planet = myPlanetList.firstOrNull { planet ->
             planet.x == i && planet.y == j
         }
         if (planet == null) {
-            myPlanetList.add(Planet(x = i, y = j, planetImage = convertPlanetImage.planetString, planetInfect =
-            planetInfect,
-                satiety =
-            satiety,
-                age = age))
+            myPlanetList.add(Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect,
+                satiety = satiety, age = age))
             spaceListener?.changeSpace(space = this)
         }
 
@@ -83,13 +80,13 @@ class Space {
 
     }
 
-    fun addFoodUser(i: Int, j: Int, foodImage: Drawable, satiety: Int) {
+    fun addFoodUser(i: Int, j: Int, foodCommand: ConvertFoodImage.CommandFood, satiety: Int) {
 
         val food = myFoodList.firstOrNull {food ->
             food.x == i && food.y == j
         }
         if (food == null) {
-            myFoodList.add(Food(x = i, y = j, foodImage = convertFoodImage.foodString , satiety = satiety))
+            myFoodList.add(Food(x = i, y = j, foodImage = foodCommand , satiety = satiety))
             spaceListener?.changeSpace(space = this)
         }
 
@@ -135,8 +132,8 @@ class Space {
 
             val index = myPlanetList.indexOf(planet)
             val planetSatiety = satiety - 100
-            myPlanetList.add(Planet(x = i, y = j, planetImage = convertPlanetImage.planetString, planetInfect = 0, satiety = 0, age = 0))
-            myPlanetList[index] = Planet(x = i, y = j, planetImage = convertPlanetImage.planetString, planetInfect = planetInfect, satiety =
+            myPlanetList.add(Planet(x = i, y = j, planetImage = planetImage, planetInfect = 0, satiety = 0, age = 0))
+            myPlanetList[index] = Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect, satiety =
             planetSatiety, age = age)
             spaceListener?.changeSpace(space = this)
 
@@ -152,7 +149,7 @@ class Space {
 
         if (planet != null) {
             val index = myPlanetList.indexOf(planet)
-            myPlanetList[index] = Planet(x = i, y = j, planetImage = convertPlanetImage.planetString, planetInfect = planetInfect, satiety =
+            myPlanetList[index] = Planet(x = i, y = j, planetImage = planetImage, planetInfect = planetInfect, satiety =
             satiety, age = age)
             spaceListener?.changeSpace(space = this)
         }
@@ -165,7 +162,7 @@ class Space {
             food.x == i && food.y == j
         }
         if (food == null) {
-            myFoodList.add(Food(x = i, y = j, foodImage = convertFoodImage.foodString , satiety = satiety))
+            myFoodList.add(Food(x = i, y = j, foodImage = convertFoodImage.food_M , satiety = satiety))
             spaceListener?.changeSpace(space = this)
         }
 

@@ -60,30 +60,13 @@ dependencies {
     // omega launcher
     implementation 'com.github.Omega-R:OmegaLaunchers:1.0.3'
 
-    //room
+    //ROOM
+    implementation "androidx.room:room-runtime:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+    implementation "androidx.room:room-ktx:2.4.3"
+    implementation "androidx.room:room-paging:2.4.3"
 
-    implementation("androidx.room:room-runtime:2.4.3")
-    annotationProcessor("androidx.room:room-compiler:2.4.3")
-
-    // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:2.4.3")
-
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.4.3")
-
-    // optional - RxJava2 support for Room
-    implementation("androidx.room:room-rxjava2:2.4.3")
-
-    // optional - RxJava3 support for Room
-    implementation("androidx.room:room-rxjava3:2.4.3")
-
-    // optional - Guava support for Room, including Optional and ListenableFuture
-    implementation("androidx.room:room-guava:2.4.3")
-
-    // optional - Test helpers
-    testImplementation("androidx.room:room-testing:2.4.3")
-
-    // optional - Paging 3 Integration
-    implementation("androidx.room:room-paging:2.5.0-beta01")
+// Paging 3.0
+    implementation 'androidx.paging:paging-compose:1.0.0-alpha15'
 
 }

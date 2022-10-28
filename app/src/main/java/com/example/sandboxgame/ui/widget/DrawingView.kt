@@ -30,8 +30,6 @@ class DrawingView : View, SpaceListener {
     }
 
     var onTapCellListener: OnTapCellListener? = null
-    var planetIm = resources.getDrawable(R.drawable.planet_1)
-    var foodIm = resources.getDrawable(R.drawable.planet_food_3)
 
     var space: Space? = null
     set(value) {
@@ -84,12 +82,14 @@ class DrawingView : View, SpaceListener {
         super.onDraw(canvas)
 
         val sizeH = height / size.toFloat()
+        var planetIm = resources.getDrawable(R.drawable.planet_1)
 
         if (space!!.myFoodList.size > 0) {
             space!!.myFoodList.forEach { food ->
                 val x = sizeH * food.x
                 val y = sizeH * food.y
                 val satiety = food.satiety
+                var foodIm = resources.getDrawable(R.drawable.planet_food_1)
 
                 if (food.foodImage == ConvertFoodImage.CommandFood.FOOD_XS) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_3)
@@ -151,6 +151,7 @@ class DrawingView : View, SpaceListener {
                 val x = sizeH * planet.x
                 val y = sizeH * planet.y
                 val infect = planet.planetInfect
+
 
                 if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET1) {
                     planetIm = resources.getDrawable(R.drawable.planet_1)

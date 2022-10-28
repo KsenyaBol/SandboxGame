@@ -2,7 +2,7 @@ package com.example.sandboxgame.di
 
 import android.app.Application
 import androidx.room.Room.databaseBuilder
-import com.example.sandboxgame.di.database.GameDatabase
+import com.example.core.rule.ui.database.GameDatabase
 
 
 class App : Application() {

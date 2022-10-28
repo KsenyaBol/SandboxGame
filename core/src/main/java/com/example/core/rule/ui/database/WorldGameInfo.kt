@@ -1,4 +1,4 @@
-package com.example.sandboxgame.di.database
+package com.example.core.rule.ui.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class WorldGameInfo (
     @PrimaryKey
     @ColumnInfo(name = "nameWorld")
-    val nameWorld: String,
-    val timeSave: String,
-    val dateSave: String,
+    var nameWorld: String,
+    var timeSave: String,
+    var dateSave: String,
 )

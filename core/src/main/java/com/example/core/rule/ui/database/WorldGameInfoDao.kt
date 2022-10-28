@@ -1,4 +1,4 @@
-package com.example.sandboxgame.di.database
+package com.example.core.rule.ui.database
 
 import androidx.room.*
 

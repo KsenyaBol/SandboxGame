@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.sandboxgame.R
+import com.example.core.rule.ui.database.WorldGameInfo
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.music.MusicService
 import com.omegar.libs.omegalaunchers.createActivityLauncher
@@ -44,6 +45,8 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
     private val textDateSave4: TextView by bind(R.id.text_date_save_4)
     private val textDateSave5: TextView by bind(R.id.text_date_save_5)
 
+    private var commandSave = SaveCommand.SAVE_1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,10 +61,60 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
         }
 
         buttonSave1.setOnClickListener {
+            commandSave = SaveCommand.SAVE_1
+        }
 
+        buttonSave2.setOnClickListener {
+            commandSave = SaveCommand.SAVE_2
+        }
+
+        buttonSave3.setOnClickListener {
+            commandSave = SaveCommand.SAVE_3
+        }
+
+        buttonSave4.setOnClickListener {
+            commandSave = SaveCommand.SAVE_4
+        }
+
+        buttonSave5.setOnClickListener {
+            commandSave = SaveCommand.SAVE_5
         }
 
 
+    }
+
+    enum class SaveCommand{
+        SAVE_1, SAVE_2, SAVE_3, SAVE_4, SAVE_5
+    }
+
+    fun saveGameInfo(name: String, time: String, date: String) {
+        if (commandSave == SaveCommand.SAVE_1) {
+            worldName1.text = name
+            textTimeSave1.text = time
+            textDateSave1.text = date
+        }
+        if (commandSave == SaveCommand.SAVE_2) {
+            worldName2.text = name
+            textTimeSave2.text = time
+            textDateSave2.text = date
+        }
+        if (commandSave == SaveCommand.SAVE_3) {
+            worldName3.text = name
+            textTimeSave3.text = time
+            textDateSave3.text = date
+        }
+        if (commandSave == SaveCommand.SAVE_4) {
+            worldName4.text = name
+            textTimeSave4.text = time
+            textDateSave4.text = date
+        }
+        if (commandSave == SaveCommand.SAVE_5) {
+            worldName5.text = name
+            textTimeSave5.text = time
+            textDateSave5.text = date
+        }
+
+        WorldGameInfo(name, time, date)
     }
 
 }
