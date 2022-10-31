@@ -6,7 +6,7 @@ import com.example.core.rule.ui.objects.space.Space
 
 class PlanetAge {
 
-    lateinit var space: Space
+    var space: Space = Space()
 
     init {
         planetAge()
@@ -19,8 +19,8 @@ class PlanetAge {
         runnable = Runnable {
             space.myPlanetList.forEachIndexed { index, planet ->
                val index = index
-               val x = planet.x
-               val y = planet.y
+               val x = planet.planetX
+               val y = planet.planetY
                var age = planet.age
 
                 age += 2

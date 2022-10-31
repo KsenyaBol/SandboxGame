@@ -13,9 +13,9 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
 
      var command: Command? = null
     private val continueActivity: ContinueActivity = ContinueActivity()
-    private val nameActivity: NameActivity = NameActivity()
-    private val gameActivity: GameActivity = GameActivity()
     lateinit var space: Space
+//    lateinit var nameWorld: String
+    private var gameActivity: GameActivity = GameActivity()
 
     init {
         viewState.size = size
@@ -26,17 +26,19 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
     }
 
     fun onButtonYesClicked() {
-        command = Command.GAME_ACTIVITY
         ContinueActivity.createLauncher().launch()
 
-        val currentDate: Date = Date()
-        val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val timeFormat: DateFormat = SimpleDateFormat("HH/mm", Locale.getDefault())
-        val dateText: String = dateFormat.format(currentDate)
-        val timeText: String = timeFormat.format(currentDate)
+//        val currentDate: Date = Date()
+//        val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+//        val timeFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+//        val dateText: String = dateFormat.format(currentDate)
+//        val timeText: String = timeFormat.format(currentDate)
 
-        continueActivity.saveGameInfo(nameActivity.name.text.toString(), timeText, dateText)
-        gameActivity.db.worldGameInfoDao?.insertWorld(WorldGameInfo(nameActivity.name.text.toString(), timeText, dateText))
+//        continueActivity.saveGameInfo(nameWorld, timeText, dateText)
+//        gameActivity.db.worldGameInfoDao?.insertWorld(WorldGameInfo(nameWorld, timeText, dateText,
+//            space.id))
+//
+//        gameActivity.db.worldGameInfoDao?.getSpaceWithPlanetAndFood()
 
         exit()
     }
@@ -62,6 +64,6 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
     }
 
     enum class Command {
-        ADD, DELETE, INFECT, TREAT, ADD_FOOD, GAME_ACTIVITY
+        ADD, DELETE, INFECT, TREAT, ADD_FOOD
     }
 }

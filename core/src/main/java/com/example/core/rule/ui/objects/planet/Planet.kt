@@ -1,14 +1,16 @@
 package com.example.core.rule.ui.objects.planet
 
-import android.graphics.drawable.Drawable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 
-@Entity(primaryKeys = ["x", "y"])
+@Entity(primaryKeys = ["planetX", "planetY"])
 data class Planet(
-    var x: Int,
-    var y: Int,
-    var planetImage: ConvertPlanetImage.CommandImage,
+    var planetX: Int,
+    var planetY: Int,
+    var planetImage: ConvertPlanetImage.Planet,
     var planetInfect: Int,
-    var satiety: Int,
+    var planetSatiety: Int,
     var age: Int,
+    @ColumnInfo(name = "space_id")
+    val spaceId: Int,
 )

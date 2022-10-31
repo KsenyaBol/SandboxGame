@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.sandboxgame.R
 import com.example.core.rule.ui.database.WorldGameInfo
+import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.music.MusicService
 import com.omegar.libs.omegalaunchers.createActivityLauncher
@@ -22,6 +23,7 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
     override val presenter: ContinuePresenter by providePresenter()
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
+    lateinit var space: Space
 
     private val buttonBack: ImageView by bind(R.id.button_back)
     private val buttonSave1: ImageButton by bind(R.id.save_1)
@@ -62,22 +64,57 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
 
         buttonSave1.setOnClickListener {
             commandSave = SaveCommand.SAVE_1
+            it.isSelected = true
+            buttonSave2.isSelected = false
+            buttonSave3.isSelected = false
+            buttonSave4.isSelected = false
+            buttonSave5.isSelected = false
+
+            soundButtonClick.start()
         }
 
         buttonSave2.setOnClickListener {
             commandSave = SaveCommand.SAVE_2
+            it.isSelected = true
+            buttonSave1.isSelected = false
+            buttonSave3.isSelected = false
+            buttonSave4.isSelected = false
+            buttonSave5.isSelected = false
+
+            soundButtonClick.start()
         }
 
         buttonSave3.setOnClickListener {
             commandSave = SaveCommand.SAVE_3
+            it.isSelected = true
+            buttonSave1.isSelected = false
+            buttonSave2.isSelected = false
+            buttonSave4.isSelected = false
+            buttonSave5.isSelected = false
+
+            soundButtonClick.start()
         }
 
         buttonSave4.setOnClickListener {
             commandSave = SaveCommand.SAVE_4
+            it.isSelected = true
+            buttonSave1.isSelected = false
+            buttonSave2.isSelected = false
+            buttonSave3.isSelected = false
+            buttonSave5.isSelected = false
+
+            soundButtonClick.start()
         }
 
         buttonSave5.setOnClickListener {
             commandSave = SaveCommand.SAVE_5
+            it.isSelected = true
+            buttonSave1.isSelected = false
+            buttonSave2.isSelected = false
+            buttonSave3.isSelected = false
+            buttonSave4.isSelected = false
+
+            soundButtonClick.start()
         }
 
 
@@ -87,34 +124,34 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
         SAVE_1, SAVE_2, SAVE_3, SAVE_4, SAVE_5
     }
 
-    fun saveGameInfo(name: String, time: String, date: String) {
+    fun saveGameInfo(time: String, date: String) {
         if (commandSave == SaveCommand.SAVE_1) {
-            worldName1.text = name
+            worldName1.text = "name"
             textTimeSave1.text = time
             textDateSave1.text = date
         }
         if (commandSave == SaveCommand.SAVE_2) {
-            worldName2.text = name
+            worldName2.text = "name"
             textTimeSave2.text = time
             textDateSave2.text = date
         }
         if (commandSave == SaveCommand.SAVE_3) {
-            worldName3.text = name
+            worldName3.text = "name"
             textTimeSave3.text = time
             textDateSave3.text = date
         }
         if (commandSave == SaveCommand.SAVE_4) {
-            worldName4.text = name
+            worldName4.text = "name"
             textTimeSave4.text = time
             textDateSave4.text = date
         }
         if (commandSave == SaveCommand.SAVE_5) {
-            worldName5.text = name
+            worldName5.text = "name"
             textTimeSave5.text = time
             textDateSave5.text = date
         }
 
-        WorldGameInfo(name, time, date)
+//        WorldGameInfo(name, time, date, space.id)
     }
 
 }

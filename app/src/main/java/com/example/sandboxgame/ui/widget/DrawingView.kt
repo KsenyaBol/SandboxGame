@@ -91,16 +91,16 @@ class DrawingView : View, SpaceListener {
                 val satiety = food.satiety
                 var foodIm = resources.getDrawable(R.drawable.planet_food_1)
 
-                if (food.foodImage == ConvertFoodImage.CommandFood.FOOD_XS) {
+                if (food.foodImage == ConvertFoodImage.Food.FOOD_XS) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_3)
                 }
-                if (food.foodImage == ConvertFoodImage.CommandFood.FOOD_S) {
+                if (food.foodImage == ConvertFoodImage.Food.FOOD_S) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_2)
                 }
-                if (food.foodImage == ConvertFoodImage.CommandFood.FOOD_M) {
+                if (food.foodImage == ConvertFoodImage.Food.FOOD_M) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_1)
                 }
-                if (food.foodImage == ConvertFoodImage.CommandFood.FOOD_L) {
+                if (food.foodImage == ConvertFoodImage.Food.FOOD_L) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_4)
                 }
 
@@ -148,39 +148,39 @@ class DrawingView : View, SpaceListener {
 
         if (space!!.myPlanetList.size > 0) {
             space!!.myPlanetList.forEach { planet ->
-                val x = sizeH * planet.x
-                val y = sizeH * planet.y
+                val x = sizeH * planet.planetX
+                val y = sizeH * planet.planetY
                 val infect = planet.planetInfect
 
 
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET1) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET1) {
                     planetIm = resources.getDrawable(R.drawable.planet_1)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET2) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET2) {
                     planetIm = resources.getDrawable(R.drawable.planet_2)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET3) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET3) {
                     planetIm = resources.getDrawable(R.drawable.planet_3)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET4) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET4) {
                     planetIm = resources.getDrawable(R.drawable.planet_4)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET5) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET5) {
                     planetIm = resources.getDrawable(R.drawable.planet_5)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET6) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET6) {
                     planetIm = resources.getDrawable(R.drawable.planet_6)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET7) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET7) {
                     planetIm = resources.getDrawable(R.drawable.planet_7)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET8) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET8) {
                     planetIm = resources.getDrawable(R.drawable.planet_8)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET9) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET9) {
                     planetIm = resources.getDrawable(R.drawable.planet_9)
                 }
-                if (planet.planetImage == ConvertPlanetImage.CommandImage.PLANET10) {
+                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET10) {
                     planetIm = resources.getDrawable(R.drawable.planet_10)
                 }
 
@@ -207,33 +207,33 @@ class DrawingView : View, SpaceListener {
             }
         }
 
-        if (space!!.myPlanetList.size > 0) {
-            space!!.myPlanetList.forEach { planet ->
-                val x = sizeH * planet.x
-                val y = sizeH * planet.y
-                val age = planet.age
-
-                if (age >= 100) {
-                    animation1.setBounds(
-                        (x - 9).toInt(),
-                        (y - 9).toInt(),
-                        ((x + 9) + sizeH).toInt(),
-                        ((y + 9) + sizeH).toInt()
-                    )
-                    animation1.draw(canvas)
-
-                    planetIm.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt() , (y + sizeH).toInt())
-                    planetIm.draw(canvas)
-                }
-                else {
-
-                    planetIm.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
-                    planetIm.draw(canvas)
-
-                }
-
-            }
-        }
+//        if (space!!.myPlanetList.size > 0) {
+//            space!!.myPlanetList.forEach { planet ->
+//                val x = sizeH * planet.planetX
+//                val y = sizeH * planet.planetY
+//                val age = planet.age
+//
+//                if (age >= 100) {
+//                    animation1.setBounds(
+//                        (x - 9).toInt(),
+//                        (y - 9).toInt(),
+//                        ((x + 9) + sizeH).toInt(),
+//                        ((y + 9) + sizeH).toInt()
+//                    )
+//                    animation1.draw(canvas)
+//
+//                    planetIm.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt() , (y + sizeH).toInt())
+//                    planetIm.draw(canvas)
+//                }
+//                else {
+//
+//                    planetIm.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
+//                    planetIm.draw(canvas)
+//
+//                }
+//
+//            }
+//        }
 
     }
 

@@ -13,6 +13,7 @@
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/bk_rectangle.xml" value="0.18" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/button_background.xml" value="0.2085" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/button_border.xml" value="0.2575" />
+        <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/button_border_gray.xml" value="0.2535" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/button_pause_reproduction.xml" value="0.252" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/cell_color_blue.xml" value="0.252" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/cell_color_dark_blue.xml" value="0.252" />
@@ -24,6 +25,7 @@
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/cell_color_red.xml" value="0.252" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/cell_color_tonyc_pink.xml" value="0.252" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/cell_color_yellow.xml" value="0.252" />
+        <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/focus_button_border.xml" value="0.2535" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/focus_state.xml" value="0.259" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/focus_state_small.xml" value="0.252" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/drawable/food_focus_state.xml" value="0.2535" />
@@ -41,7 +43,7 @@
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/layout-land/activity_game.xml" value="0.16" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/layout-land/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/layout-land/layout.xml" value="0.25" />
-        <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/layout/activity_continue.xml" value="0.33" />
+        <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/layout/activity_continue.xml" value="0.2" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/layout/activity_game.xml" value="0.18" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/Omega/AndroidStudioProjects/SandboxGame2/app/src/main/res/layout/activity_name.xml" value="0.25" />

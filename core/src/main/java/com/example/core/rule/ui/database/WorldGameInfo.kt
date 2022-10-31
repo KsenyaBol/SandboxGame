@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class WorldGameInfo (
-    @PrimaryKey
-    @ColumnInfo(name = "nameWorld")
-    var nameWorld: String,
+    @PrimaryKey var nameWorld: String,
     var timeSave: String,
     var dateSave: String,
+    @ColumnInfo(name = "space_id")
+    val spaceId: Int,
 )
