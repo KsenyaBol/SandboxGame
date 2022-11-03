@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
     android:background="@drawable/background_sandbox"
-    tools:ignore="MissingConstraints,MissingDefaultResource, ContentDescription">
+    tools:ignore="MissingConstraints,MissingDefaultResource, ContentDescription, HardcodedText">
 
     <ScrollView
         android:layout_width="0dp"
@@ -34,13 +34,13 @@
                 android:focusable="true"
                 android:layout_marginHorizontal="15dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/title_continue"
-                app:layout_constraintBottom_toBottomOf="@id/title_continue"
+                app:layout_constraintTop_toTopOf="@id/game_save"
+                app:layout_constraintBottom_toBottomOf="@id/game_save"
                 android:contentDescription="@string/back" />
 
         <TextView
             style="@style/Text.Title"
-            android:id="@+id/title_continue"
+            android:id="@+id/game_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_continue"
@@ -56,7 +56,7 @@
                 android:background="@drawable/focus_button_border"
                 android:layout_marginHorizontal="12dp"
                 android:layout_marginTop="15dp"
-                app:layout_constraintTop_toBottomOf="@+id/title_continue"/>
+                app:layout_constraintTop_toBottomOf="@+id/game_save"/>
 
             <ImageButton
                 android:id="@+id/save_2"
@@ -99,7 +99,7 @@
                 android:id="@+id/world_name_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/message_world_name"
+                android:text="World 1"
                 android:layout_marginHorizontal="10dp"
                 app:layout_constraintStart_toStartOf="@id/save_1"
                 app:layout_constraintTop_toTopOf="@id/save_1"
@@ -110,7 +110,7 @@
                 android:id="@+id/world_name_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/message_world_name"
+                android:text="World 2"
                 android:layout_marginHorizontal="10dp"
                 app:layout_constraintStart_toStartOf="@id/save_2"
                 app:layout_constraintTop_toTopOf="@id/save_2"
@@ -121,7 +121,7 @@
                 android:id="@+id/world_name_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/message_world_name"
+                android:text="World 3"
                 android:layout_marginHorizontal="10dp"
                 app:layout_constraintStart_toStartOf="@id/save_3"
                 app:layout_constraintTop_toTopOf="@id/save_3"
@@ -132,7 +132,7 @@
                 android:id="@+id/world_name_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/message_world_name"
+                android:text="World 4"
                 android:layout_marginHorizontal="10dp"
                 app:layout_constraintStart_toStartOf="@id/save_4"
                 app:layout_constraintTop_toTopOf="@id/save_4"
@@ -143,7 +143,7 @@
                 android:id="@+id/world_name_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/message_world_name"
+                android:text="World 5"
                 android:layout_marginHorizontal="10dp"
                 app:layout_constraintStart_toStartOf="@id/save_5"
                 app:layout_constraintTop_toTopOf="@id/save_5"

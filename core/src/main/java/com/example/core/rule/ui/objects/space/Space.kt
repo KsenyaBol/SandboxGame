@@ -8,25 +8,33 @@ import com.example.core.rule.ui.objects.planet.ConvertPlanetImage
 import com.example.core.rule.ui.objects.planet.Planet
 import kotlin.collections.ArrayList
 
-@Entity
 class Space {
 
-    @PrimaryKey var id: Int = 1
     var myPlanetList: ArrayList<Planet> = arrayListOf()
     var myFoodList: ArrayList<Food> = arrayListOf()
+    var mySpaceList: ArrayList<SpaceObject> = arrayListOf()
     var spaceListener: SpaceListener? = null
-    var convertFoodImage: ConvertFoodImage = ConvertFoodImage()
+    var id: Int = 0
 
+    enum class FoodImage {
+        FOOD_XS, FOOD_S, FOOD_M, FOOD_L
+    }
+
+    enum class PlanetImage {
+        PLANET1, PLANET2, PLANET3, PLANET4, PLANET5,
+        PLANET6, PLANET7, PLANET8,PLANET9, PLANET10,
+    }
 
     fun setValue(myPlanetList: ArrayList<Planet>, spaceListener: SpaceListener, myFoodList:
-    ArrayList<Food>) {
+    ArrayList<Food>, mySpaceList: ArrayList<SpaceObject>) {
 
         this.myPlanetList = myPlanetList
         this.spaceListener = spaceListener
         this.myFoodList = myFoodList
+        this.mySpaceList = mySpaceList
     }
 
-    fun addValue(i: Int, j: Int, planetImage: ConvertPlanetImage.Planet, planetInfect: Int, satiety: Int, age: Int) {
+    fun addValue(i: Int, j: Int, planetImage: PlanetImage, planetInfect: Int, satiety: Int, age: Int) {
 
         val planet = myPlanetList.firstOrNull { planet ->
             planet.planetX == i && planet.planetY == j
@@ -77,7 +85,7 @@ class Space {
 
     }
 
-    fun addFoodUser(i: Int, j: Int, foodCommand: ConvertFoodImage.Food, satiety: Int) {
+    fun addFoodUser(i: Int, j: Int, foodCommand: FoodImage, satiety: Int) {
 
         val food = myFoodList.firstOrNull {food ->
             food.x == i && food.y == j
@@ -123,7 +131,7 @@ class Space {
     }
 
 
-    fun planetDecay(i: Int, j: Int, planetImage: ConvertPlanetImage.Planet, planetInfect: Int, satiety: Int, age: Int) {
+    fun planetDecay(i: Int, j: Int, planetImage: PlanetImage, planetInfect: Int, satiety: Int, age: Int) {
 
         val planet = myPlanetList.firstOrNull{planet ->
             (planet.planetX == i && planet.planetY == j) || (planet.planetX == i - 1 && planet.planetY == j) || (planet.planetX
@@ -142,7 +150,7 @@ class Space {
         }
     }
 
-    fun planetMovingChange(i: Int, j: Int, planetImage: ConvertPlanetImage.Planet, planetInfect: Int, satiety: Int, age: Int) {
+    fun planetMovingChange(i: Int, j: Int, planetImage: PlanetImage, planetInfect: Int, satiety: Int, age: Int) {
 
         val planet = myPlanetList.firstOrNull { planet ->
             (planet.planetX == i - 1 && planet.planetY == j) || (planet.planetX
@@ -165,7 +173,7 @@ class Space {
             food.x == i && food.y == j
         }
         if (food == null) {
-            myFoodList.add(Food(x = i, y = j, foodImage = convertFoodImage.food_M , satiety = satiety, id))
+            myFoodList.add(Food(x = i, y = j, foodImage = FoodImage.FOOD_M , satiety = satiety, id))
             spaceListener?.changeSpace(space = this)
         }
 
@@ -216,6 +224,8 @@ class Space {
 
         }
     }
+
+
 
 
 

@@ -91,16 +91,16 @@ class DrawingView : View, SpaceListener {
                 val satiety = food.satiety
                 var foodIm = resources.getDrawable(R.drawable.planet_food_1)
 
-                if (food.foodImage == ConvertFoodImage.Food.FOOD_XS) {
+                if (food.foodImage == Space.FoodImage.FOOD_XS) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_3)
                 }
-                if (food.foodImage == ConvertFoodImage.Food.FOOD_S) {
+                if (food.foodImage == Space.FoodImage.FOOD_S) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_2)
                 }
-                if (food.foodImage == ConvertFoodImage.Food.FOOD_M) {
+                if (food.foodImage == Space.FoodImage.FOOD_M) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_1)
                 }
-                if (food.foodImage == ConvertFoodImage.Food.FOOD_L) {
+                if (food.foodImage == Space.FoodImage.FOOD_L) {
                     foodIm = resources.getDrawable(R.drawable.planet_food_4)
                 }
 
@@ -153,34 +153,34 @@ class DrawingView : View, SpaceListener {
                 val infect = planet.planetInfect
 
 
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET1) {
+                if (planet.planetImage == Space.PlanetImage.PLANET1) {
                     planetIm = resources.getDrawable(R.drawable.planet_1)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET2) {
+                if (planet.planetImage == Space.PlanetImage.PLANET2) {
                     planetIm = resources.getDrawable(R.drawable.planet_2)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET3) {
+                if (planet.planetImage == Space.PlanetImage.PLANET3) {
                     planetIm = resources.getDrawable(R.drawable.planet_3)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET4) {
+                if (planet.planetImage == Space.PlanetImage.PLANET4) {
                     planetIm = resources.getDrawable(R.drawable.planet_4)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET5) {
+                if (planet.planetImage == Space.PlanetImage.PLANET5) {
                     planetIm = resources.getDrawable(R.drawable.planet_5)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET6) {
+                if (planet.planetImage == Space.PlanetImage.PLANET6) {
                     planetIm = resources.getDrawable(R.drawable.planet_6)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET7) {
+                if (planet.planetImage == Space.PlanetImage.PLANET7) {
                     planetIm = resources.getDrawable(R.drawable.planet_7)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET8) {
+                if (planet.planetImage == Space.PlanetImage.PLANET8) {
                     planetIm = resources.getDrawable(R.drawable.planet_8)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET9) {
+                if (planet.planetImage == Space.PlanetImage.PLANET9) {
                     planetIm = resources.getDrawable(R.drawable.planet_9)
                 }
-                if (planet.planetImage == ConvertPlanetImage.Planet.PLANET10) {
+                if (planet.planetImage == Space.PlanetImage.PLANET10) {
                     planetIm = resources.getDrawable(R.drawable.planet_10)
                 }
 

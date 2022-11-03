@@ -1,25 +1,30 @@
 package com.example.core.rule.ui.objects.space
 
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
-import com.example.core.rule.ui.database.SpacePlanetFoodNameOfWorld
+import androidx.room.*
 import com.example.core.rule.ui.database.SpaceWithPlanetAndFood
-import com.example.core.rule.ui.database.WorldGameInfo
+import com.example.core.rule.ui.objects.food.Food
+import com.example.core.rule.ui.objects.planet.Planet
 
+
+@Dao
 interface SpaceDao {
 
+    @Transaction
+    suspend fun setSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>) {
+        deleteSpace(id)
+        insertSpace(id, planet, food )
+    }
+
     @Insert
-    fun insertSpace(vararg space: Space?)
+    fun insertSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
     @Update
-    fun updateSpace(vararg space: Space?)
+    fun updateSpace(id: SpaceObject?)
 
     @Delete
-    fun deleteSpace(vararg space: Space)
+    fun deleteSpace(id: SpaceObject)
 
-//    @Query ("SELECT id from space")
-//    fun getSpaceWithPlanetAndFood(): List<SpaceWithPlanetAndFood?>?
+    @Query("SELECT id from SpaceObject")
+    fun getSpaceWithPlanetAndFood(): List<SpaceWithPlanetAndFood?>?
 
 }

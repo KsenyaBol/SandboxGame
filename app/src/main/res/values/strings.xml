@@ -29,5 +29,7 @@
     <string name="title_name_world" translatable="false">Name The World</string>
     <string name="message_name_world">Enter World Name</string>
     <string name="message_agree" translatable="false">OK</string>
+    <string name="title_save_game" translatable="false">SAVE THE GAME</string>
+    <string name="button_save">SAVE</string>
 
 </resources>

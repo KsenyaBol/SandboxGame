@@ -23,6 +23,8 @@ import com.example.core.rule.ui.objects.planet.ConvertPlanetImage
 import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.R
 import com.example.core.rule.ui.database.GameDatabase
+import com.example.core.rule.ui.objects.planet.Planet
+import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.example.sandboxgame.ui.widget.DrawingView
@@ -49,6 +51,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     var delete = 0
     var clanAmount = 0
     var satiety: Int = 0
+    var id = 0
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private val space: Space = Space()
@@ -57,11 +60,9 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val planetAge: PlanetAge = PlanetAge()
     private val planetInfect: PlanetInfect = PlanetInfect()
     private val continueActivity: ContinueActivity = ContinueActivity()
-    private val convertPlanetImage: ConvertPlanetImage = ConvertPlanetImage()
-    private val convertFoodImage: ConvertFoodImage = ConvertFoodImage()
 
-    var foodImage = convertFoodImage.food_M
-    var planetImage = (ConvertPlanetImage.Planet.PLANET5)
+    var foodImage = Space.FoodImage.FOOD_M
+    var planetImage = (Space.PlanetImage.PLANET5)
     lateinit var nameWorld: String
 
     override val presenter: GamePresenter by providePresenter {
@@ -120,6 +121,10 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             addFood.size = value
         }
 
+//    val db = Room.databaseBuilder(applicationContext,
+//        GameDatabase::class.java, "database-name"
+//    ).build()
+
     @SuppressLint("ResourceType", "NewApi", "UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.M)
 
@@ -163,19 +168,11 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
 
-            val currentDate: Date = Date()
-            val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val timeFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val dateText: String = dateFormat.format(currentDate)
-            val timeText: String = timeFormat.format(currentDate)
+//            space.id = id
+//            space.mySpaceList.add(SpaceObject(id))
+//            db.space?.insertSpace(SpaceObject(id), space.myPlanetList, space.myFoodList)
 
-            val db = Room.databaseBuilder(
-                applicationContext,
-                GameDatabase::class.java, "GameDatabase"
-            ).build()
-
-            db.worldGameInfoDao?.getSpaceWithPlanetAndFood()
-            continueActivity.saveGameInfo(timeText, dateText)
+            id += 1
 
             soundButtonClick.start()
         }
@@ -292,7 +289,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             foodL.isSelected = false
 
             satiety = 1
-            foodImage = (ConvertFoodImage.Food.FOOD_XS)
+            foodImage = (Space.FoodImage.FOOD_XS)
         }
 
         foodS.setOnClickListener {
@@ -302,7 +299,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             foodL.isSelected = false
 
             satiety = 5
-            foodImage = (ConvertFoodImage.Food.FOOD_S)
+            foodImage = (Space.FoodImage.FOOD_S)
         }
 
         foodM.setOnClickListener {
@@ -312,7 +309,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             foodL.isSelected = false
 
             satiety = 10
-            foodImage = (ConvertFoodImage.Food.FOOD_M)
+            foodImage = (Space.FoodImage.FOOD_M)
         }
 
         foodL.setOnClickListener {
@@ -322,7 +319,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             foodL.isSelected = true
 
             satiety = 20
-            foodImage = (ConvertFoodImage.Food.FOOD_L)
+            foodImage = (Space.FoodImage.FOOD_L)
         }
 
         planet1.setOnClickListener {
@@ -337,7 +334,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet9.isSelected = false
             planet10.isSelected = false
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET1)
+            planetImage = (Space.PlanetImage.PLANET1)
         }
 
         planet2.setOnClickListener {
@@ -352,7 +349,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet9.isSelected = false
             planet10.isSelected = false
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET2)
+            planetImage = (Space.PlanetImage.PLANET2)
         }
 
         planet3.setOnClickListener {
@@ -368,7 +365,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet10.isSelected = false
 
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET3)
+            planetImage = (Space.PlanetImage.PLANET3)
         }
 
         planet4.setOnClickListener {
@@ -384,7 +381,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet10.isSelected = false
 
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET4)
+            planetImage = (Space.PlanetImage.PLANET4)
         }
 
         planet5.setOnClickListener {
@@ -399,7 +396,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet9.isSelected = false
             planet10.isSelected = false
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET5)
+            planetImage = (Space.PlanetImage.PLANET5)
         }
 
         planet6.setOnClickListener {
@@ -414,7 +411,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet9.isSelected = false
             planet10.isSelected = false
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET6)
+            planetImage = (Space.PlanetImage.PLANET6)
         }
 
         planet7.setOnClickListener {
@@ -429,7 +426,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet9.isSelected = false
             planet10.isSelected = false
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET7)
+            planetImage = (Space.PlanetImage.PLANET7)
         }
 
         planet8.setOnClickListener {
@@ -444,7 +441,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet9.isSelected = false
             planet10.isSelected = false
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET8)
+            planetImage = (Space.PlanetImage.PLANET8)
         }
 
         planet9.setOnClickListener {
@@ -459,7 +456,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet9.isSelected = true
             planet10.isSelected = false
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET9)
+            planetImage = (Space.PlanetImage.PLANET9)
         }
 
         planet10.setOnClickListener {
@@ -474,7 +471,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             planet9.isSelected = false
             planet10.isSelected = true
 
-            planetImage = (ConvertPlanetImage.Planet.PLANET10)
+            planetImage = (Space.PlanetImage.PLANET10)
         }
 
     }
@@ -510,7 +507,6 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
                 space.addValue(i, j, planetImage, 0, 0, 0)
                 soundGame(Command.ADD)
 
-                convertPlanetImage.planetImage(planetImage)
             }
 
         }
@@ -553,8 +549,6 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
             if (food == null) {
                 space.addFoodUser(i, j, foodImage, satiety)
                 soundGame(Command.ADD)
-
-                convertFoodImage.foodImage(foodImage)
             }
         }
 
