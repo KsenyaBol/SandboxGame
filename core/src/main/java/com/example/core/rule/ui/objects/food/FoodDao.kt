@@ -7,18 +7,18 @@ import com.example.core.rule.ui.objects.planet.Planet
 interface FoodDao {
 
     @Insert
-    fun insertFood(vararg food: Food?)
+    suspend fun insertFood(vararg food: Food?)
 
     @Update
-    fun updateFood(vararg food: Food?)
+    suspend fun updateFood(vararg food: Food?)
 
     @Delete
-    fun deleteFood(vararg food: Food)
+    suspend fun deleteFood(vararg food: Food)
 
     @Query("SELECT * FROM food")
-    fun getAllFood(): MutableList<Food?>
+    suspend fun getAllFood(): MutableList<Food?>
 
     @Query("SELECT * FROM food WHERE satiety LIKE :satiety")
-    fun getAllFoodWithSatiety(vararg satiety: Int?): List<Food?>?
+    suspend fun getAllFoodWithSatiety(vararg satiety: Int?): List<Food?>?
 
 }

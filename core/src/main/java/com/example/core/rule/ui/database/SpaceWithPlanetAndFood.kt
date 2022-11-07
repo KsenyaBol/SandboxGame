@@ -19,6 +19,4 @@ class SpaceWithPlanetAndFood {
     @Relation(parentColumn = "id", entityColumn = "space_id", entity = Food::class)
     var allFood: List<Food?>? = null
 
-
-
 }

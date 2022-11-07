@@ -2,7 +2,6 @@ package com.example.core.rule.ui.actions
 
 import android.os.Handler
 import android.os.Looper
-import com.example.core.rule.ui.objects.planet.ConvertPlanetImage
 import com.example.core.rule.ui.objects.space.Space
 
 open class PlanetMoving {
@@ -11,9 +10,6 @@ open class PlanetMoving {
     var size: Int = 0
     var millis: Int = 200
     var space: Space = Space()
-    var convertPlanetImage: ConvertPlanetImage = ConvertPlanetImage()
-
-//    var myPlanetList2 = ArrayList(space.myPlanetList)
 
     init {
         change()

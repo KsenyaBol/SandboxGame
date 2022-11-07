@@ -11,20 +11,20 @@ interface SpaceDao {
 
     @Transaction
     suspend fun setSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>) {
-        deleteSpace(id)
-        insertSpace(id, planet, food )
+        deleteSpace(id, planet, food)
+        insertSpace(id, planet, food)
     }
 
     @Insert
-    fun insertSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
+    suspend fun insertSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
     @Update
-    fun updateSpace(id: SpaceObject?)
+    suspend fun updateSpace(id: SpaceObject?)
 
     @Delete
-    fun deleteSpace(id: SpaceObject)
+    suspend fun deleteSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
     @Query("SELECT id from SpaceObject")
-    fun getSpaceWithPlanetAndFood(): List<SpaceWithPlanetAndFood?>?
+    suspend fun getSpaceWithPlanetAndFood(): List<SpaceWithPlanetAndFood?>?
 
 }

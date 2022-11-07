@@ -1,10 +1,6 @@
 package com.example.core.rule.ui.objects.space
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.example.core.rule.ui.objects.food.ConvertFoodImage
 import com.example.core.rule.ui.objects.food.Food
-import com.example.core.rule.ui.objects.planet.ConvertPlanetImage
 import com.example.core.rule.ui.objects.planet.Planet
 import kotlin.collections.ArrayList
 

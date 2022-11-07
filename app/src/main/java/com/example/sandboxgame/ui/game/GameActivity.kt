@@ -13,27 +13,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
-import androidx.room.Room
 import com.example.core.rule.ui.actions.FoodAdd
 import com.example.core.rule.ui.actions.PlanetAge
 import com.example.core.rule.ui.actions.PlanetInfect
 import com.example.core.rule.ui.actions.PlanetMoving
-import com.example.core.rule.ui.objects.food.ConvertFoodImage
-import com.example.core.rule.ui.objects.planet.ConvertPlanetImage
+import com.example.core.rule.ui.database.DataBaseBuilder
 import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.R
-import com.example.core.rule.ui.database.GameDatabase
-import com.example.core.rule.ui.objects.planet.Planet
-import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.example.sandboxgame.ui.widget.DrawingView
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
 
@@ -60,6 +52,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val planetAge: PlanetAge = PlanetAge()
     private val planetInfect: PlanetInfect = PlanetInfect()
     private val continueActivity: ContinueActivity = ContinueActivity()
+    private var db: DataBaseBuilder = DataBaseBuilder
 
     var foodImage = Space.FoodImage.FOOD_M
     var planetImage = (Space.PlanetImage.PLANET5)
@@ -171,6 +164,8 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 //            space.id = id
 //            space.mySpaceList.add(SpaceObject(id))
 //            db.space?.insertSpace(SpaceObject(id), space.myPlanetList, space.myFoodList)
+
+            db.getInstance(this, space)
 
             id += 1
 

@@ -9,8 +9,6 @@ import android.os.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.example.core.rule.ui.objects.food.ConvertFoodImage
-import com.example.core.rule.ui.objects.planet.ConvertPlanetImage
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceListener
 import com.example.sandboxgame.R
