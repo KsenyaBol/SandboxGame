@@ -7,12 +7,17 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import com.example.core.rule.ui.objects.space.Space
+import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
+import com.example.sandboxgame.di.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
+import com.example.sandboxgame.ui.game.GameActivity
 import com.example.sandboxgame.ui.music.MusicService
 import com.example.sandboxgame.ui.music.ScreenReceiver
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
+import kotlinx.coroutines.*
 
 
 open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
@@ -25,6 +30,11 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
     private val buttonStart: Button by bind(R.id.button_start)
     private val buttonContinue: Button by bind(R.id.button_continue)
     private val buttonSetting: Button by bind(R.id.button_settings)
+
+    private val gameActivity: GameActivity = GameActivity()
+    lateinit var space: Space
+    private val spaceObject: SpaceObject = SpaceObject(gameActivity.id)
+//    private val app: App = App()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +64,17 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
         buttonSetting.setOnClickListener {
             presenter.onButtonSettingsClicked()
             soundButtonClick.start()
+        }
+
+        GlobalScope.launch {
+//            while (database == null) {
+//
+//            }
+            val planetAndFood = database?.spaceDao?.getSpaceWithPlanetAndFood()
+
+            withContext(Dispatchers.Main) {
+
+            }
         }
 
     }

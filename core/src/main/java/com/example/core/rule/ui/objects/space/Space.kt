@@ -8,7 +8,7 @@ class Space {
 
     var myPlanetList: ArrayList<Planet> = arrayListOf()
     var myFoodList: ArrayList<Food> = arrayListOf()
-    var mySpaceList: ArrayList<SpaceObject> = arrayListOf()
+//    var mySpaceList: ArrayList<SpaceObject> = arrayListOf()
     var spaceListener: SpaceListener? = null
     var id: Int = 0
 
@@ -22,12 +22,14 @@ class Space {
     }
 
     fun setValue(myPlanetList: ArrayList<Planet>, spaceListener: SpaceListener, myFoodList:
-    ArrayList<Food>, mySpaceList: ArrayList<SpaceObject>) {
+    ArrayList<Food>
+//                 , mySpaceList: ArrayList<SpaceObject>
+    ) {
 
         this.myPlanetList = myPlanetList
         this.spaceListener = spaceListener
         this.myFoodList = myFoodList
-        this.mySpaceList = mySpaceList
+//        this.mySpaceList = mySpaceList
     }
 
     fun addValue(i: Int, j: Int, planetImage: PlanetImage, planetInfect: Int, satiety: Int, age: Int) {

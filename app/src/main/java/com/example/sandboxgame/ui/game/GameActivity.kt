@@ -17,17 +17,22 @@ import com.example.core.rule.ui.actions.FoodAdd
 import com.example.core.rule.ui.actions.PlanetAge
 import com.example.core.rule.ui.actions.PlanetInfect
 import com.example.core.rule.ui.actions.PlanetMoving
-import com.example.core.rule.ui.database.DataBaseBuilder
 import com.example.core.rule.ui.objects.space.Space
+import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
+import com.example.sandboxgame.di.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.continueGame.ContinueActivity
+import com.example.sandboxgame.ui.main.MainActivity
 import com.example.sandboxgame.ui.widget.DrawingView
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
+import kotlin.coroutines.CoroutineContext
 
-class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
+class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
+//    , CoroutineScope
+
 
     companion object {
         private const val EXTRA_SIZE = "size"
@@ -52,7 +57,9 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
     private val planetAge: PlanetAge = PlanetAge()
     private val planetInfect: PlanetInfect = PlanetInfect()
     private val continueActivity: ContinueActivity = ContinueActivity()
-    private var db: DataBaseBuilder = DataBaseBuilder
+    private var spaceObject: SpaceObject = SpaceObject(id)
+    private var mainActivity: MainActivity = MainActivity()
+//    private var db: DataBaseBuilder = DataBaseBuilder
 
     var foodImage = Space.FoodImage.FOOD_M
     var planetImage = (Space.PlanetImage.PLANET5)
@@ -118,6 +125,13 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
 //        GameDatabase::class.java, "database-name"
 //    ).build()
 
+//    val database = Room.databaseBuilder(
+//        this,
+//        GameDatabase::class.java,
+//        "gamedatabase"
+//    ).build()
+
+
     @SuppressLint("ResourceType", "NewApi", "UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.M)
 
@@ -132,6 +146,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         planetAge.space = space
         planetInfect.space = space
         addFood.pause_flg = planetMoving.pause_flg
+        mainActivity.space = space
 
 
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -161,11 +176,7 @@ class GameActivity : BaseActivity(R.layout.activity_game), GameView, DrawingView
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
 
-//            space.id = id
-//            space.mySpaceList.add(SpaceObject(id))
-//            db.space?.insertSpace(SpaceObject(id), space.myPlanetList, space.myFoodList)
-
-            db.getInstance(this, space)
+            database?.spaceDao?.insertSpace(spaceObject.copy(id = id), space.myPlanetList, space.myFoodList)
 
             id += 1
 

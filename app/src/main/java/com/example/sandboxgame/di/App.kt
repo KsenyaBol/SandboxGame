@@ -6,12 +6,17 @@ import com.example.core.rule.ui.database.GameDatabase
 
 
 class App : Application() {
-    private var database: GameDatabase? = null
+
+    companion object {
+        var instance: App? = null
+        var database: GameDatabase? = null
+
+    }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
-        database = databaseBuilder(this, GameDatabase::class.java, "database")
-            .allowMainThreadQueries()
+        database = databaseBuilder(this, GameDatabase::class.java, "gamedatabase")
             .build()
     }
 
@@ -19,7 +24,5 @@ class App : Application() {
         return database
     }
 
-    companion object {
-        var instance: App? = null
-    }
+
 }

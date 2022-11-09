@@ -12,9 +12,9 @@ import com.example.core.rule.ui.objects.space.SpaceListener
 import com.example.core.rule.ui.objects.space.SpaceObject
 
 
-@Database(entities = [SpaceObject::class, Planet::class, Food::class], version = 1)
+@Database(entities = [SpaceObject::class, Planet::class, Food::class], version = 3)
 abstract class GameDatabase : RoomDatabase() {
-    abstract val space: SpaceDao?
+    abstract val spaceDao: SpaceDao?
     abstract val planetDao: PlanetDao?
     abstract val foodDao: FoodDao?
 
