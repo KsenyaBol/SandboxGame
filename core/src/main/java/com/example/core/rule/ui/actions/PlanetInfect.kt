@@ -18,8 +18,8 @@ class PlanetInfect {
 
         runnable = Runnable {
             space.myPlanetList.forEachIndexed { index, planet ->
-                val x = planet.x
-                val y = planet.y
+                val x = planet.planetX
+                val y = planet.planetY
                 var planetInfect = planet.planetInfect
                 planetInfect += 2
                 space.infectChange(index, x, y, planetInfect)

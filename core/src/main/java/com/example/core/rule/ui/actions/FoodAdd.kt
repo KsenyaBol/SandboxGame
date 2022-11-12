@@ -9,12 +9,7 @@ class FoodAdd {
 
     var size: Int = 10
     var pause_flg: Boolean = true
-    lateinit var space: Space
-    lateinit var foodXS: Drawable
-    lateinit var foodS: Drawable
-    lateinit var foodM: Drawable
-    lateinit var foodL: Drawable
-    lateinit var imageFoodFinal: Drawable
+    var space: Space = Space()
 
     init {
         foodAdd()
@@ -26,7 +21,7 @@ class FoodAdd {
 
         runnable = Runnable {
             if (pause_flg == true) {
-                space.foodChange((0..size).random(), (0..size).random(), foodM, 10)
+                space.foodChange((0..size).random(), (0..size).random(), 10)
             }
             handler.postDelayed(runnable!!, 1500)
         }

@@ -26,5 +26,7 @@
     <string name="message_save_game">Would you like to save the game \n before exiting?</string>
     <string name="message_yes">YES</string>
     <string name="message_no">NO</string>
+    <string name="button_save">SAVE</string>
+    <string name="title_save_game" translatable="false">SAVE THE GAME</string>
 
 </resources>

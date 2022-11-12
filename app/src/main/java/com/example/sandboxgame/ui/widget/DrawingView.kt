@@ -21,8 +21,6 @@ class DrawingView : View, SpaceListener {
 
     var size: Int = 0
     @SuppressLint("UseCompatLoadingForDrawables")
-    var drawable: Drawable = resources.getDrawable(R.drawable.planet_1)
-    @SuppressLint("UseCompatLoadingForDrawables")
     val imageInfect: Drawable  = resources.getDrawable(R.drawable.image_infect)
     @SuppressLint("UseCompatLoadingForDrawables")
     var animation1 = (resources.getDrawable(R.drawable.animation_boom) as AnimationDrawable).also {
@@ -32,10 +30,10 @@ class DrawingView : View, SpaceListener {
     var onTapCellListener: OnTapCellListener? = null
 
     var space: Space? = null
-    set(value) {
-        field = value
-        field?.spaceListener = this
-    }
+        set(value) {
+            field = value
+            field?.spaceListener = this
+        }
 
     constructor(ctx: Context) : super(ctx)
     constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
@@ -82,49 +80,64 @@ class DrawingView : View, SpaceListener {
         super.onDraw(canvas)
 
         val sizeH = height / size.toFloat()
+        var planetIm = resources.getDrawable(R.drawable.planet_1)
 
         if (space!!.myFoodList.size > 0) {
             space!!.myFoodList.forEach { food ->
                 val x = sizeH * food.x
                 val y = sizeH * food.y
                 val satiety = food.satiety
+                var foodIm = resources.getDrawable(R.drawable.planet_food_1)
+
+                if (food.foodImage == Space.FoodImage.FOOD_XS) {
+                    foodIm = resources.getDrawable(R.drawable.planet_food_3)
+                }
+                if (food.foodImage == Space.FoodImage.FOOD_S) {
+                    foodIm = resources.getDrawable(R.drawable.planet_food_2)
+                }
+                if (food.foodImage == Space.FoodImage.FOOD_M) {
+                    foodIm = resources.getDrawable(R.drawable.planet_food_1)
+                }
+                if (food.foodImage == Space.FoodImage.FOOD_L) {
+                    foodIm = resources.getDrawable(R.drawable.planet_food_4)
+                }
 
                 when(satiety) {
                     1 -> {
-                        food.foodImage.setBounds(
+                        foodIm.setBounds(
                             (x + sizeH/2 - 5).toInt(),
                             (y + sizeH/2 - 5).toInt(),
                             (x + sizeH/2 + 5).toInt(),
                             (y + sizeH/2 + 5).toInt()
                         )
-                        food.foodImage.draw(canvas)
+                        foodIm.draw(canvas)
                     }
                     5 -> {
-                        food.foodImage.setBounds(
+                        foodIm.setBounds(
                             (x + sizeH/2 - 8).toInt(),
                             (y + sizeH/2 - 8).toInt(),
                             (x + sizeH/2 + 8).toInt(),
                             (y + sizeH/2 + 8).toInt()
                         )
-                        food.foodImage.draw(canvas)
+                        foodIm.draw(canvas)
                     }
                     10 -> {
-                        food.foodImage.setBounds(
+                        foodIm.setBounds(
                             (x + sizeH/2 - 10).toInt(),
                             (y + sizeH/2 - 10).toInt(),
                             (x + sizeH/2 + 10).toInt(),
                             (y + sizeH/2 + 10).toInt()
                         )
-                        food.foodImage.draw(canvas)
+                        foodIm.draw(canvas)
                     }
                     20 -> {
-                        food.foodImage.setBounds(
+                        foodIm.setBounds(
                             (x + sizeH/2 - 14).toInt(),
                             (y + sizeH/2 - 14).toInt(),
                             (x + sizeH/2 + 14).toInt(),
                             (y + sizeH/2 + 14).toInt()
                         )
-                        food.foodImage.draw(canvas)
+                        foodIm.draw(canvas)
                     }
                 }
 
@@ -133,9 +146,41 @@ class DrawingView : View, SpaceListener {
 
         if (space!!.myPlanetList.size > 0) {
             space!!.myPlanetList.forEach { planet ->
-                val x = sizeH * planet.x
-                val y = sizeH * planet.y
+                val x = sizeH * planet.planetX
+                val y = sizeH * planet.planetY
                 val infect = planet.planetInfect
+
+
+                if (planet.planetImage == Space.PlanetImage.PLANET1) {
+                    planetIm = resources.getDrawable(R.drawable.planet_1)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET2) {
+                    planetIm = resources.getDrawable(R.drawable.planet_2)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET3) {
+                    planetIm = resources.getDrawable(R.drawable.planet_3)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET4) {
+                    planetIm = resources.getDrawable(R.drawable.planet_4)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET5) {
+                    planetIm = resources.getDrawable(R.drawable.planet_5)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET6) {
+                    planetIm = resources.getDrawable(R.drawable.planet_6)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET7) {
+                    planetIm = resources.getDrawable(R.drawable.planet_7)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET8) {
+                    planetIm = resources.getDrawable(R.drawable.planet_8)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET9) {
+                    planetIm = resources.getDrawable(R.drawable.planet_9)
+                }
+                if (planet.planetImage == Space.PlanetImage.PLANET10) {
+                    planetIm = resources.getDrawable(R.drawable.planet_10)
+                }
 
                 if (infect >= 50) {
 
@@ -147,18 +192,46 @@ class DrawingView : View, SpaceListener {
                     )
                     imageInfect.draw(canvas)
 
-                    planet.planetImage.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt() , (y + sizeH).toInt())
-                    planet.planetImage.draw(canvas)
+                    planetIm.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt() , (y + sizeH).toInt())
+                    planetIm.draw(canvas)
 
                 }
                 else {
 
-                    planet.planetImage.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
-                    planet.planetImage.draw(canvas)
+                    planetIm.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
+                    planetIm.draw(canvas)
 
                 }
             }
         }
+
+//        if (space!!.myPlanetList.size > 0) {
+//            space!!.myPlanetList.forEach { planet ->
+//                val x = sizeH * planet.planetX
+//                val y = sizeH * planet.planetY
+//                val age = planet.age
+//
+//                if (age >= 100) {
+//                    animation1.setBounds(
+//                        (x - 9).toInt(),
+//                        (y - 9).toInt(),
+//                        ((x + 9) + sizeH).toInt(),
+//                        ((y + 9) + sizeH).toInt()
+//                    )
+//                    animation1.draw(canvas)
+//
+//                    planetIm.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt() , (y + sizeH).toInt())
+//                    planetIm.draw(canvas)
+//                }
+//                else {
+//
+//                    planetIm.setBounds(x.toInt(), y.toInt(), (x + sizeH).toInt(), (y + sizeH).toInt())
+//                    planetIm.draw(canvas)
+//
+//                }
+//
+//            }
+//        }
 
     }
 

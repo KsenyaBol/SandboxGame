@@ -1,16 +1,25 @@
 package com.example.sandboxgame.ui.game
 
+import com.example.core.rule.ui.objects.space.Space
+import com.example.sandboxgame.ui.gameSave.GameSaveActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
 
 class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
 
-    private var command: Command? = null
+    var command: Command? = null
+    lateinit var space: Space
+//    lateinit var nameWorld: String
 
     init {
         viewState.size = size
     }
 
     fun onButtonNoClicked() {
+        exit()
+    }
+
+    fun onButtonYesClicked() {
+        GameSaveActivity.createLauncher().launch()
         exit()
     }
 
