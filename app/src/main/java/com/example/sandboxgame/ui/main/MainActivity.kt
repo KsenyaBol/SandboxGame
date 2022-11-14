@@ -1,16 +1,22 @@
 package com.example.sandboxgame.ui.main
 
+import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.core.rule.ui.database.SpaceWithPlanetAndFood
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
+import com.example.sandboxgame.di.App
 import com.example.sandboxgame.di.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.game.GameActivity
@@ -74,7 +80,7 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
             if(database?.spaceDao?.getSpaceWithPlanetAndFood() == null) {
                 //nothing
             } else {
-                database?.spaceDao?.getSpaceWithPlanetAndFood()
+               var db = App.instance?.getDatabase()
             }
             withContext(Dispatchers.Main) {
 //                space.myPlanetList = spaceWithPlanetAndFood.planet!!
@@ -82,7 +88,32 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
             }
         }
 
+//        requestForPermission()
+
     }
+
+//    val EXTERNAL_PERMS = arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//    val EXTERNAL_REQUEST = 138
+//
+//    fun hasPermission(perm: String): Boolean {
+//        return PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm)
+//    }
+//
+//    fun canAccessExternalSd(): Boolean {
+//        return hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//    }
+//
+//    fun requestForPermission(): Boolean {
+//        var isPermissionOn = true
+//        val version = Build.VERSION.SDK_INT
+//        if (version >= 23) {
+//            if (!canAccessExternalSd()) {
+//                isPermissionOn = false
+//                ActivityCompat.requestPermissions(this, EXTERNAL_PERMS, EXTERNAL_REQUEST)
+//            }
+//        }
+//        return isPermissionOn
+//    }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {

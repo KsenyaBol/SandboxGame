@@ -6,10 +6,10 @@ import com.example.core.rule.ui.objects.space.Space
 
 @Entity(primaryKeys = ["x", "y"])
 data class Food (
-    var x: Int,
-    var y: Int,
-    var foodImage: Space.FoodImage,
-    var satiety: Int,
+    var x: Int = 0,
+    var y: Int = 0,
+    var foodImage: Space.FoodImage = Space.FoodImage.FOOD_M,
+    var satiety: Int = 0,
     @ColumnInfo(name = "space_id")
-    val spaceId: Int,
+    val spaceId: Int = 0,
 )

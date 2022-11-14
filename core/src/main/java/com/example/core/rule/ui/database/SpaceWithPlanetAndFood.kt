@@ -10,12 +10,12 @@ import com.example.core.rule.ui.objects.space.SpaceObject
 class SpaceWithPlanetAndFood {
 
     @Embedded
-    var space: SpaceObject? = null
+    var spaceObject: SpaceObject? = null
 
     @Relation(parentColumn = "id", entityColumn = "space_id", entity = Planet::class)
-    var planet: ArrayList<Planet?>? = null
+    var planet: List<Planet?>? = null
 
     @Relation(parentColumn = "id", entityColumn = "space_id", entity = Food::class)
-    var food: ArrayList<Food?>? = null
+    var food: List<Food?>? = null
 
 }

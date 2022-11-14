@@ -18,7 +18,9 @@ import com.example.core.rule.ui.actions.PlanetAge
 import com.example.core.rule.ui.actions.PlanetInfect
 import com.example.core.rule.ui.actions.PlanetMoving
 import com.example.core.rule.ui.objects.space.Space
+import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
+import com.example.sandboxgame.di.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.example.sandboxgame.ui.main.MainActivity
@@ -53,7 +55,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private val planetAge: PlanetAge = PlanetAge()
     private val planetInfect: PlanetInfect = PlanetInfect()
     private val continueActivity: ContinueActivity = ContinueActivity()
-//    private var spaceObject: SpaceObject = SpaceObject(id)
+    private var spaceObject: SpaceObject = SpaceObject(id)
     private var mainActivity: MainActivity = MainActivity()
 //    private var db: DataBaseBuilder = DataBaseBuilder
 
@@ -160,6 +162,8 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
+
+            database?.spaceDao?.insertSpace(spaceObject.copy(id), space.myPlanetList, space.myFoodList)
 
 //            database?.spaceDao?.insertSpace(spaceObject.copy(id = id), space.myPlanetList, space.myFoodList)
 

@@ -6,12 +6,12 @@ import com.example.core.rule.ui.objects.space.Space
 
 @Entity(primaryKeys = ["planetX", "planetY"])
 data class Planet(
-    var planetX: Int,
-    var planetY: Int,
-    var planetImage: Space.PlanetImage,
-    var planetInfect: Int,
-    var planetSatiety: Int,
-    var age: Int,
+    var planetX: Int = 0,
+    var planetY: Int = 0,
+    var planetImage: Space.PlanetImage = Space.PlanetImage.PLANET1,
+    var planetInfect: Int = 0,
+    var planetSatiety: Int = 0,
+    var age: Int = 0,
     @ColumnInfo(name = "space_id")
-    val spaceId: Int,
+    val spaceId: Int = 0,
 )

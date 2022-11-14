@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class SpaceObject (
 
     @PrimaryKey
-    var id: Int
+    var id: Int = 0
 
 )
