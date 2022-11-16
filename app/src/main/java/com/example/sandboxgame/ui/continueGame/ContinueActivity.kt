@@ -25,7 +25,6 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
     override val presenter: ContinuePresenter by providePresenter()
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
-    private val gameActivity: GameActivity = GameActivity()
     lateinit var space: Space
 
     private val buttonBack: ImageView by bind(R.id.button_back)
@@ -123,28 +122,21 @@ class ContinueActivity: BaseActivity(R.layout.activity_continue), ContinueView {
 
     fun saveGameInfo(command: ContinueCommand) {
         if (command == ContinueCommand.SAVE_1) {
-//            gameActivity.db.space?.getSpaceWithPlanetAndFood("SELECT id from SpaceObject")
-//            gameActivity.db.space?.getSpaceWithPlanetAndFood()
             presenter.onButtonSave1Clicked()
         }
         if (command == ContinueCommand.SAVE_2) {
-//            gameActivity.db.space?.getSpaceWithPlanetAndFood()
             presenter.onButtonSave2Clicked()
         }
         if (command == ContinueCommand.SAVE_3) {
-//            gameActivity.db.space?.getSpaceWithPlanetAndFood()
             presenter.onButtonSave3Clicked()
         }
         if (command == ContinueCommand.SAVE_4) {
-//            gameActivity.db.space?.getSpaceWithPlanetAndFood()
             presenter.onButtonSave4Clicked()
         }
         if (command == ContinueCommand.SAVE_5) {
-//            gameActivity.db.space?.getSpaceWithPlanetAndFood()
             presenter.onButtonSave5Clicked()
         }
 
-//        WorldGameInfo(name, time, date, space.id)
     }
 
 }

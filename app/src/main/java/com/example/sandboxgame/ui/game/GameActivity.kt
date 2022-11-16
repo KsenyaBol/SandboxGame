@@ -22,8 +22,6 @@ import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
 import com.example.sandboxgame.di.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
-import com.example.sandboxgame.ui.continueGame.ContinueActivity
-import com.example.sandboxgame.ui.main.MainActivity
 import com.example.sandboxgame.ui.widget.DrawingView
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
@@ -42,11 +40,11 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
 
 
-    var infect = 0
-    var delete = 0
-    var clanAmount = 0
-    var satiety: Int = 0
-    var id = 0
+    private var infect = 0
+    private var delete = 0
+    private var clanAmount = 0
+    private var satiety: Int = 0
+    private var id = 0
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private val space: Space = Space()
@@ -54,9 +52,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private val addFood: FoodAdd = FoodAdd()
     private val planetAge: PlanetAge = PlanetAge()
     private val planetInfect: PlanetInfect = PlanetInfect()
-    private val continueActivity: ContinueActivity = ContinueActivity()
     private var spaceObject: SpaceObject = SpaceObject(id)
-    private var mainActivity: MainActivity = MainActivity()
 //    private var db: DataBaseBuilder = DataBaseBuilder
 
     var foodImage = Space.FoodImage.FOOD_M
@@ -128,12 +124,11 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         drawingView.space = space
         planetMoving.space = space
         presenter.space = space
-        continueActivity.space = space
         addFood.space = space
         planetAge.space = space
         planetInfect.space = space
         addFood.pause_flg = planetMoving.pause_flg
-        mainActivity.space = space
+//        mainActivity.space = space
         space.id = id
 
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -163,11 +158,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
 
-            database?.spaceDao?.insertSpace(spaceObject.copy(id), space.myPlanetList, space.myFoodList)
-
-//            database?.spaceDao?.insertSpace(spaceObject.copy(id = id), space.myPlanetList, space.myFoodList)
-
-            id += 1
+            database?.spaceDao?.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
 
             soundButtonClick.start()
         }

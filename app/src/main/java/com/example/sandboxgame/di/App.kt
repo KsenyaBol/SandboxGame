@@ -12,7 +12,7 @@ class App : Application() {
 
     companion object {
         var instance: App? = null
-        var database: GameDatabase? = null
+        lateinit var database: GameDatabase
 
     }
 
@@ -23,10 +23,6 @@ class App : Application() {
             .build()
     }
 
-    @SuppressLint("NotConstructor")
-    fun App() {
-        if (BuildConfig.DEBUG) StrictMode.enableDefaults()
-    }
 
     fun getDatabase(): GameDatabase? {
         return database

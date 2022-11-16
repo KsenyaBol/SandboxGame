@@ -14,9 +14,9 @@ import com.example.core.rule.ui.objects.space.SpaceObject
 
 @Database(entities = [SpaceObject::class, Planet::class, Food::class], version = 2)
 abstract class GameDatabase : RoomDatabase() {
-    abstract val spaceDao: SpaceDao?
-    abstract val planetDao: PlanetDao?
-    abstract val foodDao: FoodDao?
+    abstract val spaceDao: SpaceDao
+    abstract val planetDao: PlanetDao
+    abstract val foodDao: FoodDao
 
 
 

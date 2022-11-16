@@ -1,17 +1,12 @@
 package com.example.sandboxgame.ui.main
 
-import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.core.rule.ui.database.SpaceWithPlanetAndFood
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceObject
@@ -22,12 +17,14 @@ import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.game.GameActivity
 import com.example.sandboxgame.ui.music.MusicService
 import com.example.sandboxgame.ui.music.ScreenReceiver
+import com.omega_r.libs.omegatypes.toText
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
@@ -40,9 +37,8 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
     private val buttonContinue: Button by bind(R.id.button_continue)
     private val buttonSetting: Button by bind(R.id.button_settings)
 
-    private val gameActivity: GameActivity = GameActivity()
     lateinit var space: Space
-    private val spaceObject: SpaceObject = SpaceObject(gameActivity.id)
+//    private val spaceObject: SpaceObject = SpaceObject(gameActivity.id)
     private val spaceWithPlanetAndFood: SpaceWithPlanetAndFood = SpaceWithPlanetAndFood()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,20 +71,34 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
             soundButtonClick.start()
         }
 
-        GlobalScope.launch {
 
-            if(database?.spaceDao?.getSpaceWithPlanetAndFood() == null) {
-                //nothing
-            } else {
-               var db = App.instance?.getDatabase()
-            }
-            withContext(Dispatchers.Main) {
+            GlobalScope.launch {
+
+                val list = database.spaceDao.getSpaceWithPlanetAndFood()
+
+//                if(database.spaceDao.getSpaceWithPlanetAndFood() == null) {
+//                    //nothing
+//                } else {
+//                    var db = App.instance?.getDatabase()
+//                }
+
+                withContext(Dispatchers.Main) {
+                   showToast(list.toString().toText())
 //                space.myPlanetList = spaceWithPlanetAndFood.planet!!
 //                space.myFoodList = spaceWithPlanetAndFood.food!!
+                }
             }
-        }
 
-//        requestForPermission()
+
+
+
+
+
+//        throw Exception("exception, errno = 2")
+//        try {
+//        } catch (e: IOException) {
+//            // Должно быть безопасно
+//        }
 
     }
 

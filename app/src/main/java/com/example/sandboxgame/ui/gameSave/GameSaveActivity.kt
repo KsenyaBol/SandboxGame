@@ -28,7 +28,6 @@ class GameSaveActivity: BaseActivity(R.layout.activity_game_save), GameSaveView 
 
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
-    private val continueActivity: ContinueActivity = ContinueActivity()
     lateinit var space: Space
 
     private val buttonSave: ImageView by bind(R.id.button_save)
@@ -124,24 +123,24 @@ class GameSaveActivity: BaseActivity(R.layout.activity_game_save), GameSaveView 
         val dateText: String = dateFormat.format(currentDate)
         val timeText: String = timeFormat.format(currentDate)
         if (command == SaveCommand.SAVE_1) {
-            continueActivity.textTimeSave1.text = timeText
-            continueActivity.textDateSave1.text = dateText
+            ContinueActivity().textTimeSave1.text = timeText
+            ContinueActivity().textDateSave1.text = dateText
         }
         if (command == SaveCommand.SAVE_2) {
-            continueActivity.textTimeSave2.text = timeText
-            continueActivity.textDateSave2.text = dateText
+            ContinueActivity().textTimeSave2.text = timeText
+            ContinueActivity().textDateSave2.text = dateText
         }
         if (command == SaveCommand.SAVE_3) {
-            continueActivity.textTimeSave3.text = timeText
-            continueActivity.textDateSave3.text = dateText
+            ContinueActivity().textTimeSave3.text = timeText
+            ContinueActivity().textDateSave3.text = dateText
         }
         if (command == SaveCommand.SAVE_4) {
-            continueActivity.textTimeSave4.text = timeText
-            continueActivity.textDateSave4.text = dateText
+            ContinueActivity().textTimeSave4.text = timeText
+            ContinueActivity().textDateSave4.text = dateText
         }
         if (command == SaveCommand.SAVE_5) {
-            continueActivity.textTimeSave5.text = timeText
-            continueActivity.textDateSave5.text = dateText
+            ContinueActivity().textTimeSave5.text = timeText
+            ContinueActivity().textDateSave5.text = dateText
         }
 
     }

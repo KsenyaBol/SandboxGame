@@ -18,7 +18,6 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:screenOrientation="landscape"
-            tools:ignore="MissingClass,WrongManifestParent"
             android:exported="true">
 
             <intent-filter>
