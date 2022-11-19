@@ -8,9 +8,9 @@ class Space {
 
     var myPlanetList: ArrayList<Planet> = arrayListOf()
     var myFoodList: ArrayList<Food> = arrayListOf()
-    //    var mySpaceList: ArrayList<SpaceObject> = arrayListOf()
+    private var spaceObject: SpaceObject = SpaceObject()
     var spaceListener: SpaceListener? = null
-    var id: Int = 0
+    var id: Int = spaceObject.id
 
     enum class FoodImage {
         FOOD_XS, FOOD_S, FOOD_M, FOOD_L

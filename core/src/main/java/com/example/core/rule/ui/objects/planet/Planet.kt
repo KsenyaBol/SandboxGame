@@ -2,9 +2,10 @@ package com.example.core.rule.ui.objects.planet
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.core.rule.ui.objects.space.Space
 
-@Entity(primaryKeys = ["planetX", "planetY"])
+@Entity
 data class Planet(
     var planetX: Int = 0,
     var planetY: Int = 0,
@@ -12,6 +13,6 @@ data class Planet(
     var planetInfect: Int = 0,
     var planetSatiety: Int = 0,
     var age: Int = 0,
-    @ColumnInfo(name = "space_id")
+    @PrimaryKey @ColumnInfo(name = "spaceId")
     val spaceId: Int = 0,
 )

@@ -8,23 +8,19 @@ import com.example.core.rule.ui.objects.planet.Planet
 @Dao
 interface SpaceDao {
 
-//    @Transaction
-//    suspend fun setSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>) {
-//        deleteSpace(id, planet, food)
-//        insertSpace(id, planet, food)
-//    }
-
     @Insert
-    fun insertSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
+    suspend fun insertSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
     @Update
-    suspend fun updateSpace(id: SpaceObject?)
+     suspend fun updateSpace(id: SpaceObject?)
 
     @Delete
     suspend fun deleteSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
-    @Transaction
-    @Query("SELECT id from SpaceObject")
+    @Query("SELECT * FROM space")
     suspend fun getSpaceWithPlanetAndFood(): List<SpaceWithPlanetAndFood?>?
+
+//    @Query("SELECT id FROM space WHERE id = id")
+//    suspend fun findById(id: Int) : Int
 
 }

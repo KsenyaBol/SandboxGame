@@ -7,14 +7,9 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import com.example.core.rule.ui.database.SpaceWithPlanetAndFood
-import com.example.core.rule.ui.objects.space.Space
-import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
-import com.example.sandboxgame.di.App
-import com.example.sandboxgame.di.App.Companion.database
+import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
-import com.example.sandboxgame.ui.game.GameActivity
 import com.example.sandboxgame.ui.music.MusicService
 import com.example.sandboxgame.ui.music.ScreenReceiver
 import com.omega_r.libs.omegatypes.toText
@@ -24,7 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
 
 open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
@@ -37,9 +31,6 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
     private val buttonContinue: Button by bind(R.id.button_continue)
     private val buttonSetting: Button by bind(R.id.button_settings)
 
-    lateinit var space: Space
-//    private val spaceObject: SpaceObject = SpaceObject(gameActivity.id)
-    private val spaceWithPlanetAndFood: SpaceWithPlanetAndFood = SpaceWithPlanetAndFood()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +45,6 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
         startService(Intent(this, MusicService::class.java))
-        stopService(Intent(this, MusicService::class.java))
 
         buttonStart.setOnClickListener {
             presenter.onButtonStartClicked()
@@ -76,12 +66,6 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
                 val list = database.spaceDao.getSpaceWithPlanetAndFood()
 
-//                if(database.spaceDao.getSpaceWithPlanetAndFood() == null) {
-//                    //nothing
-//                } else {
-//                    var db = App.instance?.getDatabase()
-//                }
-
                 withContext(Dispatchers.Main) {
                    showToast(list.toString().toText())
 //                space.myPlanetList = spaceWithPlanetAndFood.planet!!
@@ -89,16 +73,6 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
                 }
             }
 
-
-
-
-
-
-//        throw Exception("exception, errno = 2")
-//        try {
-//        } catch (e: IOException) {
-//            // Должно быть безопасно
-//        }
 
     }
 

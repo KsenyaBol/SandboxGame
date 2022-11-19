@@ -4,7 +4,7 @@
     package="com.example.sandboxgame">
 
     <application
-        android:name=".di.App"
+        android:name=".ui.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -47,11 +47,6 @@
 
         <activity
             android:name=".ui.continueGame.ContinueActivity"
-            android:screenOrientation="landscape"
-            tools:ignore="MissingClass,WrongManifestParent"/>
-
-        <activity
-            android:name=".ui.gameSave.GameSaveActivity"
             android:screenOrientation="landscape"
             tools:ignore="MissingClass,WrongManifestParent"/>
 

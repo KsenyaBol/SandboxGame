@@ -1,11 +1,8 @@
-package com.example.sandboxgame.di
+package com.example.sandboxgame.ui
 
-import android.annotation.SuppressLint
 import android.app.Application
-import android.os.StrictMode
 import androidx.room.Room.databaseBuilder
 import com.example.core.rule.ui.database.GameDatabase
-import com.example.sandboxgame.BuildConfig
 
 
 class App : Application() {
@@ -20,11 +17,11 @@ class App : Application() {
         super.onCreate()
         instance = this
         database = databaseBuilder(this, GameDatabase::class.java, "gamedatabase")
+            .allowMainThreadQueries()
             .build()
     }
 
-
-    fun getDatabase(): GameDatabase? {
+    fun getDatabase(): GameDatabase {
         return database
     }
 

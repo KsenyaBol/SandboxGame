@@ -3,7 +3,9 @@ package com.example.core.rule.ui.objects.space
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity (
+    tableName = "space"
+        )
 data class SpaceObject (
 
     @PrimaryKey

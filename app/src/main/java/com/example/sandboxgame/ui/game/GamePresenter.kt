@@ -1,14 +1,13 @@
 package com.example.sandboxgame.ui.game
 
 import com.example.core.rule.ui.objects.space.Space
-import com.example.sandboxgame.ui.gameSave.GameSaveActivity
+import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
 
 class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
 
     var command: Command? = null
     lateinit var space: Space
-//    lateinit var nameWorld: String
 
     init {
         viewState.size = size
@@ -19,7 +18,7 @@ class GamePresenter(private val size: Int): OmegaPresenter<GameView>() {
     }
 
     fun onButtonYesClicked() {
-        GameSaveActivity.createLauncher().launch()
+       ContinueActivity.createLauncher().launch()
         exit()
     }
 

@@ -20,12 +20,17 @@ import com.example.core.rule.ui.actions.PlanetMoving
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
-import com.example.sandboxgame.di.App.Companion.database
+import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
+import com.example.sandboxgame.ui.continueGame.ContinuePresenter
 import com.example.sandboxgame.ui.widget.DrawingView
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
 
@@ -37,8 +42,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
             EXTRA_SIZE put size,
         )
     }
-
-
 
     private var infect = 0
     private var delete = 0
@@ -53,11 +56,9 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private val planetAge: PlanetAge = PlanetAge()
     private val planetInfect: PlanetInfect = PlanetInfect()
     private var spaceObject: SpaceObject = SpaceObject(id)
-//    private var db: DataBaseBuilder = DataBaseBuilder
 
     var foodImage = Space.FoodImage.FOOD_M
     var planetImage = (Space.PlanetImage.PLANET5)
-    lateinit var nameWorld: String
 
     override val presenter: GamePresenter by providePresenter {
         GamePresenter(this[EXTRA_SIZE]!!)
@@ -110,6 +111,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     override var size: Int = 0
         set(value) {
             field = value
+            ContinuePresenter().size = value
             drawingView.size = value
             planetMoving.size = value
             addFood.size = value
@@ -128,7 +130,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         planetAge.space = space
         planetInfect.space = space
         addFood.pause_flg = planetMoving.pause_flg
-//        mainActivity.space = space
         space.id = id
 
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -158,7 +159,19 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
 
-            database?.spaceDao?.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
+            spaceObject.id = id
+
+            GlobalScope.launch {
+
+                val list = database.spaceDao.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
+
+                withContext(Dispatchers.Main) {
+                   list == database.spaceDao.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
+
+                }
+            }
+
+            id += 1
 
             soundButtonClick.start()
         }
@@ -211,7 +224,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
             foodConstraint.isVisible = false
 
             soundButtonClick.start()
-
         }
 
         buttonDelete.setOnClickListener {
@@ -265,7 +277,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
             foodConstraint.isVisible = true
 
             soundButtonClick.start()
-
         }
 
         foodXS.setOnClickListener {

@@ -1,8 +1,5 @@
 package com.example.core.rule.ui.database
 
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.core.rule.ui.objects.food.Food
