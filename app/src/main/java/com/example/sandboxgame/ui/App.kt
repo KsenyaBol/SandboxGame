@@ -18,6 +18,7 @@ class App : Application() {
         instance = this
         database = databaseBuilder(this, GameDatabase::class.java, "gamedatabase")
             .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
             .build()
     }
 

@@ -8,7 +8,7 @@ import com.example.core.rule.ui.objects.planet.Planet
 @Dao
 interface SpaceDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
     @Update
@@ -20,7 +20,7 @@ interface SpaceDao {
     @Query("SELECT * FROM space")
     suspend fun getSpaceWithPlanetAndFood(): List<SpaceWithPlanetAndFood?>?
 
-//    @Query("SELECT id FROM space WHERE id = id")
-//    suspend fun findById(id: Int) : Int
+//    @Query("SELECT * FROM space WHERE id = id")
+//    suspend fun findById(id: Int) : SpaceObject
 
 }

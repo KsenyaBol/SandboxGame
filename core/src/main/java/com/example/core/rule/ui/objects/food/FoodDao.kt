@@ -5,7 +5,7 @@ import androidx.room.*
 @Dao
 interface FoodDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFood(vararg food: Food?)
 
     @Update
@@ -15,7 +15,7 @@ interface FoodDao {
     suspend fun deleteFood(vararg food: Food)
 
     @Query("SELECT * FROM food ")
-    fun getAllFood(): MutableList<Food?>
+    fun getAllFood(): List<Food>
 //
 //    @Query("SELECT * FROM food WHERE satiety LIKE :satiety")
 //    fun getAllFoodWithSatiety(vararg satiety: Int?): List<Food?>?

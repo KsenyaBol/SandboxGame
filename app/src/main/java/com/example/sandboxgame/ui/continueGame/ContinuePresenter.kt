@@ -1,24 +1,28 @@
 package com.example.sandboxgame.ui.continueGame
 
+import com.example.core.rule.ui.objects.food.Food
+import com.example.core.rule.ui.objects.planet.Planet
 import com.example.sandboxgame.ui.game.GameActivity
 import com.example.sandboxgame.ui.main.MainActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
 
-class ContinuePresenter: OmegaPresenter<ContinueView>() {
+class ContinuePresenter(): OmegaPresenter<ContinueView>() {
 
-     var size: Int = 10
+    var size: Int = 10
 
     fun onButtonBackClicked() {
+        MainActivity.createLauncher().launch()
         exit()
     }
 
     fun onButtonSaveClicked() {
         MainActivity.createLauncher().launch()
+        exit()
     }
 
-    fun onButtonContinueClicked() {
-        GameActivity.createLauncher(size).launch()
-
+    fun onButtonContinueClicked(food: ArrayList<Food>, planet: ArrayList<Planet>) {
+        GameActivity.createLauncher(size, planet = planet).launch()
+        exit()
     }
 
     fun onButtonSave1Clicked() {

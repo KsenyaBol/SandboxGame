@@ -53,6 +53,7 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
         buttonContinue.setOnClickListener {
             presenter.onButtonContinueClicked()
+
             soundButtonClick.start()
         }
 
@@ -61,43 +62,17 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
             soundButtonClick.start()
         }
 
-
             GlobalScope.launch {
 
                 val list = database.spaceDao.getSpaceWithPlanetAndFood()
 
                 withContext(Dispatchers.Main) {
-                   showToast(list.toString().toText())
-//                space.myPlanetList = spaceWithPlanetAndFood.planet!!
-//                space.myFoodList = spaceWithPlanetAndFood.food!!
+
                 }
             }
 
 
     }
-
-//    val EXTERNAL_PERMS = arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//    val EXTERNAL_REQUEST = 138
-//
-//    fun hasPermission(perm: String): Boolean {
-//        return PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, perm)
-//    }
-//
-//    fun canAccessExternalSd(): Boolean {
-//        return hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//    }
-//
-//    fun requestForPermission(): Boolean {
-//        var isPermissionOn = true
-//        val version = Build.VERSION.SDK_INT
-//        if (version >= 23) {
-//            if (!canAccessExternalSd()) {
-//                isPermissionOn = false
-//                ActivityCompat.requestPermissions(this, EXTERNAL_PERMS, EXTERNAL_REQUEST)
-//            }
-//        }
-//        return isPermissionOn
-//    }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {

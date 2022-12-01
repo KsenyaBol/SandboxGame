@@ -4,7 +4,7 @@ import androidx.room.*
 
 @Dao
 interface PlanetDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPlanet(vararg planet: Planet)
 
     @Update
@@ -14,6 +14,6 @@ interface PlanetDao {
     suspend fun deletePlanet(vararg planet:Planet)
 
     @Query("SELECT * FROM planet ")
-    fun getAllPlanet(): MutableList<Planet?>
+    fun getAllPlanet(): List<Planet>
 
 }

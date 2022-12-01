@@ -13,10 +13,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import androidx.room.Insert
 import com.example.core.rule.ui.actions.FoodAdd
 import com.example.core.rule.ui.actions.PlanetAge
 import com.example.core.rule.ui.actions.PlanetInfect
 import com.example.core.rule.ui.actions.PlanetMoving
+import com.example.core.rule.ui.objects.food.Food
+import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
@@ -24,6 +27,7 @@ import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.continueGame.ContinuePresenter
 import com.example.sandboxgame.ui.widget.DrawingView
+import com.omega_r.libs.extensions.list.toArrayList
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
@@ -32,14 +36,17 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
+
+class GameActivity(override var planet: ArrayList<Planet>) : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
 
 
     companion object {
         private const val EXTRA_SIZE = "size"
+        private const val EXTRA_PLANET = "planet"
+//        private const val EXTRA_SPACE = "space"
 
-        fun createLauncher(size: Int) = createActivityLauncher(
-            EXTRA_SIZE put size,
+        fun createLauncher(size: Int, planet: ArrayList<Planet>) = createActivityLauncher(
+            EXTRA_SIZE put size, EXTRA_PLANET put planet
         )
     }
 
@@ -47,7 +54,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private var delete = 0
     private var clanAmount = 0
     private var satiety: Int = 0
-    private var id = 0
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private val space: Space = Space()
@@ -55,13 +61,13 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private val addFood: FoodAdd = FoodAdd()
     private val planetAge: PlanetAge = PlanetAge()
     private val planetInfect: PlanetInfect = PlanetInfect()
-    private var spaceObject: SpaceObject = SpaceObject(id)
+
 
     var foodImage = Space.FoodImage.FOOD_M
     var planetImage = (Space.PlanetImage.PLANET5)
 
     override val presenter: GamePresenter by providePresenter {
-        GamePresenter(this[EXTRA_SIZE]!!)
+        GamePresenter(this[EXTRA_SIZE]!!, this[EXTRA_PLANET]!!)
     }
     private val buttonExit: Button by bind(R.id.button_exit)
     private val buttonAdd: Button by bind(R.id.button_add_square)
@@ -117,6 +123,10 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
             addFood.size = value
         }
 
+    private var id: Int = 0
+
+    private var spaceObject: SpaceObject = SpaceObject(id)
+
     @SuppressLint("ResourceType", "NewApi", "UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.M)
 
@@ -125,7 +135,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
         drawingView.space = space
         planetMoving.space = space
-        presenter.space = space
+//        presenter.space = space
         addFood.space = space
         planetAge.space = space
         planetInfect.space = space
@@ -160,17 +170,23 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
             presenter.onButtonYesClicked()
 
             spaceObject.id = id
+//            save()
 
             GlobalScope.launch {
 
-                val list = database.spaceDao.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
-
                 withContext(Dispatchers.Main) {
-                   list == database.spaceDao.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
+                    space.myPlanetList.forEach { planet ->
+                        database.planetDao.insertPlanet(planet)
+                    }
+                    space.myFoodList.forEach { food ->
+                        database.foodDao.insertFood(food)
+                    }
+                    database.spaceDao.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
 
                 }
             }
 
+            presenter.id = id
             id += 1
 
             soundButtonClick.start()
@@ -492,9 +508,26 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         ADD, DELETE, INFECT, TREAT
     }
 
+//    private fun save() {
+//        GlobalScope.launch {
+//
+//            val list = database.spaceDao.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
+//
+//            withContext(Dispatchers.Main) {
+//                space.myPlanetList.forEach { planet ->
+//                    database.planetDao.insertPlanet(planet)
+//                }
+//                space.myFoodList.forEach { food ->
+//                    database.foodDao.insertFood(food)
+//                }
+//                database.spaceDao.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
+//
+//            }
+//        }
+//    }
+
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onTapCell(i: Int, j: Int) {
-
 
         if (buttonAdd.isSelected) {
             val planet = space.myPlanetList.firstOrNull { planet ->
@@ -503,7 +536,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
             if (planet == null) {
                 space.addValue(i, j, planetImage, 0, 0, 0)
                 soundGame(Command.ADD)
-
             }
 
         }
@@ -553,12 +585,11 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         textNumberAmount.text = planetAmount.toString()
         textNumberAmountDied.text = delete.toString()
         textNumberAmountInfected.text = infect.toString()
-
-//        val cellClansAmount = space.myPlanetList.count {
-//            it.planetImage == planetImage}
-//        textNumberAmountClans.text = cellClansAmount.toString()
-
     }
 
 
 }
+
+//        val cellClansAmount = space.myPlanetList.count {
+//            it.planetImage == planetImage}
+//        textNumberAmountClans.text = cellClansAmount.toString()

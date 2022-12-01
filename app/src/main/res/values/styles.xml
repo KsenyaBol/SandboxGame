@@ -21,19 +21,31 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="Text.Big.Dark">
-        <item name="android:textColor">@color/black</item>
+    <style name="Text.Medium">
+    <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Text.Medium">
-        <item name="android:textSize">16sp</item>
+    <style name="Text.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Big.Dark">
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Text.Medium.Roboto">
         <item name="android:fontFamily">@font/advent_pro</item>
     </style>
 
+    <style name="Text.Small.Roboto">
+        <item name="android:fontFamily">@font/advent_pro</item>
+    </style>
+
     <style name="Text.Medium.Roboto.Bold">
+        <item name="android:fontFamily">@font/advent_pro_semibold</item>
+    </style>
+
+    <style name="Text.Small.Roboto.Bold">
         <item name="android:fontFamily">@font/advent_pro_semibold</item>
     </style>
 
