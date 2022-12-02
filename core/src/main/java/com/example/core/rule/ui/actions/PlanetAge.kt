@@ -6,7 +6,7 @@ import com.example.core.rule.ui.objects.space.Space
 
 class PlanetAge {
 
-    lateinit var space: Space
+    var space: Space = Space()
 
     init {
         planetAge()
@@ -25,7 +25,7 @@ class PlanetAge {
 
                 age += 2
                 space.ageChange(index, x, y, age)
-//                space.planetDie(x, y, age)
+                space.planetDie(x, y, age)
             }
             handler.postDelayed(runnable!!, 3000)
         }

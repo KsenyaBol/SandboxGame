@@ -8,6 +8,15 @@ class ReviewPlanet {
 
     private var space: Space = Space()
 
+//    fun mineOrStranger() {
+//        val myPlanetList2 = ArrayList(space.myPlanetList)
+//        myPlanetList2.forEachIndexed { index, planet->
+//            var planetX = planet.planetX
+//            var planetY = planet.planetY
+//            if ()
+//        }
+//    }
+
 //    init{
 //        reviewPlanet()
 //    }

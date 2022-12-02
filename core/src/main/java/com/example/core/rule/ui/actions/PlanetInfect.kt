@@ -6,7 +6,7 @@ import com.example.core.rule.ui.objects.space.Space
 
 class PlanetInfect {
 
-    lateinit var space: Space
+    var space: Space = Space()
 
     init {
         planetInfect()
@@ -23,7 +23,7 @@ class PlanetInfect {
                 var planetInfect = planet.planetInfect
                 planetInfect += 2
                 space.infectChange(index, x, y, planetInfect)
-//                space.planetDie(x, y, planetInfect)
+                space.planetDie(x, y, planetInfect)
             }
             handler.postDelayed(runnable!!, 2000)
         }
