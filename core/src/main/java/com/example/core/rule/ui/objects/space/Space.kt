@@ -2,9 +2,12 @@ package com.example.core.rule.ui.objects.space
 
 import com.example.core.rule.ui.objects.food.Food
 import com.example.core.rule.ui.objects.planet.Planet
+import java.io.Serializable
 import kotlin.collections.ArrayList
 
-class Space {
+
+
+class Space: Serializable {
 
     var myPlanetList: ArrayList<Planet> = arrayListOf()
     var myFoodList: ArrayList<Food> = arrayListOf()
@@ -221,7 +224,15 @@ class Space {
         }
     }
 
-
+//    fun toObject(stringValue: String): Space {
+//        return JSON.parse(Space.serializer(), stringValue)
+//    }
+//
+//    fun toJson(space: Space): String {
+//        // Обратите внимание, что мы вызываем Serializer, который автоматически сгенерирован из нашего класса
+//        // Сразу после того, как мы добавили аннотацию @Serializer
+//        return JSON.stringify(Space.serializer(), space)
+//    }
 
 
 
