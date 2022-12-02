@@ -107,7 +107,7 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
         }
 
         buttonContinue.setOnClickListener {
-            presenter.onButtonContinueClicked(food = space.myFoodList, planet = space.myPlanetList)
+
 
             GlobalScope.launch {
 
@@ -127,6 +127,8 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
 
                 }
             }
+
+            presenter.onButtonContinueClicked(space)
 
             soundButtonClick.start()
         }

@@ -1,11 +1,12 @@
 package com.example.sandboxgame.ui.game
 
+import com.example.core.rule.ui.objects.food.Food
 import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
 
-class GamePresenter(private val size: Int, private val planet: ArrayList<Planet>): OmegaPresenter<GameView>() {
+class GamePresenter(private val size: Int, private val space: Space): OmegaPresenter<GameView>() {
 
     var id: Int = 0
     var command: Command? = null
@@ -13,7 +14,8 @@ class GamePresenter(private val size: Int, private val planet: ArrayList<Planet>
 
     init {
         viewState.size = size
-        viewState.planet = planet
+        viewState.space = space
+
     }
 
     fun onButtonNoClicked() {

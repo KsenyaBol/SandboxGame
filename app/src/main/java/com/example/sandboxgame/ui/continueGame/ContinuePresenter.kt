@@ -2,6 +2,7 @@ package com.example.sandboxgame.ui.continueGame
 
 import com.example.core.rule.ui.objects.food.Food
 import com.example.core.rule.ui.objects.planet.Planet
+import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.ui.game.GameActivity
 import com.example.sandboxgame.ui.main.MainActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
@@ -20,8 +21,8 @@ class ContinuePresenter(): OmegaPresenter<ContinueView>() {
         exit()
     }
 
-    fun onButtonContinueClicked(food: ArrayList<Food>, planet: ArrayList<Planet>) {
-        GameActivity.createLauncher(size, planet = planet).launch()
+    fun onButtonContinueClicked(space: Space) {
+        GameActivity.createLauncher(size, space).launch()
         exit()
     }
 

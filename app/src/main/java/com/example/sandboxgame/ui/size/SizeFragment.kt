@@ -16,7 +16,6 @@ open class SizeFragment : BaseActivity(R.layout.layout_field_size), SizeView {
     }
 
     override val presenter: SizePresenter by providePresenter()
-
     private val buttonBigFaild: Button by bind(R.id.button_size_big)
     private val buttonNormFaild: Button by bind(R.id.button_size_normal)
     private val buttonSmallFaild: Button by bind(R.id.button_size_small)
