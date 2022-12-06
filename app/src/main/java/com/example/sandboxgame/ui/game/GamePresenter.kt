@@ -10,7 +10,6 @@ class GamePresenter(private val size: Int, private val space: Space): OmegaPrese
 
     var id: Int = 0
     var command: Command? = null
-//    lateinit var space: Space
 
     init {
         viewState.size = size

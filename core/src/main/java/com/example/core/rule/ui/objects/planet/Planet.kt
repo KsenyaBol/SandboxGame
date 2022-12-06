@@ -4,7 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.core.rule.ui.objects.space.Space
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 @Entity
 data class Planet(
     var planetX: Int = 0,
@@ -16,3 +19,10 @@ data class Planet(
     @PrimaryKey @ColumnInfo(name = "spaceId")
     val spaceId: Int = 0,
 )
+
+//fun planetToJson(planet: Planet): String {
+//    return Json.encodeToString(planet)
+//}
+//fun planetFromJson(planetFromString: String): Planet {
+//    return Json.decodeFromString(planetFromString)
+//}

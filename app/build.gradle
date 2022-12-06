@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id("com.jfrog.bintray") version "1.8.5"
 }
 
 android {
@@ -95,8 +94,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 
-    implementation 'com.google.code.gson:gson:2.8.9'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+
 
 //    implementation "gradle-plugin:1.7.20"
 //    implementation "serialization:1.7.20"

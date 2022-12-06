@@ -3,8 +3,14 @@ package com.example.core.rule.ui.objects.food
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
+@Serializable
 @Entity
 data class Food (
     var x: Int = 0,
@@ -14,3 +20,10 @@ data class Food (
     @PrimaryKey @ColumnInfo(name = "spaceId")
     val spaceId: Int = 0,
 )
+
+//fun foodToJson(food: Food): String {
+//    return Json.encodeToString(food)
+//}
+//fun foodFromJson(foodFromString: String): Food {
+//    return Json.decodeFromString(foodFromString)
+//}

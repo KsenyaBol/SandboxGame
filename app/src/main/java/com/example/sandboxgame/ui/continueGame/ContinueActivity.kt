@@ -20,6 +20,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,6 +55,7 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
     private val space: Space = Space()
+    val spaceToJson = Json.encodeToString(space)
     var food: ArrayList<Food> = arrayListOf()
     var planet:  ArrayList<Planet> = arrayListOf()
 
@@ -122,13 +125,10 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
                     showToast(space.myFoodList.toString().toText())
                     showToast(space.myPlanetList.toString().toText())
 
-//                    space.myPlanetList = SpaceWithPlanetAndFood().planet!!.toArrayList()
-//                    space.myFoodList = SpaceWithPlanetAndFood().food!!.toArrayList()
-
                 }
             }
 
-            presenter.onButtonContinueClicked(space)
+            presenter.onButtonContinueClicked(spaceToJson)
 
             soundButtonClick.start()
         }

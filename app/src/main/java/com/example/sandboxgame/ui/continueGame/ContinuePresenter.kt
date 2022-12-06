@@ -21,7 +21,7 @@ class ContinuePresenter(): OmegaPresenter<ContinueView>() {
         exit()
     }
 
-    fun onButtonContinueClicked(space: Space) {
+    fun onButtonContinueClicked(space: String) {
         GameActivity.createLauncher(size, space).launch()
         exit()
     }

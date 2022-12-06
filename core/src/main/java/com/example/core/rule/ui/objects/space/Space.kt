@@ -2,18 +2,28 @@ package com.example.core.rule.ui.objects.space
 
 import com.example.core.rule.ui.objects.food.Food
 import com.example.core.rule.ui.objects.planet.Planet
-import java.io.Serializable
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import kotlin.collections.ArrayList
 
-
-
-class Space: Serializable {
+@Serializable
+class Space {
 
     var myPlanetList: ArrayList<Planet> = arrayListOf()
     var myFoodList: ArrayList<Food> = arrayListOf()
     private var spaceObject: SpaceObject = SpaceObject()
     var spaceListener: SpaceListener? = null
     var id: Int = spaceObject.id
+
+    private val spaceToJson = Json.encodeToString(this)
+    val spaceFromJson = Json.decodeFromString<Space>(spaceToJson)
+
+    val jsonPlanetList = Json.encodeToString(myPlanetList)
+    val jsonFoodList = Json.encodeToString(myFoodList)
+    val toObjectPlanetList = Json.decodeFromString<Space>(jsonPlanetList)
+    val toObjectFoodList = Json.decodeFromString<Space>(jsonFoodList)
 
     enum class FoodImage {
         FOOD_XS, FOOD_S, FOOD_M, FOOD_L
@@ -224,15 +234,18 @@ class Space: Serializable {
         }
     }
 
-//    fun toObject(stringValue: String): Space {
-//        return JSON.parse(Space.serializer(), stringValue)
+//    private val spaceToJson = Json.encodeToString(this)
+//    val spaceFromJson = Json.decodeFromString<Space>(spaceToJson)
+
+//    fun toJson(space: Space): String {
+//        return Json.encodeToString(space)
 //    }
 //
-//    fun toJson(space: Space): String {
-//        // Обратите внимание, что мы вызываем Serializer, который автоматически сгенерирован из нашего класса
-//        // Сразу после того, как мы добавили аннотацию @Serializer
-//        return JSON.stringify(Space.serializer(), space)
+//    fun toObject(spaceToString: String): Space {
+//        return Json.decodeFromString(spaceToString)
 //    }
+
+
 
 
 

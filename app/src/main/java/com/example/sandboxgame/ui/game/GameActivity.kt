@@ -32,7 +32,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
 
 
@@ -41,7 +40,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         private const val EXTRA_SPACE = "space"
 
         fun createLauncher(size: Int, space: Space) = createActivityLauncher(
-            EXTRA_SIZE put size, EXTRA_SPACE put space.myPlanetList
+            EXTRA_SIZE put size, EXTRA_SPACE put (space)
         )
     }
 
@@ -126,6 +125,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         planetAge.space = value
         planetInfect.space = value
     }
+//    var spaceFromJson = Json.decodeFromString(space)
 
     private var id: Int = 0
 
