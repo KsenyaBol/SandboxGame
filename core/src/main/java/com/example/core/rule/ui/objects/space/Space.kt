@@ -1,5 +1,6 @@
 package com.example.core.rule.ui.objects.space
 
+import androidx.annotation.Nullable
 import com.example.core.rule.ui.objects.food.Food
 import com.example.core.rule.ui.objects.planet.Planet
 import kotlinx.serialization.Serializable
@@ -10,6 +11,12 @@ import kotlin.collections.ArrayList
 
 @Serializable
 class Space {
+
+//    companion object{
+//        @Nullable
+//        var space: Space = Space()
+//    }
+    //передаавть не весь space а только id
 
     var myPlanetList: ArrayList<Planet> = arrayListOf()
     var myFoodList: ArrayList<Food> = arrayListOf()

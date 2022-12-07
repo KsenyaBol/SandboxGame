@@ -34,7 +34,7 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
 
         val filter = IntentFilter(Intent.ACTION_SCREEN_ON)
         filter.addAction(Intent.ACTION_SCREEN_OFF)
@@ -62,14 +62,14 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
             soundButtonClick.start()
         }
 
-            GlobalScope.launch {
-
-                val list = database.spaceDao.getSpaceWithPlanetAndFood()
-
-                withContext(Dispatchers.Main) {
-
-                }
-            }
+//            GlobalScope.launch {
+//
+//                val list = database.spaceDao.getSpaceWithPlanetAndFood()
+//
+//                withContext(Dispatchers.Main) {
+//
+//                }
+//            }
 
 
     }

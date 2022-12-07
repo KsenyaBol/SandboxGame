@@ -20,6 +20,8 @@ open class SizeFragment : BaseActivity(R.layout.layout_field_size), SizeView {
     private val buttonNormFaild: Button by bind(R.id.button_size_normal)
     private val buttonSmallFaild: Button by bind(R.id.button_size_small)
 
+//    private val space: com.example.core.rule.ui.objects.space.Space = null!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)

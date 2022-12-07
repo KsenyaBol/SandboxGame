@@ -40,7 +40,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         private const val EXTRA_SPACE = "space"
 
         fun createLauncher(size: Int, space: Space) = createActivityLauncher(
-            EXTRA_SIZE put size, EXTRA_SPACE put (space)
+            EXTRA_SIZE put size, EXTRA_SPACE put space.toString()
         )
     }
 
@@ -50,7 +50,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private var satiety: Int = 0
 
     @SuppressLint("UseCompatLoadingForDrawables")
-//    private val space: Space = Space()
     private val planetMoving: PlanetMoving = PlanetMoving()
     private val addFood: FoodAdd = FoodAdd()
     private val planetAge: PlanetAge = PlanetAge()

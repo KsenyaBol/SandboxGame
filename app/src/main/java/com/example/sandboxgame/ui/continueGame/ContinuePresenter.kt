@@ -1,7 +1,5 @@
 package com.example.sandboxgame.ui.continueGame
 
-import com.example.core.rule.ui.objects.food.Food
-import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.ui.game.GameActivity
 import com.example.sandboxgame.ui.main.MainActivity
@@ -21,7 +19,7 @@ class ContinuePresenter(): OmegaPresenter<ContinueView>() {
         exit()
     }
 
-    fun onButtonContinueClicked(space: String) {
+    fun onButtonContinueClicked(space: Space) {
         GameActivity.createLauncher(size, space).launch()
         exit()
     }

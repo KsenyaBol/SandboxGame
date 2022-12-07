@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.*
+import com.example.core.rule.ui.database.SpaceWithPlanetAndFood
 import com.example.core.rule.ui.objects.food.Food
 import com.example.core.rule.ui.objects.planet.Planet
-import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
@@ -49,13 +49,14 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
     }
 
     var mSettings: SharedPreferences? = null
+//    var space = null
 
     override val presenter: ContinuePresenter by providePresenter()
 
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
-    private val space: Space = Space()
-    val spaceToJson = Json.encodeToString(space)
+//    private val space: Space = Space()
+//    val spaceToJson = Json.encodeToString(space)
     var food: ArrayList<Food> = arrayListOf()
     var planet:  ArrayList<Planet> = arrayListOf()
 
@@ -111,24 +112,25 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
 
         buttonContinue.setOnClickListener {
 
-
             GlobalScope.launch {
 
                 database.spaceDao.getSpaceWithPlanetAndFood()
 
                 withContext(Dispatchers.Main) {
-                    space.myFoodList = database.foodDao.getAllFood().toArrayList()
-                    food = space.myFoodList
-                    space.myPlanetList = database.planetDao.getAllPlanet().toArrayList()
-                    planet = space.myPlanetList
+//                    space.myFoodList = database.foodDao.getAllFood().toArrayList()
+//                    food = space.myFoodList
+//                    space.myPlanetList = database.planetDao.getAllPlanet().toArrayList()
+//                    planet = space.myPlanetList
+//
+//                    showToast(space.myFoodList.toString().toText())
+//                    showToast(space.myPlanetList.toString().toText())
 
-                    showToast(space.myFoodList.toString().toText())
-                    showToast(space.myPlanetList.toString().toText())
+                    val space1 = database.spaceDao.getSpaceWithPlanetAndFood()
 
                 }
             }
 
-            presenter.onButtonContinueClicked(spaceToJson)
+            presenter.onButtonContinueClicked(space)
 
             soundButtonClick.start()
         }
