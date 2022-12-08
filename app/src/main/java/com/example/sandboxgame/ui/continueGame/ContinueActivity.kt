@@ -5,28 +5,16 @@ import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.*
-import com.example.core.rule.ui.database.SpaceWithPlanetAndFood
-import com.example.core.rule.ui.objects.food.Food
-import com.example.core.rule.ui.objects.planet.Planet
+import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.music.MusicService
-import com.omega_r.libs.extensions.list.toArrayList
-import com.omega_r.libs.omegatypes.toText
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import java.text.DateFormat
+import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-
 
 class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView {
 
@@ -43,22 +31,20 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
         const val TEXT_TIME5 = "timeSave5"
         const val TEXT_DATE5 = "dateSave5"
 
+        const val EXTRA_ID = "id"
         var id = 0
-        fun createLauncher() = createActivityLauncher(
-        )
+
+        fun createLauncher() = createActivityLauncher()
     }
 
-    var mSettings: SharedPreferences? = null
-//    var space = null
+    private var mSettings: SharedPreferences? = null
+
 
     override val presenter: ContinuePresenter by providePresenter()
 
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
-//    private val space: Space = Space()
-//    val spaceToJson = Json.encodeToString(space)
-    var food: ArrayList<Food> = arrayListOf()
-    var planet:  ArrayList<Planet> = arrayListOf()
+    private var space: Space = Space()
 
     private val buttonBack: ImageView by bind(R.id.button_back)
     private val buttonSave: Button by bind(R.id.button_save)
@@ -79,19 +65,19 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
     val textDateSave4: TextView by bind(R.id.text_date_save_4)
     val textDateSave5: TextView by bind(R.id.text_date_save_5)
 
-    val currentDate: Date = Date()
-    val dateFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-    val timeFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-    val dateText: String = dateFormat.format(currentDate)
-    val timeText: String = timeFormat.format(currentDate)
+    private val currentDate = Date()
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    private val dateText = dateFormat.format(currentDate)
+    private val timeText = timeFormat.format(currentDate)
 
+
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
-
         musicService.player = player
-
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
         buttonBack.setOnClickListener {
@@ -112,22 +98,11 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
 
         buttonContinue.setOnClickListener {
 
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.Main) {
+                val newSpace = database.spaceDao.getSpace(id)
+                space = newSpace
+                id += 1
 
-                database.spaceDao.getSpaceWithPlanetAndFood()
-
-                withContext(Dispatchers.Main) {
-//                    space.myFoodList = database.foodDao.getAllFood().toArrayList()
-//                    food = space.myFoodList
-//                    space.myPlanetList = database.planetDao.getAllPlanet().toArrayList()
-//                    planet = space.myPlanetList
-//
-//                    showToast(space.myFoodList.toString().toText())
-//                    showToast(space.myPlanetList.toString().toText())
-
-                    val space1 = database.spaceDao.getSpaceWithPlanetAndFood()
-
-                }
             }
 
             presenter.onButtonContinueClicked(space)
@@ -226,6 +201,8 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
         val dateSave5: String = textDateSave5.text.toString()
         editor.putString(TEXT_DATE5, dateSave5)
 
+        editor.putInt(EXTRA_ID, id)
+
         editor.apply()
     }
 
@@ -243,6 +220,7 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
             textDateSave3.text = mSettings!!.getString(TEXT_DATE3, "")
             textDateSave4.text = mSettings!!.getString(TEXT_DATE4, "")
             textDateSave5.text = mSettings!!.getString(TEXT_DATE5, "")
+            id = mSettings!!.getInt(EXTRA_ID, id)
         }
     }
 

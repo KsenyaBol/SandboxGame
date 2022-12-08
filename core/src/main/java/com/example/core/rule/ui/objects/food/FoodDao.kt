@@ -14,8 +14,8 @@ interface FoodDao {
     @Delete
     suspend fun deleteFood(vararg food: Food)
 
-    @Query("SELECT * FROM food ")
-    fun getAllFood(): List<Food>
+    @Query("SELECT * FROM food WHERE spaceId = :spaceId")
+    fun getAllFood(spaceId: Int): List<Food>
 //
 //    @Query("SELECT * FROM food WHERE satiety LIKE :satiety")
 //    fun getAllFoodWithSatiety(vararg satiety: Int?): List<Food?>?

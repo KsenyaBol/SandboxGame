@@ -22,15 +22,12 @@ import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
-import com.example.sandboxgame.ui.continueGame.ContinuePresenter
 import com.example.sandboxgame.ui.widget.DrawingView
+import com.omega_r.libs.extensions.list.toArrayList
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingView.OnTapCellListener {
 
@@ -39,8 +36,9 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         private const val EXTRA_SIZE = "size"
         private const val EXTRA_SPACE = "space"
 
-        fun createLauncher(size: Int, space: Space) = createActivityLauncher(
-            EXTRA_SIZE put size, EXTRA_SPACE put space.toString()
+        fun createLauncher(size: Int, space: Space?) = createActivityLauncher(
+            EXTRA_SIZE put size,
+            EXTRA_SPACE put space,
         )
     }
 
@@ -48,6 +46,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private var delete = 0
     private var clanAmount = 0
     private var satiety: Int = 0
+    private var id: Int = 0
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private val planetMoving: PlanetMoving = PlanetMoving()
@@ -109,7 +108,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     override var size: Int = 0
         set(value) {
             field = value
-            ContinuePresenter().size = value
             drawingView.size = value
             planetMoving.size = value
             addFood.size = value
@@ -124,21 +122,27 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         planetAge.space = value
         planetInfect.space = value
     }
-//    var spaceFromJson = Json.decodeFromString(space)
-
-    private var id: Int = 0
 
     private var spaceObject: SpaceObject = SpaceObject(id)
 
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("ResourceType", "NewApi", "UseCompatLoadingForDrawables")
     @RequiresApi(Build.VERSION_CODES.M)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+            GlobalScope.launch{
+                withContext(Dispatchers.Main){
+                    val newPlanetList = database.planetDao.getAllPlanet(id)
+                    val newFoodList = database.foodDao.getAllFood(id)
+                    space.myPlanetList = newPlanetList.toArrayList()
+                    space.myFoodList = newFoodList.toArrayList()
+
+                }
+            }
 
         addFood.pause_flg = planetMoving.pause_flg
-        space.id = id
 
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN)

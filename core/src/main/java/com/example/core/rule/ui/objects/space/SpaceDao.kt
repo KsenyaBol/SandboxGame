@@ -20,6 +20,8 @@ interface SpaceDao {
     @Query("SELECT * FROM space")
     suspend fun getSpaceWithPlanetAndFood(): List<SpaceWithPlanetAndFood?>?
 
+    @Query("SELECT * FROM space WHERE id = :id")
+    suspend fun getSpace(id: Int): Space
 //    @Query("SELECT * FROM space WHERE id = id")
 //    suspend fun findById(id: Int) : SpaceObject
 

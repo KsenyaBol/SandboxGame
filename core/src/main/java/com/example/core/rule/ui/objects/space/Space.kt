@@ -1,36 +1,20 @@
 package com.example.core.rule.ui.objects.space
 
-import androidx.annotation.Nullable
+import androidx.room.Ignore
 import com.example.core.rule.ui.objects.food.Food
 import com.example.core.rule.ui.objects.planet.Planet
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import java.io.Serializable
 import kotlin.collections.ArrayList
 
-@Serializable
-class Space {
+class Space: Serializable {
 
-//    companion object{
-//        @Nullable
-//        var space: Space = Space()
-//    }
     //передаавть не весь space а только id
 
-    var myPlanetList: ArrayList<Planet> = arrayListOf()
-    var myFoodList: ArrayList<Food> = arrayListOf()
-    private var spaceObject: SpaceObject = SpaceObject()
-    var spaceListener: SpaceListener? = null
-    var id: Int = spaceObject.id
-
-    private val spaceToJson = Json.encodeToString(this)
-    val spaceFromJson = Json.decodeFromString<Space>(spaceToJson)
-
-    val jsonPlanetList = Json.encodeToString(myPlanetList)
-    val jsonFoodList = Json.encodeToString(myFoodList)
-    val toObjectPlanetList = Json.decodeFromString<Space>(jsonPlanetList)
-    val toObjectFoodList = Json.decodeFromString<Space>(jsonFoodList)
+    @Ignore var myPlanetList: ArrayList<Planet> = arrayListOf()
+    @Ignore var myFoodList: ArrayList<Food> = arrayListOf()
+//    private var spaceObject: SpaceObject = SpaceObject()
+    @Ignore var spaceListener: SpaceListener? = null
+    var id: Int = 0
 
     enum class FoodImage {
         FOOD_XS, FOOD_S, FOOD_M, FOOD_L
@@ -240,21 +224,6 @@ class Space {
 
         }
     }
-
-//    private val spaceToJson = Json.encodeToString(this)
-//    val spaceFromJson = Json.decodeFromString<Space>(spaceToJson)
-
-//    fun toJson(space: Space): String {
-//        return Json.encodeToString(space)
-//    }
-//
-//    fun toObject(spaceToString: String): Space {
-//        return Json.decodeFromString(spaceToString)
-//    }
-
-
-
-
 
 
 

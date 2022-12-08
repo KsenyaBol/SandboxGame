@@ -1,7 +1,5 @@
 package com.example.sandboxgame.ui.game
 
-import com.example.core.rule.ui.objects.food.Food
-import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
