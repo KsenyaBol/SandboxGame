@@ -11,10 +11,10 @@ class SpaceWithPlanetAndFood {
     @Embedded
     var spaceObject: SpaceObject? = null
 
-    @Relation(parentColumn = "id", entityColumn = "spaceId", entity = Planet::class)
-    var planet: List<Planet?>? = null
+    @Relation(parentColumn = "id", entityColumn = "space_id", entity = Planet::class)
+    var planet: List<Planet>? = arrayListOf()
 
-    @Relation(parentColumn = "id", entityColumn = "spaceId", entity = Food::class)
-    var food: List<Food?>? = null
+    @Relation(parentColumn = "id", entityColumn = "space_id", entity = Food::class)
+    var food: List<Food>? = arrayListOf()
 
 }

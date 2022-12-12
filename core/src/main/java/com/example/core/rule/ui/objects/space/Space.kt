@@ -8,12 +8,11 @@ import kotlin.collections.ArrayList
 
 class Space: Serializable {
 
-    //передаавть не весь space а только id
-
-    @Ignore var myPlanetList: ArrayList<Planet> = arrayListOf()
-    @Ignore var myFoodList: ArrayList<Food> = arrayListOf()
-//    private var spaceObject: SpaceObject = SpaceObject()
-    @Ignore var spaceListener: SpaceListener? = null
+    @Transient
+    @Ignore
+    var spaceListener: SpaceListener? = null
+    var myPlanetList: ArrayList<Planet> = arrayListOf()
+    var myFoodList: ArrayList<Food> = arrayListOf()
     var id: Int = 0
 
     enum class FoodImage {
@@ -28,7 +27,6 @@ class Space: Serializable {
     fun setValue(myPlanetList: ArrayList<Planet>, spaceListener: SpaceListener, myFoodList:
     ArrayList<Food>
     ) {
-
         this.myPlanetList = myPlanetList
         this.spaceListener = spaceListener
         this.myFoodList = myFoodList

@@ -1,6 +1,8 @@
 package com.example.sandboxgame.ui.game
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Build
@@ -22,6 +24,8 @@ import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
+import com.example.sandboxgame.ui.continueGame.ContinueActivity
+import com.example.sandboxgame.ui.continueGame.ContinueActivity.Companion.mSettings
 import com.example.sandboxgame.ui.widget.DrawingView
 import com.omega_r.libs.extensions.list.toArrayList
 import com.omegar.libs.omegalaunchers.createActivityLauncher
@@ -35,10 +39,12 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     companion object {
         private const val EXTRA_SIZE = "size"
         private const val EXTRA_SPACE = "space"
+        private const val EXTRA_ID_1 = "id"
 
-        fun createLauncher(size: Int, space: Space?) = createActivityLauncher(
+        fun createLauncher(size: Int, space: Space?, id: Int) = createActivityLauncher(
             EXTRA_SIZE put size,
             EXTRA_SPACE put space,
+            EXTRA_ID_1 put id,
         )
     }
 
@@ -46,7 +52,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private var delete = 0
     private var clanAmount = 0
     private var satiety: Int = 0
-    private var id: Int = 0
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private val planetMoving: PlanetMoving = PlanetMoving()
@@ -58,8 +63,9 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     var planetImage = (Space.PlanetImage.PLANET5)
 
     override val presenter: GamePresenter by providePresenter {
-        GamePresenter(this[EXTRA_SIZE]!!, this[EXTRA_SPACE]!!)
+        GamePresenter(this[EXTRA_SIZE]!!, this[EXTRA_SPACE]!!, this[EXTRA_ID_1]!!)
     }
+
     private val buttonExit: Button by bind(R.id.button_exit)
     private val buttonAdd: Button by bind(R.id.button_add_square)
     private val buttonDelete: Button by bind(R.id.button_delete_square)
@@ -123,6 +129,9 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         planetInfect.space = value
     }
 
+    override var id: Int = 0
+
+
     private var spaceObject: SpaceObject = SpaceObject(id)
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -144,6 +153,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
         addFood.pause_flg = planetMoving.pause_flg
 
+        mSettings = getSharedPreferences(ContinueActivity.APP_PREFERENCES, Context.MODE_PRIVATE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
@@ -187,7 +197,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
             }
 
-            presenter.id = id
             id += 1
 
             soundButtonClick.start()
@@ -486,6 +495,34 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
             planet10.isSelected = true
 
             planetImage = (Space.PlanetImage.PLANET10)
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val editor: SharedPreferences.Editor = mSettings!!.edit()
+        editor.putInt(EXTRA_ID_1, id)
+        editor.apply()
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun onRestart() {
+        super.onRestart()
+
+        if(mSettings!!.contains(EXTRA_ID_1)) {
+            id = mSettings!!.getInt(EXTRA_ID_1, id)
+        }
+
+        GlobalScope.launch{
+            withContext(Dispatchers.Main){
+                val newPlanetList = database.planetDao.getAllPlanet(id)
+                val newFoodList = database.foodDao.getAllFood(id)
+                space.myPlanetList = newPlanetList.toArrayList()
+                space.myFoodList = newFoodList.toArrayList()
+
+            }
         }
 
     }

@@ -14,6 +14,6 @@ data class Planet (
     var planetInfect: Int = 0,
     var planetSatiety: Int = 0,
     var age: Int = 0,
-    @PrimaryKey @ColumnInfo(name = "spaceId")
+    @PrimaryKey @ColumnInfo(name = "space_id")
     val spaceId: Int = 0,
 ): java.io.Serializable

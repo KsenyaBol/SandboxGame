@@ -4,14 +4,14 @@ import com.example.core.rule.ui.objects.space.Space
 import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
 
-class GamePresenter(private val size: Int, private val space: Space): OmegaPresenter<GameView>() {
+class GamePresenter(private val size: Int, private val space: Space, private val id: Int): OmegaPresenter<GameView>() {
 
-    var id: Int = 0
     var command: Command? = null
 
     init {
         viewState.size = size
         viewState.space = space
+        viewState.id = id
 
     }
 
@@ -21,7 +21,6 @@ class GamePresenter(private val size: Int, private val space: Space): OmegaPrese
 
     fun onButtonYesClicked() {
        ContinueActivity.createLauncher().launch()
-        ContinueActivity.id = id
         exit()
     }
 

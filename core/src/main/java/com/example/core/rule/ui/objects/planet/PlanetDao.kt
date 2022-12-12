@@ -13,7 +13,7 @@ interface PlanetDao {
     @Delete
     suspend fun deletePlanet(vararg planet:Planet)
 
-    @Query("SELECT * FROM planet WHERE spaceId = :spaceId")
+    @Query("SELECT * FROM planet WHERE space_id = :spaceId")
     fun getAllPlanet(spaceId: Int): List<Planet>
 
 }
