@@ -1,5 +1,6 @@
 package com.example.sandboxgame.ui.continueGame
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.MediaPlayer
@@ -78,6 +79,7 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
     private val timeText = timeFormat.format(currentDate)
 
 
+    @SuppressLint("ShowToast")
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,10 +109,18 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
             GlobalScope.launch {
 
                 withContext(Dispatchers.Main) {
-                    val newPlanet = database.planetDao.getAllPlanet(id)
-                    val newFood = database.foodDao.getAllFood(id)
-                    space.myPlanetList = newPlanet.toArrayList()
-                    space.myFoodList = newFood.toArrayList()
+
+//                    val newPlanet = database.planetDao.getAllPlanet(id)
+//                    val newFood = database.foodDao.getAllFood(id)
+
+                    val newSpace = database.spaceDao.getSpace(id)
+                    space.myPlanetList = newSpace.planet!!.toArrayList()
+                    space.myFoodList = newSpace.food!!.toArrayList()
+                    val sizeList = newSpace.planet!!.size
+                    Toast.makeText(applicationContext, "planet - $sizeList", Toast.LENGTH_SHORT).show()
+
+//                    space.myPlanetList = newPlanet.toArrayList()
+//                    space.myFoodList = newFood.toArrayList()
                 }
 
             }
@@ -241,44 +251,34 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
             textTimeSave1.text = timeText
             textDateSave1.text = dateText
 
-            if(id == 0) {
-                id += 1
-            }
+            id = 0
 
         }
         if (command == ContinuePresenter.ContinueCommand.SAVE_2) {
             textTimeSave2.text = timeText
             textDateSave2.text = dateText
 
-            if(id == 1) {
-                id += 1
-            }
+           id = 1
 
         }
         if (command == ContinuePresenter.ContinueCommand.SAVE_3) {
             textTimeSave3.text = timeText
             textDateSave3.text = dateText
 
-            if(id == 2) {
-                id += 1
-            }
+            id = 2
         }
         if (command == ContinuePresenter.ContinueCommand.SAVE_4) {
             textTimeSave4.text = timeText
             textDateSave4.text = dateText
 
-            if(id == 3) {
-                id += 1
-            }
+            id = 3
 
         }
         if (command == ContinuePresenter.ContinueCommand.SAVE_5) {
             textTimeSave5.text = timeText
             textDateSave5.text = dateText
 
-            if(id == 4) {
-                id += 1
-            }
+            id = 4
 
         }
 

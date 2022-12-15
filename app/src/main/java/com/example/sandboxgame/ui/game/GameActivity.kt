@@ -2,7 +2,6 @@ package com.example.sandboxgame.ui.game
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Build
@@ -39,12 +38,12 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     companion object {
         private const val EXTRA_SIZE = "size"
         private const val EXTRA_SPACE = "space"
-        private const val EXTRA_ID_1 = "id"
+        private const val EXTRA_ID = "id"
 
-        fun createLauncher(size: Int, space: Space?, id: Int) = createActivityLauncher(
+        fun createLauncher(size: Int, space: Space?, id: Int?) = createActivityLauncher(
             EXTRA_SIZE put size,
             EXTRA_SPACE put space,
-            EXTRA_ID_1 put id,
+            EXTRA_ID put id,
         )
     }
 
@@ -63,7 +62,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     var planetImage = (Space.PlanetImage.PLANET5)
 
     override val presenter: GamePresenter by providePresenter {
-        GamePresenter(this[EXTRA_SIZE]!!, this[EXTRA_SPACE]!!, this[EXTRA_ID_1]!!)
+        GamePresenter(this[EXTRA_SIZE]!!, this[EXTRA_SPACE]!!, this[EXTRA_ID]!!)
     }
 
     private val buttonExit: Button by bind(R.id.button_exit)
@@ -130,6 +129,10 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     }
 
     override var id: Int = 0
+    set(value) {
+        field = value
+        space.id = id
+    }
 
 
     private var spaceObject: SpaceObject = SpaceObject(id)
@@ -143,10 +146,11 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
             GlobalScope.launch{
                 withContext(Dispatchers.Main){
-                    val newPlanetList = database.planetDao.getAllPlanet(id)
-                    val newFoodList = database.foodDao.getAllFood(id)
-                    space.myPlanetList = newPlanetList.toArrayList()
-                    space.myFoodList = newFoodList.toArrayList()
+
+                        val newPlanetList = database.planetDao.getAllPlanet(id)
+                        val newFoodList = database.foodDao.getAllFood(id)
+                        space.myPlanetList = newPlanetList.toArrayList()
+                        space.myFoodList = newFoodList.toArrayList()
 
                 }
             }
@@ -192,7 +196,9 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
                     space.myFoodList.forEach { food ->
                         database.foodDao.insertFood(food)
                     }
-                    database.spaceDao.insertSpace(spaceObject, space.myPlanetList, space.myFoodList)
+                    val planet = database.planetDao.getAllPlanet(id)
+                    val food = database.foodDao.getAllFood(id)
+                    database.spaceDao.insertSpace(spaceObject, planet, food)
                 }
 
             }
@@ -495,34 +501,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
             planet10.isSelected = true
 
             planetImage = (Space.PlanetImage.PLANET10)
-        }
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        val editor: SharedPreferences.Editor = mSettings!!.edit()
-        editor.putInt(EXTRA_ID_1, id)
-        editor.apply()
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    override fun onRestart() {
-        super.onRestart()
-
-        if(mSettings!!.contains(EXTRA_ID_1)) {
-            id = mSettings!!.getInt(EXTRA_ID_1, id)
-        }
-
-        GlobalScope.launch{
-            withContext(Dispatchers.Main){
-                val newPlanetList = database.planetDao.getAllPlanet(id)
-                val newFoodList = database.foodDao.getAllFood(id)
-                space.myPlanetList = newPlanetList.toArrayList()
-                space.myFoodList = newFoodList.toArrayList()
-
-            }
         }
 
     }
