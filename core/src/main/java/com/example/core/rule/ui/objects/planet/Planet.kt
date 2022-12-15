@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.example.core.rule.ui.objects.space.Space
 import kotlinx.serialization.Serializable
 
-@Entity
+@Entity (primaryKeys = ["planetX", "planetY"])
 data class Planet (
     var planetX: Int = 0,
     var planetY: Int = 0,
@@ -14,6 +14,6 @@ data class Planet (
     var planetInfect: Int = 0,
     var planetSatiety: Int = 0,
     var age: Int = 0,
-    @PrimaryKey @ColumnInfo(name = "space_id")
+    @ColumnInfo(name = "space_id")
     val spaceId: Int = 0,
 ): java.io.Serializable

@@ -187,6 +187,10 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
             spaceObject.id = id
 
+            if (id == -1) {
+                id += 1
+            }
+
             GlobalScope.launch {
 
                 withContext(Dispatchers.Main) {

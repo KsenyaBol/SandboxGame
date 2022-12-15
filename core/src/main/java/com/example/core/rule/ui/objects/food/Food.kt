@@ -10,12 +10,12 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@Entity
+@Entity (primaryKeys = ["x", "y"])
 data class Food (
     var x: Int = 0,
     var y: Int = 0,
     var foodImage: Space.FoodImage = Space.FoodImage.FOOD_M,
     var satiety: Int = 0,
-    @PrimaryKey @ColumnInfo(name = "space_id")
+    @ColumnInfo(name = "space_id")
     val spaceId: Int = 0,
 ): java.io.Serializable

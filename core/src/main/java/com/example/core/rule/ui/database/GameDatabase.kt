@@ -9,7 +9,7 @@ import com.example.core.rule.ui.objects.planet.PlanetDao
 import com.example.core.rule.ui.objects.space.SpaceDao
 import com.example.core.rule.ui.objects.space.SpaceObject
 
-@Database(entities = [SpaceObject::class, Planet::class, Food::class], version = 6)
+@Database(entities = [SpaceObject::class, Planet::class, Food::class], version = 7)
 abstract class GameDatabase : RoomDatabase() {
     abstract val spaceDao: SpaceDao
     abstract val planetDao: PlanetDao
