@@ -10,6 +10,20 @@
 
     <Button
         style="@style/Text.Small.Roboto.Bold"
+        android:id="@+id/button_delete"
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:background="@drawable/focus_button_border"
+        android:text="DELETE"
+        android:textColor="@color/black"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/scroll_view"
+        app:layout_constraintStart_toStartOf="@id/scroll_view"
+        app:layout_constraintEnd_toStartOf="@id/button_save"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        style="@style/Text.Small.Roboto.Bold"
         android:id="@+id/button_save"
         android:layout_width="150dp"
         android:layout_height="55dp"
@@ -17,7 +31,7 @@
         android:text="@string/button_save"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@+id/scroll_view"
-        app:layout_constraintStart_toStartOf="@id/scroll_view"
+        app:layout_constraintStart_toEndOf="@id/button_delete"
         app:layout_constraintEnd_toStartOf="@id/button_continue"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -29,6 +43,7 @@
         android:background="@drawable/focus_button_border"
         android:text="@string/button_continue"
         android:textColor="@color/black"
+        android:layout_margin="10dp"
         app:layout_constraintTop_toBottomOf="@+id/scroll_view"
         app:layout_constraintStart_toEndOf="@id/button_save"
         app:layout_constraintEnd_toEndOf="@id/scroll_view"

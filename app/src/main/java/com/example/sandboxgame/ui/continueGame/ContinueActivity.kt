@@ -6,8 +6,6 @@ import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.*
-import com.example.core.rule.ui.objects.food.Food
-import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
@@ -20,7 +18,6 @@ import com.omegar.mvp.ktx.providePresenter
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView {
 
@@ -51,11 +48,13 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
 
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
+    private var spaceObject: SpaceObject = SpaceObject(id)
     private var space: Space = Space()
 
-    private val buttonBack: ImageView by bind(R.id.button_back)
-    private val buttonSave: Button by bind(R.id.button_save)
-    private val buttonContinue: Button by bind(R.id.button_continue)
+    private val backButton: ImageView by bind(R.id.button_back)
+    private val deleteButton: Button by bind(R.id.button_delete)
+    private val saveButton: Button by bind(R.id.button_save)
+    private val continueButton: Button by bind(R.id.button_continue)
     private val buttonSave1: ImageButton by bind(R.id.save_1)
     private val buttonSave2: ImageButton by bind(R.id.save_2)
     private val buttonSave3: ImageButton by bind(R.id.save_3)
@@ -88,13 +87,23 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
         musicService.player = player
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
 
-        buttonBack.setOnClickListener {
+        backButton.setOnClickListener {
             presenter.onButtonBackClicked()
 
             soundButtonClick.start()
         }
 
-        buttonSave.setOnClickListener {
+        deleteButton.setOnClickListener {
+
+            GlobalScope.launch {
+                withContext(Dispatchers.Main) {
+//                    database.spaceDao.deleteSpace(spaceObject, )
+                }
+            }
+
+        }
+
+        saveButton.setOnClickListener {
             presenter.onButtonSaveClicked()
 
             val text = "world successfully saved"
@@ -104,14 +113,11 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
             soundButtonClick.start()
         }
 
-        buttonContinue.setOnClickListener {
+        continueButton.setOnClickListener {
 
             GlobalScope.launch {
 
                 withContext(Dispatchers.Main) {
-
-//                    val newPlanet = database.planetDao.getAllPlanet(id)
-//                    val newFood = database.foodDao.getAllFood(id)
 
                     val newSpace = database.spaceDao.getSpace(id)
                     space.myPlanetList = newSpace.planet!!.toArrayList()
@@ -119,8 +125,6 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
                     val sizeList = newSpace.planet!!.size
                     Toast.makeText(applicationContext, "planet - $sizeList", Toast.LENGTH_SHORT).show()
 
-//                    space.myPlanetList = newPlanet.toArrayList()
-//                    space.myFoodList = newFood.toArrayList()
                 }
 
             }

@@ -29,5 +29,10 @@
     <string name="button_save">SAVE</string>
     <string name="title_save_game" translatable="false">SAVE THE GAME</string>
     <string name="button_continue">CONTINUE</string>
+    <string name="message_warning_text" translatable="false">Oops! \nIt seems you have exceeded \nthe limit of your worlds. \nContinue an existing
+        one \nor delete an old one \nto start over</string>
+    <string name="button_cancel" translatable="false">cancel</string>
+    <string name="warning" translatable="false">warning</string>
+
 
 </resources>

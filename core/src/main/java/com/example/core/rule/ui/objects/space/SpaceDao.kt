@@ -12,7 +12,7 @@ interface SpaceDao {
     suspend fun insertSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
     @Update
-     suspend fun updateSpace(id: SpaceObject?)
+     suspend fun updateSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
     @Delete
     suspend fun deleteSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)

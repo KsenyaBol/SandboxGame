@@ -185,29 +185,59 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
 
-            spaceObject.id = id
-
             if (id == -1) {
+
+                GlobalScope.launch {
+                    withContext(Dispatchers.Main) {
+                        if (database.spaceDao.getSpace(0) != null) id = 1 else id = 0
+                        if (database.spaceDao.getSpace(1) != null) id = 2 else id = 1
+                        if (database.spaceDao.getSpace(2) != null) id = 3 else id = 2
+                        if (database.spaceDao.getSpace(3) != null) id = 4 else id = 3
+//                        if (database.spaceDao.getSpace(4) != null) {
+//
+//                        }
+                    }
+                }
+
                 id += 1
+                spaceObject.id = id
             }
 
             GlobalScope.launch {
 
                 withContext(Dispatchers.Main) {
-                    space.myPlanetList.forEach { planet ->
-                        database.planetDao.insertPlanet(planet)
+
+                    if (database.spaceDao.getSpace(id) != null) {
+
+                        space.myPlanetList.forEach { planet ->
+                            database.planetDao.insertPlanet(planet)
+                        }
+                        space.myFoodList.forEach { food ->
+                            database.foodDao.insertFood(food)
+                        }
+                        val planet = database.planetDao.getAllPlanet(id)
+                        val food = database.foodDao.getAllFood(id)
+                        database.spaceDao.updateSpace(spaceObject, planet, food)
+
+                    } else {
+
+                        space.myPlanetList.forEach { planet ->
+                            database.planetDao.insertPlanet(planet)
+                        }
+                        space.myFoodList.forEach { food ->
+                            database.foodDao.insertFood(food)
+                        }
+                        val planet = database.planetDao.getAllPlanet(id)
+                        val food = database.foodDao.getAllFood(id)
+                        database.spaceDao.insertSpace(spaceObject, planet, food)
+
                     }
-                    space.myFoodList.forEach { food ->
-                        database.foodDao.insertFood(food)
-                    }
-                    val planet = database.planetDao.getAllPlanet(id)
-                    val food = database.foodDao.getAllFood(id)
-                    database.spaceDao.insertSpace(spaceObject, planet, food)
+
                 }
 
             }
 
-            id += 1
+//            id += 1
 
             soundButtonClick.start()
         }
