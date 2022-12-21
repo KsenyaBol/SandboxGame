@@ -15,7 +15,7 @@ interface SpaceDao {
      suspend fun updateSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
 
     @Delete
-    suspend fun deleteSpace(id: SpaceObject, planet: List<Planet>, food: List<Food>)
+    suspend fun deleteSpace(id: SpaceObject, planet: List<Planet>?, food: List<Food>?)
 
 //    @Query("SELECT * FROM space")
 //    suspend fun getSpaceWithPlanetAndFood(): List<SpaceWithPlanetAndFood?>?

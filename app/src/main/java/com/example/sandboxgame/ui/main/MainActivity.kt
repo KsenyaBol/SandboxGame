@@ -16,6 +16,7 @@ import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.music.MusicService
 import com.example.sandboxgame.ui.music.ScreenReceiver
+import com.omega_r.libs.extensions.common.ifNull
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +54,6 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
         startService(Intent(this, MusicService::class.java))
 
         startButton.setOnClickListener {
-
 
             GlobalScope.launch {
                 withContext(Dispatchers.Main) {

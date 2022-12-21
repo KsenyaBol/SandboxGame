@@ -33,6 +33,7 @@
         one \nor delete an old one \nto start over</string>
     <string name="button_cancel" translatable="false">cancel</string>
     <string name="warning" translatable="false">warning</string>
+    <string name="message_delete">DELETE</string>
 
 
 </resources>

@@ -39,6 +39,10 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
         var mSettings: SharedPreferences? = null
 
         fun createLauncher() = createActivityLauncher()
+
+//        fun saveTheGame() {
+//
+//        }
     }
 
 
@@ -94,13 +98,26 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
         }
 
         deleteButton.setOnClickListener {
+// не забыть, есть аннотация, чтобы сразу удалить все объекты, относящиеся к этому id
 
             GlobalScope.launch {
                 withContext(Dispatchers.Main) {
-//                    database.spaceDao.deleteSpace(spaceObject, )
+
+                    val newPlanet = database.planetDao.getAllPlanet(id)
+                    val newFood = database.foodDao.getAllFood(id)
+                    database.spaceDao.deleteSpace(spaceObject, newPlanet, newFood)
+
+                    newPlanet.forEach { planet ->
+                        database.planetDao.deletePlanet(planet)
+                    }
+                    newFood.forEach { food ->
+                        database.foodDao.deleteFood(food)
+                    }
+
                 }
             }
 
+            soundButtonClick.start()
         }
 
         saveButton.setOnClickListener {
@@ -248,6 +265,43 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
             id = mSettings!!.getInt(EXTRA_ID, id)
         }
     }
+
+//    fun saveTheGame() {
+//
+//        GlobalScope.launch {
+//
+//            withContext(Dispatchers.Main) {
+//
+//                if (database.spaceDao.getSpace(id) != null) {
+//
+//                    space.myPlanetList.forEach { planet ->
+//                        database.planetDao.insertPlanet(planet)
+//                    }
+//                    space.myFoodList.forEach { food ->
+//                        database.foodDao.insertFood(food)
+//                    }
+//                    val planet = database.planetDao.getAllPlanet(id)
+//                    val food = database.foodDao.getAllFood(id)
+//                    database.spaceDao.updateSpace(spaceObject, planet, food)
+//
+//                } else {
+//
+//                    space.myPlanetList.forEach { planet ->
+//                        database.planetDao.insertPlanet(planet)
+//                    }
+//                    space.myFoodList.forEach { food ->
+//                        database.foodDao.insertFood(food)
+//                    }
+//                    val planet = database.planetDao.getAllPlanet(id)
+//                    val food = database.foodDao.getAllFood(id)
+//                    database.spaceDao.insertSpace(spaceObject, planet, food)
+//
+//                }
+//
+//            }
+//
+//        }
+//    }
 
     override fun showGameInfo(command: ContinuePresenter.ContinueCommand) {
 

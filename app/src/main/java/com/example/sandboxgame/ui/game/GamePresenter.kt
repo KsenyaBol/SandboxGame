@@ -20,7 +20,8 @@ class GamePresenter(private val size: Int, private val space: Space, private val
     }
 
     fun onButtonYesClicked() {
-       ContinueActivity.createLauncher().launch()
+        ContinueActivity.createLauncher().launch()
+
         exit()
     }
 
@@ -43,6 +44,10 @@ class GamePresenter(private val size: Int, private val space: Space, private val
     fun onButtonAddFoodClicked() {
         command = Command.ADD_FOOD
     }
+
+//    fun querySaveDataBase() {
+//        ContinueActivity.saveTheGame()
+//    }
 
     enum class Command {
         ADD, DELETE, INFECT, TREAT, ADD_FOOD

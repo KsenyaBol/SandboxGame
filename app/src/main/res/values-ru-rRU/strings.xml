@@ -22,6 +22,7 @@
     <string name="message_no">НЕТ</string>
     <string name="button_save">СОХРАНИТЬ</string>
     <string name="button_continue">ПРОДОЛЖИТЬ</string>
+    <string name="message_delete">УДАЛИТЬ</string>
 <!--    <string name="message_warning_text"> Упс! \n Кажется, вы превысили максимально \n возможное количество миров \n-->
 <!--        Продолжите один из них \n или удалите и \n начните новый</string>-->
 </resources>

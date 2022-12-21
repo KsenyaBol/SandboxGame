@@ -185,23 +185,25 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
 
-            if (id == -1) {
-
                 GlobalScope.launch {
                     withContext(Dispatchers.Main) {
-                        if (database.spaceDao.getSpace(0) != null) id = 1 else id = 0
-                        if (database.spaceDao.getSpace(1) != null) id = 2 else id = 1
-                        if (database.spaceDao.getSpace(2) != null) id = 3 else id = 2
-                        if (database.spaceDao.getSpace(3) != null) id = 4 else id = 3
-//                        if (database.spaceDao.getSpace(4) != null) {
-//
-//                        }
+                        if (database.planetDao.getAllPlanet(0).isNotEmpty()) {
+                            id = 1
+                            if (database.planetDao.getAllPlanet(1).isNotEmpty()) {
+                                id = 2
+                                if (database.planetDao.getAllPlanet(2).isNotEmpty()) {
+                                    id = 3
+                                    if (database.planetDao.getAllPlanet(3).isNotEmpty()) {
+                                        id = 4
+                                    } else id = 3
+                                } else id = 2
+                            } else id = 1
+                        } else id = 0
                     }
                 }
 
-                id += 1
                 spaceObject.id = id
-            }
+
 
             GlobalScope.launch {
 
@@ -236,8 +238,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
                 }
 
             }
-
-//            id += 1
 
             soundButtonClick.start()
         }
