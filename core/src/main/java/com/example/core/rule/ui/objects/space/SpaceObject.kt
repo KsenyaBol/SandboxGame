@@ -4,12 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
-@Entity (
-    tableName = "space"
-        )
 data class SpaceObject (
 
-    @PrimaryKey
-    var id: Int = 0
+    var id: Int = 0,
+    var size: Int = 10,
 
 ): java.io.Serializable

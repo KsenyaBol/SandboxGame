@@ -1,7 +1,6 @@
 package com.example.sandboxgame.ui.game
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Build
@@ -14,19 +13,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
-import com.example.core.rule.ui.actions.FoodAdd
-import com.example.core.rule.ui.actions.PlanetAge
-import com.example.core.rule.ui.actions.PlanetInfect
-import com.example.core.rule.ui.actions.PlanetMoving
+import com.example.core.rule.ui.actions.ParameterValues
 import com.example.core.rule.ui.objects.space.Space
-import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.sandboxgame.R
-import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
-import com.example.sandboxgame.ui.continueGame.ContinueActivity
-import com.example.sandboxgame.ui.continueGame.ContinueActivity.Companion.mSettings
 import com.example.sandboxgame.ui.widget.DrawingView
-import com.omega_r.libs.extensions.list.toArrayList
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.libs.omegalaunchers.tools.put
 import com.omegar.mvp.ktx.providePresenter
@@ -36,14 +27,10 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
 
     companion object {
-        private const val EXTRA_SIZE = "size"
         private const val EXTRA_SPACE = "space"
-        private const val EXTRA_ID = "id"
 
-        fun createLauncher(size: Int, space: Space?, id: Int?) = createActivityLauncher(
-            EXTRA_SIZE put size,
+        fun createLauncher(space: Space) = createActivityLauncher(
             EXTRA_SPACE put space,
-            EXTRA_ID put id,
         )
     }
 
@@ -53,16 +40,17 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private var satiety: Int = 0
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private val planetMoving: PlanetMoving = PlanetMoving()
-    private val addFood: FoodAdd = FoodAdd()
-    private val planetAge: PlanetAge = PlanetAge()
-    private val planetInfect: PlanetInfect = PlanetInfect()
+    private val planetMoving: ParameterValues = ParameterValues()
+//    private val addFood: FoodAdd = FoodAdd()
+//    private val planetAge: PlanetAge = PlanetAge()
+//    private val planetInfect: PlanetInfect = PlanetInfect()
+//    private val foodAdd: FoodAdd = FoodAdd()
 
     var foodImage = Space.FoodImage.FOOD_M
     var planetImage = (Space.PlanetImage.PLANET5)
 
     override val presenter: GamePresenter by providePresenter {
-        GamePresenter(this[EXTRA_SIZE]!!, this[EXTRA_SPACE]!!, this[EXTRA_ID]!!)
+        GamePresenter(this[EXTRA_SPACE]!!)
     }
 
     private val buttonExit: Button by bind(R.id.button_exit)
@@ -110,32 +98,11 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         onTapCellListener = this@GameActivity
     }
 
-    override var size: Int = 0
-        set(value) {
-            field = value
-            drawingView.size = value
-            planetMoving.size = value
-            addFood.size = value
-        }
-
-    override var space: Space = Space()
+    override var space: Space? = null
     set(value) {
         field = value
         drawingView.space = value
-        planetMoving.space = value
-        addFood.space = value
-        planetAge.space = value
-        planetInfect.space = value
     }
-
-    override var id: Int = 0
-    set(value) {
-        field = value
-        space.id = id
-    }
-
-
-    private var spaceObject: SpaceObject = SpaceObject(id)
 
     @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("ResourceType", "NewApi", "UseCompatLoadingForDrawables")
@@ -144,20 +111,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-            GlobalScope.launch{
-                withContext(Dispatchers.Main){
 
-                        val newPlanetList = database.planetDao.getAllPlanet(id)
-                        val newFoodList = database.foodDao.getAllFood(id)
-                        space.myPlanetList = newPlanetList.toArrayList()
-                        space.myFoodList = newFoodList.toArrayList()
-
-                }
-            }
-
-        addFood.pause_flg = planetMoving.pause_flg
-
-        mSettings = getSharedPreferences(ContinueActivity.APP_PREFERENCES, Context.MODE_PRIVATE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
@@ -171,8 +125,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
         buttonExit.setOnClickListener {
             questionConstraint.isVisible = true
-            planetMoving.pause_flg = planetMoving.pause_flg != true
-
             soundButtonClick.start()
         }
 
@@ -184,60 +136,9 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
+            presenter.saveClicked()
+// TODO to presenter
 
-                GlobalScope.launch {
-                    withContext(Dispatchers.Main) {
-                        if (database.planetDao.getAllPlanet(0).isNotEmpty()) {
-                            id = 1
-                            if (database.planetDao.getAllPlanet(1).isNotEmpty()) {
-                                id = 2
-                                if (database.planetDao.getAllPlanet(2).isNotEmpty()) {
-                                    id = 3
-                                    if (database.planetDao.getAllPlanet(3).isNotEmpty()) {
-                                        id = 4
-                                    } else id = 3
-                                } else id = 2
-                            } else id = 1
-                        } else id = 0
-                    }
-                }
-
-                spaceObject.id = id
-
-
-            GlobalScope.launch {
-
-                withContext(Dispatchers.Main) {
-
-                    if (database.spaceDao.getSpace(id) != null) {
-
-                        space.myPlanetList.forEach { planet ->
-                            database.planetDao.insertPlanet(planet)
-                        }
-                        space.myFoodList.forEach { food ->
-                            database.foodDao.insertFood(food)
-                        }
-                        val planet = database.planetDao.getAllPlanet(id)
-                        val food = database.foodDao.getAllFood(id)
-                        database.spaceDao.updateSpace(spaceObject, planet, food)
-
-                    } else {
-
-                        space.myPlanetList.forEach { planet ->
-                            database.planetDao.insertPlanet(planet)
-                        }
-                        space.myFoodList.forEach { food ->
-                            database.foodDao.insertFood(food)
-                        }
-                        val planet = database.planetDao.getAllPlanet(id)
-                        val food = database.foodDao.getAllFood(id)
-                        database.spaceDao.insertSpace(spaceObject, planet, food)
-
-                    }
-
-                }
-
-            }
 
             soundButtonClick.start()
         }
@@ -562,58 +463,58 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     override fun onTapCell(i: Int, j: Int) {
 
         if (buttonAdd.isSelected) {
-            val planet = space.myPlanetList.firstOrNull { planet ->
+            val planet = space!!.myPlanetList.firstOrNull { planet ->
                 planet.planetX == i && planet.planetY == j
             }
             if (planet == null) {
-                space.addValue(i, j, planetImage, 0, 0, 0)
+                space!!.addValue(i, j, planetImage, 0, 0, 0)
                 soundGame(Command.ADD)
             }
 
         }
         if (buttonDelete.isSelected) {
-            val planet = space.myPlanetList.firstOrNull { planet ->
+            val planet = space!!.myPlanetList.firstOrNull { planet ->
                 planet.planetX == i && planet.planetY == j
             }
             if (planet != null) {
-                space.deleteValue(i, j)
+                space!!.deleteValue(i, j)
                 delete += 1
                 soundGame(Command.DELETE)
             }
         }
         if (buttonInfect.isSelected) {
-            val planet = space.myPlanetList.firstOrNull { planet ->
+            val planet = space!!.myPlanetList.firstOrNull { planet ->
                 planet.planetX == i && planet.planetY == j && planet.planetInfect <= 50
             }
             if (planet != null) {
-                space.infectValue(i, j,  50, planet.age)
+                space!!.infectValue(i, j,  50, planet.age)
                 infect += 1
                 soundGame(Command.INFECT)
             }
         }
 
         if (buttonTreat.isSelected) {
-            val planet = space.myPlanetList.firstOrNull { planet ->
+            val planet = space!!.myPlanetList.firstOrNull { planet ->
                 planet.planetX == i && planet.planetY == j && planet.planetInfect >= 50
             }
             if (planet != null) {
-                space.treatValue(i, j, 0, planet.age)
+                space!!.treatValue(i, j, 0, planet.age)
                 infect -= 1
                 soundGame(Command.TREAT)
             }
         }
 
         if (buttonAddFood.isSelected) {
-            val food = space.myFoodList.firstOrNull { food ->
+            val food = space!!.myFoodList.firstOrNull { food ->
                 food.x == i && food.y == j
             }
             if (food == null) {
-                space.addFoodUser(i, j, foodImage, satiety)
+                space!!.addFoodUser(i, j, foodImage, satiety)
                 soundGame(Command.ADD)
             }
         }
 
-        val planetAmount = space.myPlanetList.size
+        val planetAmount = space!!.myPlanetList.size
         textNumberAmount.text = planetAmount.toString()
         textNumberAmountDied.text = delete.toString()
         textNumberAmountInfected.text = infect.toString()

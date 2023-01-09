@@ -3,8 +3,8 @@ package com.example.sandboxgame.ui
 import android.app.Application
 import androidx.annotation.Nullable
 import androidx.room.Room.databaseBuilder
-import com.example.core.rule.ui.database.GameDatabase
 import com.example.core.rule.ui.objects.space.Space
+import com.example.data.GameDatabase
 
 
 class App : Application() {

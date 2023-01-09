@@ -7,17 +7,17 @@ import com.omega_r.base.mvp.presenters.OmegaPresenter
 class SizePresenter: OmegaPresenter<SizeView>() {
 
     fun onButtonBigClicked() {
-        GameActivity.createLauncher(50, Space(), 0).launch()
+        GameActivity.createLauncher(Space(50)).launch()
         exit()
     }
 
     fun onButtonNormClicked() {
-        GameActivity.createLauncher(20, Space(), 0).launch()
+        GameActivity.createLauncher(Space(20)).launch()
         exit()
     }
 
     fun onButtonSmallClicked() {
-        GameActivity.createLauncher(10, Space(), 0).launch()
+        GameActivity.createLauncher(Space(10)).launch()
         exit()
     }
 

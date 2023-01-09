@@ -12,6 +12,7 @@ import android.view.View
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceListener
 import com.example.sandboxgame.R
+import com.omega_r.libs.extensions.view.getCompatDrawable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -19,7 +20,6 @@ class MyState(private val superSaveState: Parcelable?) : View.BaseSavedState(sup
 
 class DrawingView : View, SpaceListener {
 
-    var size: Int = 0
     @SuppressLint("UseCompatLoadingForDrawables")
     val imageInfect: Drawable  = resources.getDrawable(R.drawable.image_infect)
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -62,14 +62,16 @@ class DrawingView : View, SpaceListener {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                val sizeH = height / size.toFloat()
+        space?.also { space ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    val sizeH = height / space.size.toFloat()
 
-                val i = (event.x / sizeH).toInt()
-                val j = (event.y / sizeH).toInt()
+                    val i = (event.x / sizeH).toInt()
+                    val j = (event.y / sizeH).toInt()
 
-                onTapCellListener?.onTapCell(i, j)
+                    onTapCellListener?.onTapCell(i, j)
+                }
             }
         }
         return super.onTouchEvent(event)
@@ -78,12 +80,12 @@ class DrawingView : View, SpaceListener {
     @SuppressLint("DrawAllocation")
     public override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        space?.also { space ->
+        val sizeH = height / space.size.toFloat()
+        var planetIm = getCompatDrawable(R.drawable.planet_1)!!
 
-        val sizeH = height / size.toFloat()
-        var planetIm = resources.getDrawable(R.drawable.planet_1)
-
-        if (space!!.myFoodList.size > 0) {
-            space!!.myFoodList.forEach { food ->
+        if (space.myFoodList.size > 0) {
+            space.myFoodList.forEach { food ->
                 val x = sizeH * food.x
                 val y = sizeH * food.y
                 val satiety = food.satiety
@@ -144,8 +146,8 @@ class DrawingView : View, SpaceListener {
             }
         }
 
-        if (space!!.myPlanetList.size > 0) {
-            space!!.myPlanetList.forEach { planet ->
+        if (space.myPlanetList.size > 0) {
+            space.myPlanetList.forEach { planet ->
                 val x = sizeH * planet.planetX
                 val y = sizeH * planet.planetY
                 val infect = planet.planetInfect
@@ -179,7 +181,7 @@ class DrawingView : View, SpaceListener {
                     planetIm = resources.getDrawable(R.drawable.planet_9)
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET10) {
-                    planetIm = resources.getDrawable(R.drawable.planet_10)
+                    planetIm = resources.getDrawable(R.drawable.planet_10) // FIX ME
                 }
 
                 if (infect >= 50) {
@@ -232,7 +234,7 @@ class DrawingView : View, SpaceListener {
 //
 //            }
 //        }
-
+        }
     }
 
     interface OnTapCellListener {

@@ -1,22 +1,27 @@
-package com.example.engine
-
-import android.os.Handler
-import android.os.Looper
-import com.example.core.rule.ui.objects.space.Space
-
-class ReviewPlanet {
-
-    private var space: Space = Space()
-
+//package com.example.engine
+//
+//import android.os.Handler
+//import android.os.Looper
+//import com.example.core.rule.ui.objects.space.Space
+//
+//class ReviewPlanet {
+//
+//    private var space: Space = Space()
+//
 //    fun mineOrStranger() {
 //        val myPlanetList2 = ArrayList(space.myPlanetList)
 //        myPlanetList2.forEachIndexed { index, planet->
 //            var planetX = planet.planetX
 //            var planetY = planet.planetY
-//            if ()
+//            var planetImage = planet.planetImage
+//
+//            planetX == (planetX + 1) && planetY == planetY && planetImage == planetImage ||
+//            planetX == (planetX - 1) && planetY == planetY && planetImage == planetImage ||
+//            planetY == (planetY + 1) && planetX == planetX && planetImage == planetImage ||
+//            planetY == (planetY - 1) && planetX == planetX && planetImage == planetImage
 //        }
 //    }
-
+//
 //    init{
 //        reviewPlanet()
 //    }
@@ -27,8 +32,8 @@ class ReviewPlanet {
 //
 //        runnable = Runnable {
 //            space.myPlanetList.forEach { planet ->
-//                val xPlanet = planet.x
-//                val yPlanet = planet.y
+//                val xPlanet = planet.planetX
+//                val yPlanet = planet.planetY
 //
 //                val food = space.myFoodList.firstOrNull { food ->
 //                    food.x == (xPlanet + 1) || food.x == (xPlanet - 1) || food.y == (yPlanet + 1) || food.y == (yPlanet - 1)
@@ -41,6 +46,19 @@ class ReviewPlanet {
 //        }
 //        handler.postDelayed(runnable, 100)
 //    }
+//
+//
+//}
 
 
-}
+
+
+
+
+
+
+
+
+
+
+

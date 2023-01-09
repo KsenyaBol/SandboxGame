@@ -6,7 +6,9 @@ import com.example.core.rule.ui.objects.space.Space
 
 class PlanetInfect {
 
-    var space: Space = Space()
+    var id: Int = 0
+    var space: Space = Space(id)
+    var pause_flg = true
 
     init {
         planetInfect()
@@ -17,17 +19,18 @@ class PlanetInfect {
         var runnable: Runnable? = null
 
         runnable = Runnable {
-            space.myPlanetList.forEachIndexed { index, planet ->
-                val x = planet.planetX
-                val y = planet.planetY
-                var planetInfect = planet.planetInfect
-                planetInfect += 2
-                space.infectChange(index, x, y, planetInfect)
-                space.planetDie(x, y, planetInfect)
+            if (pause_flg == true) {
+                space.myPlanetList.forEachIndexed { index, planet ->
+                    val x = planet.planetX
+                    val y = planet.planetY
+                    var planetInfect = planet.planetInfect
+                    planetInfect += 2
+                    space.infectChange(index, x, y, planetInfect)
+                    space.planetDie(x, y, planetInfect)
+                }
+                handler.postDelayed(runnable!!, 2000)
             }
-            handler.postDelayed(runnable!!, 2000)
         }
         handler.postDelayed(runnable, 2000)
-
     }
 }

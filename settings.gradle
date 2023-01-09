@@ -17,3 +17,4 @@ rootProject.name = "SandboxGame"
 include ':app'
 include ':core'
 include ':engine'
+include ':data'

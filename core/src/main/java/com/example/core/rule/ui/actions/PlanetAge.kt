@@ -6,7 +6,9 @@ import com.example.core.rule.ui.objects.space.Space
 
 class PlanetAge {
 
-    var space: Space = Space()
+    var id: Int = 0
+    var space: Space = Space(id)
+    var pause_flg = true
 
     init {
         planetAge()
@@ -17,17 +19,18 @@ class PlanetAge {
         var runnable: Runnable? = null
 
         runnable = Runnable {
-            space.myPlanetList.forEachIndexed { index, planet ->
-               val index = index
-               val x = planet.planetX
-               val y = planet.planetY
-               var age = planet.age
+            if (pause_flg == true) {
+                space.myPlanetList.forEachIndexed { index, planet ->
+                val index = index
+                val x = planet.planetX
+                val y = planet.planetY
+                var age = planet.age
 
                 age += 2
                 space.ageChange(index, x, y, age)
                 space.planetDie(x, y, age)
             }
-            handler.postDelayed(runnable!!, 3000)
+                handler.postDelayed(runnable!!, 3000)}
         }
         handler.postDelayed(runnable, 3000)
 

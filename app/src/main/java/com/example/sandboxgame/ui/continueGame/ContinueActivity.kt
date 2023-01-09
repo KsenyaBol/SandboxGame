@@ -8,11 +8,13 @@ import android.os.Bundle
 import android.widget.*
 import com.example.core.rule.ui.objects.space.Space
 import com.example.core.rule.ui.objects.space.SpaceObject
+import com.example.data.objectDao.food.FoodEntity
+import com.example.data.objectDao.planet.PlanetEntity
+import com.example.data.objectDao.space.SpaceEntity
 import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.music.MusicService
-import com.omega_r.libs.extensions.list.toArrayList
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
 import kotlinx.coroutines.*
@@ -39,21 +41,16 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
         var mSettings: SharedPreferences? = null
 
         fun createLauncher() = createActivityLauncher()
-
-//        fun saveTheGame() {
-//
-//        }
     }
-
-
-
 
     override val presenter: ContinuePresenter by providePresenter()
 
+    var size: Int = 10
+
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
-    private var spaceObject: SpaceObject = SpaceObject(id)
-    private var space: Space = Space()
+    private var spaceEntity: SpaceEntity = SpaceEntity(id, size)
+    private var space: Space = Space(size)
 
     private val backButton: ImageView by bind(R.id.button_back)
     private val deleteButton: Button by bind(R.id.button_delete)
@@ -98,14 +95,12 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
         }
 
         deleteButton.setOnClickListener {
-// не забыть, есть аннотация, чтобы сразу удалить все объекты, относящиеся к этому id
 
             GlobalScope.launch {
                 withContext(Dispatchers.Main) {
 
                     val newPlanet = database.planetDao.getAllPlanet(id)
                     val newFood = database.foodDao.getAllFood(id)
-                    database.spaceDao.deleteSpace(spaceObject, newPlanet, newFood)
 
                     newPlanet.forEach { planet ->
                         database.planetDao.deletePlanet(planet)
@@ -113,6 +108,7 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
                     newFood.forEach { food ->
                         database.foodDao.deleteFood(food)
                     }
+                    database.spaceDao.deleteSpace(spaceEntity, newPlanet, newFood)
 
                 }
             }
@@ -136,17 +132,28 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
 
                 withContext(Dispatchers.Main) {
 
-                    val newSpace = database.spaceDao.getSpace(id)
-                    space.myPlanetList = newSpace.planet!!.toArrayList()
-                    space.myFoodList = newSpace.food!!.toArrayList()
-                    val sizeList = newSpace.planet!!.size
+                    val newPlanet = database.planetDao.getAllPlanet(id)
+                    val newFood = database.foodDao.getAllFood(id)
+//                    val size1 = database.spaceDao.getSpace(id)
+//                    size = size1.spaceEntity.size
+
+                    newPlanet.forEach{ planetEntity ->
+                    val planet = PlanetEntity.toPlanet(planetEntity)
+                        space.myPlanetList.add(planet)
+                    }
+                    newFood.forEach { foodEntity ->
+                        val food = FoodEntity.toFood(foodEntity)
+                        space.myFoodList.add(food)
+                    }
+
+                    val sizeList = space.myPlanetList.size
                     Toast.makeText(applicationContext, "planet - $sizeList", Toast.LENGTH_SHORT).show()
 
                 }
 
             }
 
-            presenter.onButtonContinueClicked(space, id)
+            presenter.onButtonContinueClicked(space)
 
             soundButtonClick.start()
         }
@@ -265,43 +272,6 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
             id = mSettings!!.getInt(EXTRA_ID, id)
         }
     }
-
-//    fun saveTheGame() {
-//
-//        GlobalScope.launch {
-//
-//            withContext(Dispatchers.Main) {
-//
-//                if (database.spaceDao.getSpace(id) != null) {
-//
-//                    space.myPlanetList.forEach { planet ->
-//                        database.planetDao.insertPlanet(planet)
-//                    }
-//                    space.myFoodList.forEach { food ->
-//                        database.foodDao.insertFood(food)
-//                    }
-//                    val planet = database.planetDao.getAllPlanet(id)
-//                    val food = database.foodDao.getAllFood(id)
-//                    database.spaceDao.updateSpace(spaceObject, planet, food)
-//
-//                } else {
-//
-//                    space.myPlanetList.forEach { planet ->
-//                        database.planetDao.insertPlanet(planet)
-//                    }
-//                    space.myFoodList.forEach { food ->
-//                        database.foodDao.insertFood(food)
-//                    }
-//                    val planet = database.planetDao.getAllPlanet(id)
-//                    val food = database.foodDao.getAllFood(id)
-//                    database.spaceDao.insertSpace(spaceObject, planet, food)
-//
-//                }
-//
-//            }
-//
-//        }
-//    }
 
     override fun showGameInfo(command: ContinuePresenter.ContinueCommand) {
 

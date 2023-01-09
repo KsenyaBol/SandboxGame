@@ -19,10 +19,7 @@ import com.example.sandboxgame.ui.music.ScreenReceiver
 import com.omega_r.libs.extensions.common.ifNull
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
@@ -38,6 +35,7 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
     private val messageWarning: ImageView by bind(R.id.warning_window)
     private val messageWarningText: TextView by bind(R.id.warning_text)
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,14 +55,10 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
             GlobalScope.launch {
                 withContext(Dispatchers.Main) {
-                    if (database.spaceDao.getSpace(0) != null || database.spaceDao.getSpace(1) != null ||
-                        database.spaceDao.getSpace(2) != null || database.spaceDao.getSpace(3) != null ||
-                        database.spaceDao.getSpace(4) != null) {
-
+                    if (database.spaceDao.getAllSpace().size >= 5) {
                         messageWarning.isVisible = true
                         messageWarningText.isVisible = true
                         cancelButton.isVisible = true
-
                     } else {
                         presenter.onButtonStartClicked()
                     }

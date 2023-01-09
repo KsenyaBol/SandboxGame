@@ -1,18 +1,22 @@
 package com.example.sandboxgame.ui.game
 
 import com.example.core.rule.ui.objects.space.Space
+import com.example.data.objectDao.food.FoodEntity
+import com.example.data.objectDao.planet.PlanetEntity
+import com.example.sandboxgame.ui.App
 import com.example.sandboxgame.ui.continueGame.ContinueActivity
 import com.omega_r.base.mvp.presenters.OmegaPresenter
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class GamePresenter(private val size: Int, private val space: Space, private val id: Int): OmegaPresenter<GameView>() {
+class GamePresenter(private val space: Space): OmegaPresenter<GameView>() {
 
     var command: Command? = null
 
     init {
-        viewState.size = size
         viewState.space = space
-        viewState.id = id
-
     }
 
     fun onButtonNoClicked() {
@@ -23,6 +27,21 @@ class GamePresenter(private val size: Int, private val space: Space, private val
         ContinueActivity.createLauncher().launch()
 
         exit()
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun saveClicked() {
+        GlobalScope.launch(Dispatchers.Main) {
+            space.myPlanetList.forEach { planet ->
+                val planetEntity = PlanetEntity.fromPlanet(planet)
+                App.database.planetDao.insertPlanet(planetEntity)
+            }
+            space.myFoodList.forEach { food ->
+                val foodEntity = FoodEntity.fromFood(food)
+                App.database.foodDao.insertFood(foodEntity)
+            }
+            App.database.spaceDao.insertSpace(space)
+        }
     }
 
     fun onButtonAddClicked() {

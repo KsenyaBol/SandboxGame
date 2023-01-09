@@ -1,6 +1,5 @@
 package com.example.core.rule.ui.actions
 
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import com.example.core.rule.ui.objects.space.Space
@@ -8,8 +7,9 @@ import com.example.core.rule.ui.objects.space.Space
 class FoodAdd {
 
     var size: Int = 10
+    var id: Int = 0
     var pause_flg: Boolean = true
-    var space: Space = Space()
+    var space: Space = Space(id)
 
     init {
         foodAdd()

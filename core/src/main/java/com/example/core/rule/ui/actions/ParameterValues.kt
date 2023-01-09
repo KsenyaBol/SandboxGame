@@ -4,12 +4,15 @@ import android.os.Handler
 import android.os.Looper
 import com.example.core.rule.ui.objects.space.Space
 
-open class PlanetMoving {
+open class ParameterValues {
+
+    // переместить сюда вске остальные ненужные классы
 
     var pause_flg = true
+    var id: Int = 0
     var size: Int = 0
     var millis: Int = 200
-    var space: Space = Space()
+    var space: Space = Space(id)
 
     init {
         change()
