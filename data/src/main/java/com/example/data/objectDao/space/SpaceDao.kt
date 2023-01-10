@@ -12,13 +12,13 @@ import com.example.data.objectDao.planet.PlanetEntity
 interface SpaceDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertSpace(spaceEntity: SpaceEntity): Int
+    suspend fun insertSpace(spaceEntity: SpaceEntity)
 
     @Update
-    suspend fun updateSpace(spaceEntity: SpaceEntity, planet: List<PlanetEntity>, food: List<FoodEntity>)
+    suspend fun updateSpace(spaceEntity: SpaceEntity)
 
     @Delete
-    suspend fun deleteSpace(spaceEntity: SpaceEntity, planet: List<PlanetEntity>?, food: List<FoodEntity>?)
+    suspend fun deleteSpace(spaceEntity: SpaceEntity)
 
     @Query("SELECT * FROM space WHERE id = :id")
     suspend fun getSpace(id: Int): SpaceToManyRelationship

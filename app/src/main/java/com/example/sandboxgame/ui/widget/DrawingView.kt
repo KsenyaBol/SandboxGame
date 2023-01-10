@@ -21,9 +21,9 @@ class MyState(private val superSaveState: Parcelable?) : View.BaseSavedState(sup
 class DrawingView : View, SpaceListener {
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    val imageInfect: Drawable  = resources.getDrawable(R.drawable.image_infect)
+    val imageInfect: Drawable  = getCompatDrawable(R.drawable.image_infect)!!
     @SuppressLint("UseCompatLoadingForDrawables")
-    var animation1 = (resources.getDrawable(R.drawable.animation_boom) as AnimationDrawable).also {
+    var animation1 = (getCompatDrawable(R.drawable.animation_boom)!! as AnimationDrawable).also {
         it.callback = this
     }
 
@@ -89,19 +89,19 @@ class DrawingView : View, SpaceListener {
                 val x = sizeH * food.x
                 val y = sizeH * food.y
                 val satiety = food.satiety
-                var foodIm = resources.getDrawable(R.drawable.planet_food_1)
+                var foodIm = getCompatDrawable(R.drawable.planet_food_1)!!
 
                 if (food.foodImage == Space.FoodImage.FOOD_XS) {
-                    foodIm = resources.getDrawable(R.drawable.planet_food_3)
+                    foodIm = getCompatDrawable(R.drawable.planet_food_3)!!
                 }
                 if (food.foodImage == Space.FoodImage.FOOD_S) {
-                    foodIm = resources.getDrawable(R.drawable.planet_food_2)
+                    foodIm = getCompatDrawable(R.drawable.planet_food_2)!!
                 }
                 if (food.foodImage == Space.FoodImage.FOOD_M) {
-                    foodIm = resources.getDrawable(R.drawable.planet_food_1)
+                    foodIm = getCompatDrawable(R.drawable.planet_food_1)!!
                 }
                 if (food.foodImage == Space.FoodImage.FOOD_L) {
-                    foodIm = resources.getDrawable(R.drawable.planet_food_4)
+                    foodIm = getCompatDrawable(R.drawable.planet_food_4)!!
                 }
 
                 when(satiety) {
@@ -154,34 +154,34 @@ class DrawingView : View, SpaceListener {
 
 
                 if (planet.planetImage == Space.PlanetImage.PLANET1) {
-                    planetIm = resources.getDrawable(R.drawable.planet_1)
+                    planetIm = getCompatDrawable(R.drawable.planet_1)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET2) {
-                    planetIm = resources.getDrawable(R.drawable.planet_2)
+                    planetIm = getCompatDrawable(R.drawable.planet_2)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET3) {
-                    planetIm = resources.getDrawable(R.drawable.planet_3)
+                    planetIm = getCompatDrawable(R.drawable.planet_3)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET4) {
-                    planetIm = resources.getDrawable(R.drawable.planet_4)
+                    planetIm = getCompatDrawable(R.drawable.planet_4)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET5) {
-                    planetIm = resources.getDrawable(R.drawable.planet_5)
+                    planetIm = getCompatDrawable(R.drawable.planet_5)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET6) {
-                    planetIm = resources.getDrawable(R.drawable.planet_6)
+                    planetIm = getCompatDrawable(R.drawable.planet_6)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET7) {
-                    planetIm = resources.getDrawable(R.drawable.planet_7)
+                    planetIm = getCompatDrawable(R.drawable.planet_7)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET8) {
-                    planetIm = resources.getDrawable(R.drawable.planet_8)
+                    planetIm = getCompatDrawable(R.drawable.planet_8)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET9) {
-                    planetIm = resources.getDrawable(R.drawable.planet_9)
+                    planetIm = getCompatDrawable(R.drawable.planet_9)!!
                 }
                 if (planet.planetImage == Space.PlanetImage.PLANET10) {
-                    planetIm = resources.getDrawable(R.drawable.planet_10) // FIX ME
+                    planetIm = getCompatDrawable(R.drawable.planet_10)!!
                 }
 
                 if (infect >= 50) {

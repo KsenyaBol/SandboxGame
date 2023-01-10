@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 
 data class SpaceObject (
 
-    var id: Int = 0,
     var size: Int = 10,
 
 ): java.io.Serializable

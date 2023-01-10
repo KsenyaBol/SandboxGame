@@ -15,6 +15,7 @@ import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.music.MusicService
+import com.omega_r.libs.extensions.list.toArrayList
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
 import kotlinx.coroutines.*
@@ -49,8 +50,7 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
 
     private var player: MediaPlayer =  MediaPlayer()
     private val musicService: MusicService = MusicService()
-    private var spaceEntity: SpaceEntity = SpaceEntity(id, size)
-    private var space: Space = Space(size)
+    private val space: Space = Space(size)
 
     private val backButton: ImageView by bind(R.id.button_back)
     private val deleteButton: Button by bind(R.id.button_delete)
@@ -61,16 +61,16 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
     private val buttonSave3: ImageButton by bind(R.id.save_3)
     private val buttonSave4: ImageButton by bind(R.id.save_4)
     private val buttonSave5: ImageButton by bind(R.id.save_5)
-    val textTimeSave1: TextView by bind(R.id.text_time_save_1)
-    val textTimeSave2: TextView by bind(R.id.text_time_save_2)
-    val textTimeSave3: TextView by bind(R.id.text_time_save_3)
-    val textTimeSave4: TextView by bind(R.id.text_time_save_4)
-    val textTimeSave5: TextView by bind(R.id.text_time_save_5)
-    val textDateSave1: TextView by bind(R.id.text_date_save_1)
-    val textDateSave2: TextView by bind(R.id.text_date_save_2)
-    val textDateSave3: TextView by bind(R.id.text_date_save_3)
-    val textDateSave4: TextView by bind(R.id.text_date_save_4)
-    val textDateSave5: TextView by bind(R.id.text_date_save_5)
+    private val textTimeSave1: TextView by bind(R.id.text_time_save_1)
+    private val textTimeSave2: TextView by bind(R.id.text_time_save_2)
+    private val textTimeSave3: TextView by bind(R.id.text_time_save_3)
+    private val textTimeSave4: TextView by bind(R.id.text_time_save_4)
+    private val textTimeSave5: TextView by bind(R.id.text_time_save_5)
+    private val textDateSave1: TextView by bind(R.id.text_date_save_1)
+    private val textDateSave2: TextView by bind(R.id.text_date_save_2)
+    private val textDateSave3: TextView by bind(R.id.text_date_save_3)
+    private val textDateSave4: TextView by bind(R.id.text_date_save_4)
+    private val textDateSave5: TextView by bind(R.id.text_date_save_5)
 
     private val currentDate = Date()
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -83,6 +83,13 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        GlobalScope.launch(Dispatchers.Main) {
+//            val sized = database.spaceDao.getSpace(id)
+//            size = sized.spaceEntity.size
+//        }
+
+
 
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
         musicService.player = player
@@ -108,7 +115,7 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
                     newFood.forEach { food ->
                         database.foodDao.deleteFood(food)
                     }
-                    database.spaceDao.deleteSpace(spaceEntity, newPlanet, newFood)
+                    database.spaceDao.deleteSpace(spaceEntity = SpaceEntity(size))
 
                 }
             }
@@ -134,8 +141,6 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
 
                     val newPlanet = database.planetDao.getAllPlanet(id)
                     val newFood = database.foodDao.getAllFood(id)
-//                    val size1 = database.spaceDao.getSpace(id)
-//                    size = size1.spaceEntity.size
 
                     newPlanet.forEach{ planetEntity ->
                     val planet = PlanetEntity.toPlanet(planetEntity)

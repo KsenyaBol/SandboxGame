@@ -19,7 +19,7 @@ data class PlanetEntity (
     var planetSatiety: Int = 0,
     var age: Int = 0,
     @ColumnInfo(name = "space_id")
-    val spaceId: Int = 0,
+    var spaceId: Int = 0,
 ) {
     @PrimaryKey(autoGenerate = true)
     var idPlanet: Long = 0

@@ -10,20 +10,18 @@ import com.example.core.rule.ui.objects.space.SpaceObject
 )
 data class SpaceEntity (
 
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
     var size: Int = 0,
 
 ) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
 
     companion object {
         fun toSpace(spaceEntity: SpaceEntity): SpaceObject = SpaceObject(
-            id = spaceEntity.id,
             size = spaceEntity.size
         )
 
         fun fromPlanet(spaceObject: SpaceObject): SpaceEntity = SpaceEntity (
-            id = spaceObject.id,
             size = spaceObject.size
         )
     }

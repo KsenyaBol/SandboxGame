@@ -10,10 +10,10 @@ data class SpaceToManyRelationship(
     @Embedded
     var spaceEntity: SpaceEntity,
 
-    @Relation(parentColumn = "id", entityColumn = "spaceId", entity = PlanetEntity::class)
+    @Relation(parentColumn = "id", entityColumn = "space_id", entity = PlanetEntity::class)
     var planet: List<PlanetEntity>,
 
-    @Relation(parentColumn = "id", entityColumn = "spaceId", entity = FoodEntity::class)
+    @Relation(parentColumn = "id", entityColumn = "space_id", entity = FoodEntity::class)
     var food: List<FoodEntity>,
 )
 

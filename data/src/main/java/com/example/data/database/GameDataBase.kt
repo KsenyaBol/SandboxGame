@@ -16,8 +16,9 @@ abstract class GameDatabase : RoomDatabase() {
     abstract val planetDao: PlanetDao
     abstract val foodDao: FoodDao
 
-suspend fun saveSpace(space: Space): SpaceEntity {
-
-}
+//suspend fun saveSpace(space: SpaceEntity): Int {
+//        return spaceDao.insertSpace(space)
+//
+//}
 
 }

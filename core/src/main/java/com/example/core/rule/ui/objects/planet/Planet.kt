@@ -14,7 +14,4 @@ data class Planet (
     var planetSatiety: Int = 0,
     var age: Int = 0,
     var spaceId: Int = 0,
-): java.io.Serializable {
-
-
-}
+): java.io.Serializable

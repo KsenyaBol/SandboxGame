@@ -40,7 +40,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     private var satiety: Int = 0
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private val planetMoving: ParameterValues = ParameterValues()
+    private val parameterValues: ParameterValues = ParameterValues()
 //    private val addFood: FoodAdd = FoodAdd()
 //    private val planetAge: PlanetAge = PlanetAge()
 //    private val planetInfect: PlanetInfect = PlanetInfect()
@@ -102,6 +102,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     set(value) {
         field = value
         drawingView.space = value
+        parameterValues.space = value
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -125,6 +126,7 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
         buttonExit.setOnClickListener {
             questionConstraint.isVisible = true
+            parameterValues.pause_flg = false
             soundButtonClick.start()
         }
 
@@ -145,14 +147,14 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
         buttonReproduction.setOnClickListener {
 
-            if (planetMoving.pause_flg) {
-                planetMoving.pause_flg = false
+            if (parameterValues.pause_flg) {
+                parameterValues.pause_flg = false
 
                 val reproduction : Drawable? = getDrawable(R.drawable.ic_reproduction)
                 buttonReproduction.setBackgroundDrawable(reproduction)
 
             } else {
-                planetMoving.pause_flg = true
+                parameterValues.pause_flg = true
 
                 val pause : Drawable? = getDrawable(R.drawable.ic_pause)
                 buttonReproduction.setBackgroundDrawable(pause)
@@ -164,18 +166,18 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
 
         buttonSlowly.setOnClickListener {
             it.isSelected = true
-            if(planetMoving.millis < 3001) {
-                planetMoving.millis += 100
-            } else planetMoving.millis = 3000
+            if(parameterValues.millis < 3001) {
+                parameterValues.millis += 100
+            } else parameterValues.millis = 3000
 
             soundButtonClick.start()
         }
 
         buttonAcceleration.setOnClickListener {
             it.isSelected = true
-            if (planetMoving.millis > 101) {
-                planetMoving.millis -= 100
-            } else planetMoving.millis = 0
+            if (parameterValues.millis > 101) {
+                parameterValues.millis -= 100
+            } else parameterValues.millis = 0
 
             soundButtonClick.start()
         }
