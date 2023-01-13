@@ -55,7 +55,7 @@ open class MainActivity : BaseActivity(R.layout.activity_main), MainView {
 
             GlobalScope.launch {
                 withContext(Dispatchers.Main) {
-                    if (database.spaceDao.getAllSpace().size >= 5) {
+                    if (database.spaceDao.getAllSpaceSize() >= 5) {
                         messageWarning.isVisible = true
                         messageWarningText.isVisible = true
                         cancelButton.isVisible = true

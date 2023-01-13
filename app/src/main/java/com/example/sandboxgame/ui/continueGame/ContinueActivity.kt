@@ -7,7 +7,6 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.*
 import com.example.core.rule.ui.objects.space.Space
-import com.example.core.rule.ui.objects.space.SpaceObject
 import com.example.data.objectDao.food.FoodEntity
 import com.example.data.objectDao.planet.PlanetEntity
 import com.example.data.objectDao.space.SpaceEntity
@@ -15,7 +14,6 @@ import com.example.sandboxgame.R
 import com.example.sandboxgame.ui.App.Companion.database
 import com.example.sandboxgame.ui.base.BaseActivity
 import com.example.sandboxgame.ui.music.MusicService
-import com.omega_r.libs.extensions.list.toArrayList
 import com.omegar.libs.omegalaunchers.createActivityLauncher
 import com.omegar.mvp.ktx.providePresenter
 import kotlinx.coroutines.*
@@ -84,13 +82,6 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        GlobalScope.launch(Dispatchers.Main) {
-//            val sized = database.spaceDao.getSpace(id)
-//            size = sized.spaceEntity.size
-//        }
-
-
-
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
         musicService.player = player
         val soundButtonClick = MediaPlayer.create(this, R.raw.sound_for_button)
@@ -139,26 +130,24 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
 
                 withContext(Dispatchers.Main) {
 
-                    val newPlanet = database.planetDao.getAllPlanet(id)
-                    val newFood = database.foodDao.getAllFood(id)
+                    val newSpace = database.spaceDao.getSpace(id)
 
-                    newPlanet.forEach{ planetEntity ->
-                    val planet = PlanetEntity.toPlanet(planetEntity)
-                        space.myPlanetList.add(planet)
+                    newSpace.planet.forEach { planetEntity ->
+                        space.myPlanetList.add(planetEntity)
                     }
-                    newFood.forEach { foodEntity ->
-                        val food = FoodEntity.toFood(foodEntity)
-                        space.myFoodList.add(food)
+                    newSpace.food.forEach { foodEntity ->
+                        space.myFoodList.add(foodEntity)
                     }
 
                     val sizeList = space.myPlanetList.size
                     Toast.makeText(applicationContext, "planet - $sizeList", Toast.LENGTH_SHORT).show()
 
+                    presenter.onButtonContinueClicked(space)
                 }
 
             }
 
-            presenter.onButtonContinueClicked(space)
+
 
             soundButtonClick.start()
         }
@@ -284,34 +273,34 @@ class ContinueActivity : BaseActivity(R.layout.activity_continue), ContinueView 
             textTimeSave1.text = timeText
             textDateSave1.text = dateText
 
-            id = 0
+            id = 1
 
         }
         if (command == ContinuePresenter.ContinueCommand.SAVE_2) {
             textTimeSave2.text = timeText
             textDateSave2.text = dateText
 
-           id = 1
+           id = 2
 
         }
         if (command == ContinuePresenter.ContinueCommand.SAVE_3) {
             textTimeSave3.text = timeText
             textDateSave3.text = dateText
 
-            id = 2
+            id = 3
         }
         if (command == ContinuePresenter.ContinueCommand.SAVE_4) {
             textTimeSave4.text = timeText
             textDateSave4.text = dateText
 
-            id = 3
+            id = 4
 
         }
         if (command == ContinuePresenter.ContinueCommand.SAVE_5) {
             textTimeSave5.text = timeText
             textDateSave5.text = dateText
 
-            id = 4
+            id = 5
 
         }
 

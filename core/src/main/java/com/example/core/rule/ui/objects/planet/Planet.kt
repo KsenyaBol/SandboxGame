@@ -1,17 +1,25 @@
 package com.example.core.rule.ui.objects.planet
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.Ignore
 import com.example.core.rule.ui.objects.space.Space
-import kotlinx.serialization.Serializable
+import java.io.Serializable
 
-data class Planet (
-    var planetX: Int = 0,
-    var planetY: Int = 0,
-    var planetImage: Space.PlanetImage = Space.PlanetImage.PLANET1,
-    var planetInfect: Int = 0,
-    var planetSatiety: Int = 0,
-    var age: Int = 0,
-    var spaceId: Int = 0,
-): java.io.Serializable
+interface Planet: Serializable {
+
+    var planetX: Int
+    var planetY: Int
+    var planetImage: Space.PlanetImage
+    var planetInfect: Int
+    var planetSatiety: Int
+    var age: Int
+
+//    fun planetObj(
+//        planetX: Int,
+//        planetY: Int,
+//        planetImage: Space.PlanetImage,
+//        planetInfect: Int,
+//        planetSatiety: Int,
+//        age: Int
+//    ): Planet
+
+}

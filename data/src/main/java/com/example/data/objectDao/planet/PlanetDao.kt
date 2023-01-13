@@ -5,7 +5,7 @@ import androidx.room.*
 @Dao
 interface PlanetDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertPlanet(vararg planet: PlanetEntity)
+    suspend fun insertPlanet(planet: List<PlanetEntity>)
 
     @Update
     suspend fun updatePlanet(vararg planet: PlanetEntity)

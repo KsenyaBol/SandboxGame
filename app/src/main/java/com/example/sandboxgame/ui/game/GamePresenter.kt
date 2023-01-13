@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 class GamePresenter(private val space: Space): OmegaPresenter<GameView>() {
 
     var command: Command? = null
-    private var spaceEntity: SpaceEntity = SpaceEntity(space.size)
 
     init {
         viewState.space = space
@@ -35,22 +34,9 @@ class GamePresenter(private val space: Space): OmegaPresenter<GameView>() {
 
     @OptIn(DelicateCoroutinesApi::class)
     fun saveClicked() {
-        GlobalScope.launch(Dispatchers.Main) {
-
-            database.spaceDao.insertSpace(spaceEntity)
-
-            space.myPlanetList.forEach { planet ->
-                planet.spaceId = spaceEntity.id
-                val planetEntity = PlanetEntity.fromPlanet(planet)
-                database.planetDao.insertPlanet(planetEntity)
-            }
-            space.myFoodList.forEach { food ->
-                food.spaceId = spaceEntity.id
-                val foodEntity = FoodEntity.fromFood(food)
-                database.foodDao.insertFood(foodEntity)
-            }
-
-        }
+       launch {
+           database.saveSpace(space)
+       }
     }
 
     fun onButtonAddClicked() {

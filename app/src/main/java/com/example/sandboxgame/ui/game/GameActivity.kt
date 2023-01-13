@@ -112,7 +112,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
@@ -139,8 +138,6 @@ class GameActivity() : BaseActivity(R.layout.activity_game), GameView, DrawingVi
         buttonYes.setOnClickListener {
             presenter.onButtonYesClicked()
             presenter.saveClicked()
-// TODO to presenter
-
 
             soundButtonClick.start()
         }

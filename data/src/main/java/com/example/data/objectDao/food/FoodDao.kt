@@ -6,7 +6,7 @@ import androidx.room.*
 interface FoodDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertFood(vararg food: FoodEntity?)
+    suspend fun insertFood(food: List<FoodEntity>)
 
     @Update
     suspend fun updateFood(vararg food: FoodEntity?)

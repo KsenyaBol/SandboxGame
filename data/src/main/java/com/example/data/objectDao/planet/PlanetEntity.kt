@@ -3,7 +3,6 @@ package com.example.data.objectDao.planet
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import com.example.core.rule.ui.objects.planet.Planet
 import com.example.core.rule.ui.objects.space.Space
 
@@ -11,38 +10,43 @@ import com.example.core.rule.ui.objects.space.Space
     tableName = "planets"
 )
 data class PlanetEntity (
-
-    var planetX: Int = 0,
-    var planetY: Int = 0,
-    var planetImage: Space.PlanetImage = Space.PlanetImage.PLANET1,
-    var planetInfect: Int = 0,
-    var planetSatiety: Int = 0,
-    var age: Int = 0,
+    override var planetX: Int = 0,
+    override var planetY: Int = 0,
+    override var planetImage: Space.PlanetImage = Space.PlanetImage.PLANET1,
+    override var planetInfect: Int = 0,
+    override var planetSatiety: Int = 0,
+    override var age: Int = 0,
     @ColumnInfo(name = "space_id")
-    var spaceId: Int = 0,
-) {
+    var spaceId: Long = 0,
+): Planet {
     @PrimaryKey(autoGenerate = true)
     var idPlanet: Long = 0
 
-    companion object {
-        fun toPlanet(planetEntity: PlanetEntity): Planet = Planet(
-            planetX = planetEntity.planetX,
-            planetY = planetEntity.planetY,
-            planetImage = planetEntity.planetImage,
-            planetInfect = planetEntity.planetInfect,
-            planetSatiety = planetEntity.planetSatiety,
-            age = planetEntity.age,
-            spaceId = planetEntity.spaceId,
-        )
+    constructor(spaceId: Long, planet: Planet): this(
+        planetX = planet.planetX,
+        planetY = planet.planetY,
+        planetImage = planet.planetImage,
+        planetInfect = planet.planetInfect,
+        planetSatiety = planet.planetSatiety,
+        age = planet.age,
+        spaceId = spaceId
+    )
 
-        fun fromPlanet(planet: Planet): PlanetEntity = PlanetEntity (
-            planetX = planet.planetX,
-            planetY = planet.planetY,
-            planetImage = planet.planetImage,
-            planetInfect = planet.planetInfect,
-            planetSatiety = planet.planetSatiety,
-            age = planet.age,
-            spaceId = planet.spaceId,
-        )
-    }
+//    override fun planetObj(
+//        planetX: Int,
+//        planetY: Int,
+//        planetImage: Space.PlanetImage,
+//        planetInfect: Int,
+//        planetSatiety: Int,
+//        age: Int
+//    ) {
+//        this.planetX = planetX
+//        this.planetY = planetY
+//        this.planetImage = planetImage
+//        this.planetInfect = planetInfect
+//        this.planetSatiety = planetSatiety
+//        this.age = age
+//    }
+
+
 }

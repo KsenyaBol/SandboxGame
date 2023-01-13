@@ -1,19 +1,17 @@
 package com.example.core.rule.ui.objects.food
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.example.core.rule.ui.objects.planet.Planet
+import androidx.room.Ignore
 import com.example.core.rule.ui.objects.space.Space
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import java.io.Serializable
 
-data class Food (
-    var x: Int = 0,
-    var y: Int = 0,
-    var foodImage: Space.FoodImage = Space.FoodImage.FOOD_M,
-    var satiety: Int = 0,
-    var spaceId: Int = 0,
-): java.io.Serializable
+interface Food: Serializable {
+
+    var x: Int
+    var y: Int
+    var foodImage: Space.FoodImage
+    var satiety: Int
+
+
+//    fun foodObg(x: Int, y: Int, foodImage: Space.FoodImage, satiety: Int): Food
+
+}

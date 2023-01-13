@@ -14,6 +14,14 @@ class Space(val size: Int): Serializable {
     var myPlanetList: ArrayList<Planet> = arrayListOf()
     var myFoodList: ArrayList<Food> = arrayListOf()
 
+    @Transient
+    @Ignore
+    var planetListener: Planet? = null
+
+    @Transient
+    @Ignore
+    var foodListener: Food? = null
+
     enum class FoodImage {
         FOOD_XS, FOOD_S, FOOD_M, FOOD_L
     }
@@ -37,7 +45,7 @@ class Space(val size: Int): Serializable {
             planet.planetX == i && planet.planetY == j
         }
         if (planet == null) {
-            myPlanetList.add(Planet(planetX = i, planetY = j, planetImage = planetImage, planetInfect = planetInfect,
+            myPlanetList.add(planetListener!!.planetObj(planetX = i, planetY = j, planetImage = planetImage, planetInfect = planetInfect,
                 planetSatiety = satiety, age = age))
             spaceListener?.changeSpace(space = this)
         }
@@ -51,7 +59,7 @@ class Space(val size: Int): Serializable {
         }
         if (planet != null) {
             val index = myPlanetList.indexOf(planet)
-            myPlanetList[index] = Planet(planetX = i, planetY = j, planetImage = planet.planetImage, planetInfect = planetInfect,
+            myPlanetList[index] = planetListener!!.planetObj(planetX = i, planetY = j, planetImage = planet.planetImage, planetInfect = planetInfect,
                 planetSatiety = planet.planetSatiety, age = age)
             spaceListener?.changeSpace(space = this)
         }
@@ -75,7 +83,8 @@ class Space(val size: Int): Serializable {
         }
         if (planet != null) {
             val index = myPlanetList.indexOf(planet)
-            myPlanetList[index] = Planet(planetX = i, planetY = j, planetImage = planet.planetImage, planetInfect = planetInfect,
+            myPlanetList[index] = planetListener!!.planetObj(planetX = i, planetY = j, planetImage = planet.planetImage, planetInfect =
+            planetInfect,
                 planetSatiety = planet.planetSatiety, age = age)
             spaceListener?.changeSpace(space = this)
         }
@@ -88,7 +97,7 @@ class Space(val size: Int): Serializable {
             food.x == i && food.y == j
         }
         if (food == null) {
-            myFoodList.add(Food(x = i, y = j, foodImage = foodCommand , satiety = satiety))
+            myFoodList.add(foodListener!!.foodObg(x = i, y = j, foodImage = foodCommand , satiety = satiety))
             spaceListener?.changeSpace(space = this)
         }
 
@@ -111,7 +120,7 @@ class Space(val size: Int): Serializable {
                 var satietyAll = satiety
                 satietyAll += food.satiety
                 myFoodList.remove(food)
-                myPlanetList[index] = Planet(
+                myPlanetList[index] = planetListener!!.planetObj(
                     planetX = planet.planetX,
                     planetY = planet.planetY,
                     planetImage = planet.planetImage,
@@ -138,8 +147,8 @@ class Space(val size: Int): Serializable {
 
             val index = myPlanetList.indexOf(planet)
             val planetSatiety = satiety - 100
-            myPlanetList.add(Planet(planetX = i, planetY = j, planetImage = planetImage, planetInfect = 0, planetSatiety = 0, age = 0))
-            myPlanetList[index] = Planet(planetX = i, planetY = j, planetImage = planetImage, planetInfect = planetInfect, planetSatiety =
+            myPlanetList.add(planetListener!!.planetObj(planetX = i, planetY = j, planetImage = planetImage, planetInfect = 0, planetSatiety = 0, age = 0))
+            myPlanetList[index] = planetListener!!.planetObj(planetX = i, planetY = j, planetImage = planetImage, planetInfect = planetInfect, planetSatiety =
             planetSatiety, age = age)
             spaceListener?.changeSpace(space = this)
 
@@ -156,7 +165,7 @@ class Space(val size: Int): Serializable {
 
         if (planet != null) {
             val index = myPlanetList.indexOf(planet)
-            myPlanetList[index] = Planet(planetX = i, planetY = j, planetImage = planetImage, planetInfect = planetInfect, planetSatiety =
+            myPlanetList[index] = planetListener!!.planetObj(planetX = i, planetY = j, planetImage = planetImage, planetInfect = planetInfect, planetSatiety =
             satiety, age = age)
             spaceListener?.changeSpace(space = this)
         }
@@ -169,7 +178,7 @@ class Space(val size: Int): Serializable {
             food.x == i && food.y == j
         }
         if (food == null) {
-            myFoodList.add(Food(x = i, y = j, foodImage = FoodImage.FOOD_M , satiety = satiety))
+            myFoodList.add(foodListener!!.foodObg(x = i, y = j, foodImage = FoodImage.FOOD_M , satiety = satiety))
             spaceListener?.changeSpace(space = this)
         }
 
@@ -180,7 +189,7 @@ class Space(val size: Int): Serializable {
             planet.planetX == i && planet.planetY == j
         }
         if (planet != null) {
-            myPlanetList[index] = Planet(planetX = i, planetY = j, planetImage = planet.planetImage, planetInfect = planet.planetInfect,
+            myPlanetList[index] = planetListener!!.planetObj(planetX = i, planetY = j, planetImage = planet.planetImage, planetInfect = planet.planetInfect,
                 planetSatiety = planet.planetSatiety, age = age)
             spaceListener?.changeSpace(space = this)
         }
@@ -192,7 +201,7 @@ class Space(val size: Int): Serializable {
             planet.planetX == i && planet.planetY == j
         }
         if (planet != null) {
-            myPlanetList[index] = Planet(planetX = i, planetY = j, planetImage = planet.planetImage, planetInfect = planetInfect,
+            myPlanetList[index] = planetListener!!.planetObj(planetX = i, planetY = j, planetImage = planet.planetImage, planetInfect = planetInfect,
                 planetSatiety = planet.planetSatiety, age = planet.age)
             spaceListener?.changeSpace(space = this)
         }
@@ -205,7 +214,7 @@ class Space(val size: Int): Serializable {
         }
         if (planet != null) {
             val index = myPlanetList.indexOf(planet)
-            myPlanetList[index] = Planet(iFood, jFood, planet.planetImage, planet.planetInfect, planet.planetSatiety, planet.age)
+            myPlanetList[index] = planetListener!!.planetObj(iFood, jFood, planet.planetImage, planet.planetInfect, planet.planetSatiety, planet.age)
             spaceListener?.changeSpace(space = this)
         }
 
