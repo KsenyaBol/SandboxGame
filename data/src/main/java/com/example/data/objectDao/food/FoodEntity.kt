@@ -34,11 +34,4 @@ data class FoodEntity (
 
     )
 
-//    override fun foodObg(x: Int, y: Int, foodImage: Space.FoodImage, satiety: Int) {
-//        this.x = x
-//        this.y = y
-//        this.foodImage = foodImage
-//        this.satiety = satiety
-//    }
-
 }

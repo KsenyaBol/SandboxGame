@@ -11,7 +11,4 @@ interface Food: Serializable {
     var foodImage: Space.FoodImage
     var satiety: Int
 
-
-//    fun foodObg(x: Int, y: Int, foodImage: Space.FoodImage, satiety: Int): Food
-
 }

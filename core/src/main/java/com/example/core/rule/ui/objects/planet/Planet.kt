@@ -13,13 +13,4 @@ interface Planet: Serializable {
     var planetSatiety: Int
     var age: Int
 
-//    fun planetObj(
-//        planetX: Int,
-//        planetY: Int,
-//        planetImage: Space.PlanetImage,
-//        planetInfect: Int,
-//        planetSatiety: Int,
-//        age: Int
-//    ): Planet
-
 }

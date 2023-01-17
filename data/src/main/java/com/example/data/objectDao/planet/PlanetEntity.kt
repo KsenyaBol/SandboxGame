@@ -32,21 +32,4 @@ data class PlanetEntity (
         spaceId = spaceId
     )
 
-//    override fun planetObj(
-//        planetX: Int,
-//        planetY: Int,
-//        planetImage: Space.PlanetImage,
-//        planetInfect: Int,
-//        planetSatiety: Int,
-//        age: Int
-//    ) {
-//        this.planetX = planetX
-//        this.planetY = planetY
-//        this.planetImage = planetImage
-//        this.planetInfect = planetInfect
-//        this.planetSatiety = planetSatiety
-//        this.age = age
-//    }
-
-
 }

@@ -32,7 +32,6 @@ class GamePresenter(private val space: Space): OmegaPresenter<GameView>() {
         exit()
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     fun saveClicked() {
        launch {
            database.saveSpace(space)
